@@ -26,9 +26,9 @@
       background-color: #07090c;
       color: #e6edf3;
       background-image: 
-        linear-gradient(rgba(202, 107, 45, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(202, 107, 45, 0.03) 1px, transparent 1px),
-        radial-gradient(ellipse at 50% -10%, rgba(245, 158, 11, 0.12) 0%, transparent 55%),
+        linear-gradient(rgba(202, 107, 45, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(202, 107, 45, 0.04) 1px, transparent 1px),
+        radial-gradient(ellipse at 50% -10%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
         radial-gradient(ellipse at 50% 110%, rgba(20, 26, 35, 0.95) 0%, #07090c 100%);
       background-size: 24px 24px, 24px 24px, 100% 100%, 100% 100%;
       background-attachment: fixed;
@@ -50,27 +50,38 @@
     }
 
     .glass-card {
-      background: linear-gradient(145deg, rgba(26, 32, 44, 0.7) 0%, rgba(13, 17, 23, 0.85) 100%);
-      border: 1px solid rgba(202, 107, 45, 0.25);
-      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7), inset 0 1px 0 0 rgba(255, 207, 150, 0.1);
-      backdrop-filter: blur(12px);
+      background: linear-gradient(145deg, rgba(26, 32, 44, 0.75) 0%, rgba(13, 17, 23, 0.9) 100%);
+      border: 1px solid rgba(202, 107, 45, 0.28);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8), inset 0 1px 0 0 rgba(255, 207, 150, 0.12);
+      backdrop-filter: blur(14px);
     }
 
     .bronze-btn {
       background: linear-gradient(135deg, #f59e0b 0%, #ca6b2d 50%, #9e4612 100%);
-      box-shadow: 0 4px 15px rgba(202, 107, 45, 0.35), inset 0 1px 0 rgba(255, 244, 229, 0.3);
+      box-shadow: 0 4px 18px rgba(202, 107, 45, 0.4), inset 0 1px 0 rgba(255, 244, 229, 0.35);
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .bronze-btn:active {
       transform: scale(0.98);
       box-shadow: 0 2px 8px rgba(202, 107, 45, 0.25);
     }
+
+    .action-btn {
+      background: linear-gradient(145deg, rgba(30, 38, 50, 0.8) 0%, rgba(18, 22, 30, 0.95) 100%);
+      border: 1px solid rgba(202, 107, 45, 0.3);
+      transition: all 0.15s ease;
+    }
+    .action-btn:active {
+      transform: scale(0.97);
+      background: rgba(45, 55, 72, 0.9);
+      border-color: rgba(245, 158, 11, 0.6);
+    }
   </style>
 </head>
 <body class="min-h-screen text-slate-200 flex flex-col items-center justify-start p-3 sm:p-6 select-none">
 
   <!-- ==================== 1. 封面登入頁 (Cover Screen) ==================== -->
-  <div id="coverScreen" class="w-full max-w-md mx-auto flex flex-col items-center justify-center min-h-[90vh] py-8">
+  <div id="coverScreen" class="w-full max-w-md mx-auto flex flex-col items-center justify-center min-h-[92vh] py-6">
     
     <!-- 頂部徽章 -->
     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-950/40 border border-amber-600/30 text-amber-300 text-xs tracking-widest font-times font-semibold uppercase mb-6 shadow-inner">
@@ -97,12 +108,12 @@
       <div>
         <label class="block text-xs font-semibold text-amber-300/90 tracking-wider mb-2 font-serif-tc flex items-center justify-between">
           <span>評圖年級 (ACADEMIC YEAR)</span>
-          <span class="text-[10px] text-amber-500/70 font-times uppercase">Target Class</span>
+          <span class="text-[10px] text-amber-500/70 font-times uppercase">Select Class</span>
         </label>
         <div class="relative">
           <select id="coverGradeSelect" class="w-full bg-[#121721] border border-amber-600/40 rounded-xl px-4 py-3 text-base text-amber-200 font-bold focus:outline-none focus:border-amber-400 transition cursor-pointer appearance-none">
             <option value="G1_大一">G1_大一 (建築設計一)</option>
-            <option value="G2_大二">G2_大二 (建築設計二)</option>
+            <option value="G2_大二" selected>G2_大二 (建築設計二)</option>
             <option value="G3_大三">G3_大三 (建築設計三)</option>
             <option value="G4_大四">G4_大四 (建築設計四)</option>
             <option value="G5_大五">G5_大五 (畢業設計)</option>
@@ -149,48 +160,45 @@
   <!-- ==================== 2. 主評分頁 (Critique Screen) ==================== -->
   <div id="critiqueScreen" class="w-full max-w-md mx-auto hidden flex flex-col gap-4 pb-24">
     
-    <!-- 頂部資訊列 (常駐年級標籤 + 換年級按鈕) -->
-    <header class="w-full glass-card rounded-xl px-4 py-3 flex items-center justify-between sticky top-2 z-40">
+    <!-- 頂部資訊列 (已移除換年級按鈕，極致簡潔) -->
+    <header class="w-full glass-card rounded-xl px-4 py-2.5 flex items-center justify-between sticky top-2 z-40">
       <div class="flex items-center gap-2.5">
         <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></div>
-        <div>
-          <div class="flex items-center gap-2">
-            <span id="topGradeBadge" class="text-xs font-black tracking-wider text-amber-300 font-serif-tc">G1_大一</span>
-            <span class="text-slate-600 text-xs">|</span>
-            <span id="topStageBadge" class="text-xs text-slate-300 font-serif-tc">期中評圖</span>
-          </div>
-          <p class="text-[11px] text-slate-400 font-serif-tc">評審：<span id="topReviewerText" class="text-amber-200 font-semibold">--</span></p>
+        <div class="flex items-center gap-2">
+          <span id="topGradeBadge" class="text-xs font-black tracking-wider text-amber-300 font-serif-tc">G2_大二</span>
+          <span class="text-slate-600 text-xs">|</span>
+          <span id="topStageBadge" class="text-xs text-slate-300 font-serif-tc">期中評圖</span>
         </div>
       </div>
-
-      <button onclick="switchGradeReturnCover()" class="px-2.5 py-1 rounded-lg bg-amber-950/50 border border-amber-600/40 text-[11px] text-amber-300 hover:bg-amber-900/60 transition cursor-pointer font-serif-tc">
-        ↩ 換年級
-      </button>
+      <div>
+        <span class="text-[11px] text-slate-400 font-serif-tc">評審：</span>
+        <span id="topReviewerText" class="text-xs text-amber-300 font-bold font-serif-tc">--</span>
+      </div>
     </header>
 
     <!-- 快速跳轉與上下位控制 -->
     <div class="flex items-center justify-between gap-2">
-      <button onclick="navigateStudent(-1)" class="px-3.5 py-2.5 glass-card rounded-xl text-xs font-serif-tc text-slate-300 hover:text-white transition flex items-center gap-1">
+      <button onclick="navigateStudent(-1)" class="px-3.5 py-2.5 action-btn rounded-xl text-xs font-serif-tc text-slate-300 hover:text-white transition flex items-center gap-1 cursor-pointer">
         ❮ 上一位
       </button>
 
       <!-- 快選下拉選單 -->
       <div class="flex-1 relative">
         <select id="quickJumpSelect" onchange="jumpToStudent(this.value)" class="w-full bg-[#121721] border border-amber-600/30 rounded-xl px-3 py-2 text-xs text-amber-300 font-serif-tc focus:outline-none appearance-none text-center cursor-pointer">
-          <!-- 動態生成選項 -->
+          <!-- 動態生成學生選單 -->
         </select>
         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-amber-400 text-[10px]">
           ▼
         </div>
       </div>
 
-      <button onclick="navigateStudent(1)" class="px-3.5 py-2.5 glass-card rounded-xl text-xs font-serif-tc text-slate-300 hover:text-white transition flex items-center gap-1">
+      <button onclick="navigateStudent(1)" class="px-3.5 py-2.5 action-btn rounded-xl text-xs font-serif-tc text-slate-300 hover:text-white transition flex items-center gap-1 cursor-pointer">
         下一位 ❯
       </button>
     </div>
 
-    <!-- 學生名牌卡 -->
-    <div class="w-full glass-card rounded-2xl p-5 space-y-3 relative overflow-hidden">
+    <!-- 學生名牌卡 (含拍照與相簿按鈕) -->
+    <div class="w-full glass-card rounded-2xl p-5 space-y-4 relative overflow-hidden">
       <div class="flex items-start justify-between">
         <div>
           <div class="flex items-center gap-2 mb-1">
@@ -207,64 +215,94 @@
         </div>
       </div>
 
-      <!-- 小組成員切換列 (僅在小組模式下顯現) -->
-      <div id="groupMembersContainer" class="hidden pt-3 border-t border-slate-800/80">
-        <p class="text-[10px] text-slate-400 font-serif-tc mb-2">小組成員（點擊切換個人評分）：</p>
-        <div id="groupMembersList" class="grid grid-cols-2 gap-2"></div>
+      <!-- 拍照與相簿按鈕列 -->
+      <div class="grid grid-cols-2 gap-2 pt-1">
+        <label class="action-btn flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl cursor-pointer text-xs font-serif-tc text-slate-200 hover:text-amber-200">
+          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+          <span>啟動相機拍照</span>
+          <input type="file" accept="image/*" capture="environment" class="hidden" onchange="handlePhotoUpload(this)">
+        </label>
+
+        <label class="action-btn flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl cursor-pointer text-xs font-serif-tc text-slate-200 hover:text-amber-200">
+          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+          </svg>
+          <span>從相簿選取</span>
+          <input type="file" accept="image/*" class="hidden" onchange="handlePhotoUpload(this)">
+        </label>
+      </div>
+
+      <!-- 照片預覽縮圖容器 -->
+      <div id="photoPreviewContainer" class="hidden pt-2">
+        <div class="relative w-full h-32 rounded-xl overflow-hidden border border-amber-500/40 bg-black/60">
+          <img id="photoPreviewImg" class="w-full h-full object-cover">
+          <button onclick="removePhoto()" class="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-black/70 text-rose-400 text-[10px] font-bold">✕ 移除</button>
+        </div>
       </div>
     </div>
 
-    <!-- 加權總分儀表卡片 -->
-    <div class="w-full glass-card rounded-2xl p-6 text-center relative">
-      <div class="flex items-center justify-between text-xs text-slate-400 font-serif-tc mb-2">
+    <!-- 加權總分儀表卡片 (復原半圓刻度環) -->
+    <div class="w-full glass-card rounded-2xl p-5 text-center relative overflow-hidden">
+      <div class="flex items-center justify-between text-xs text-slate-400 font-serif-tc mb-1">
         <span class="flex items-center gap-1.5 text-amber-300">
           <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-          加權評圖總分
+          個人加權分數
         </span>
         <span class="font-times uppercase text-[10px] tracking-widest text-slate-500">Evaluation Total</span>
       </div>
 
-      <div class="my-3">
-        <span id="displayTotalScore" class="text-5xl font-black font-times tracking-tight text-white drop-shadow-[0_2px_15px_rgba(245,158,11,0.25)]">0.0</span>
-        <span class="text-xs font-times text-slate-400 ml-1">/ 100 PTS</span>
+      <!-- 儀表半圓刻度繪製區 -->
+      <div class="relative w-48 h-28 mx-auto mt-2 flex flex-col items-center justify-end">
+        <svg class="w-48 h-24 overflow-visible" viewBox="0 0 200 100">
+          <!-- 刻度線背景弧 -->
+          <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(202, 107, 45, 0.2)" stroke-width="6" stroke-linecap="round" stroke-dasharray="2 6"/>
+          <!-- 動態高亮進度條 -->
+          <path id="gaugeArcProgress" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#amberGradient)" stroke-width="6" stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="251.2" style="transition: stroke-dashoffset 0.4s ease;"/>
+          <defs>
+            <linearGradient id="amberGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#ca6b2d" />
+              <stop offset="50%" stop-color="#f59e0b" />
+              <stop offset="100%" stop-color="#fde68a" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <!-- 置中分數 -->
+        <div class="absolute bottom-1 flex flex-col items-center">
+          <span id="displayTotalScore" class="text-4xl font-black font-times tracking-tight text-white drop-shadow-[0_2px_12px_rgba(245,158,11,0.3)]">0.0</span>
+          <span class="text-[10px] font-times text-slate-400 -mt-1">/ 100 PTS</span>
+        </div>
+
+        <span class="absolute left-2 bottom-0 text-[10px] font-times text-slate-500">0</span>
+        <span class="absolute right-2 bottom-0 text-[10px] font-times text-amber-500/80">100</span>
       </div>
 
       <!-- 小組與個人拆分預覽 (僅在小組模式顯現) -->
-      <div id="scoreRatioSplitBar" class="hidden flex items-center justify-center gap-4 text-xs font-serif-tc pt-3 border-t border-slate-800 text-slate-400">
+      <div id="scoreRatioSplitBar" class="hidden flex items-center justify-center gap-4 text-xs font-serif-tc pt-3 mt-2 border-t border-slate-800 text-slate-400">
         <div>小組 (<span id="splitGroupRatioText">0</span>%)：<span id="splitGroupScoreText" class="font-times text-amber-300 font-bold">0.0</span></div>
         <span class="text-slate-600">|</span>
         <div>個人 (<span id="splitIndRatioText">100</span>%)：<span id="splitIndScoreText" class="font-times text-amber-300 font-bold">0.0</span></div>
       </div>
     </div>
 
-    <!-- PART 1: 小組團體成績 (僅在小組模式顯現) -->
-    <div id="part1GroupCard" class="w-full glass-card rounded-2xl p-5 space-y-4 hidden">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-          <h3 class="text-sm font-bold text-amber-200 font-serif-tc">PART 1 · 小組團體分數</h3>
-        </div>
-        <span class="px-2 py-0.5 rounded bg-amber-950/60 border border-amber-600/40 text-[10px] text-amber-300 font-serif-tc">
-          佔比 <span id="labelPart1Ratio">30</span>%
-        </span>
-      </div>
-      <div id="groupCriteriaList" class="space-y-3"></div>
-    </div>
-
-    <!-- PART 2: 個人評分維度 -->
+    <!-- 評分維度 (ASSESSMENT CRITERIA) -->
     <div class="w-full glass-card rounded-2xl p-5 space-y-4">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
           <span class="w-2 h-2 rounded-full bg-sky-400"></span>
-          <h3 class="text-sm font-bold text-slate-100 font-serif-tc" id="part2Title">評分維度 (ASSESSMENT CRITERIA)</h3>
+          <h3 class="text-sm font-bold text-slate-100 font-serif-tc">評分維度 (ASSESSMENT CRITERIA)</h3>
         </div>
-        <!-- 佔比標籤：個人模式下會由程式自動設為 hidden -->
         <span id="badgePart2Ratio" class="hidden px-2 py-0.5 rounded bg-sky-950/60 border border-sky-600/40 text-[10px] text-sky-300 font-serif-tc">
           佔比 <span id="labelPart2Ratio">100</span>%
         </span>
       </div>
-      <p class="text-[11px] text-slate-400 font-serif-tc">請輸入各評圖指標給分（0 - 100 分）：</p>
-      <div id="indCriteriaList" class="space-y-3"></div>
+      <p class="text-[11px] text-slate-400 font-serif-tc">各項評圖標準加權給分：</p>
+      
+      <!-- 動態載入規準清單 -->
+      <div id="indCriteriaList" class="space-y-2.5"></div>
     </div>
 
     <!-- 評審意見與總評 -->
@@ -278,7 +316,7 @@
     </div>
 
     <!-- 底部常駐儲存按鈕 -->
-    <div class="fixed bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-[#07090c] via-[#07090c]/90 to-transparent z-40 max-w-md mx-auto">
+    <div class="fixed bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-[#07090c] via-[#07090c]/95 to-transparent z-40 max-w-md mx-auto">
       <button id="btnSaveAndNext" onclick="handleSaveAndNext()" class="w-full bronze-btn text-white font-bold py-3.5 px-6 rounded-xl text-base tracking-widest font-serif-tc flex items-center justify-center gap-2 shadow-2xl cursor-pointer">
         <span id="btnSaveText">儲存並評下一位 ➔</span>
       </button>
@@ -292,30 +330,25 @@
   </div>
 
   <script>
-    // ==================== 後端 API 網址 (已自動填入您的部署網址) ====================
     const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxVKmk3v0HRJJOPkvwYMKbFyIPumffiyO-j56v3RicEqNYBilGpwPXd37yFk7hJFeEQ/exec";
 
-    // 狀態變數
-    let currentGrade = "G1_大一";
+    let currentGrade = "G2_大二";
     let reviewerName = "";
     let sessionData = null;
     let currentIndex = 0;
-    let reviewMemory = {}; // 記憶評分：studentId -> { scores, comment, totalScore }
+    let reviewMemory = {}; // studentId -> { scores, comment, totalScore, photo }
 
-    // 初始化封面
     window.addEventListener('DOMContentLoaded', () => {
-      // 讀取本地快取的評審姓名
       const savedReviewer = localStorage.getItem('ccu_reviewer_name');
       if (savedReviewer) {
         document.getElementById('reviewerInput').value = savedReviewer;
       }
     });
 
-    // 點擊「進入評圖系統」
     async function handleEnterSystem() {
       const reviewerInput = document.getElementById('reviewerInput').value.trim();
       if (!reviewerInput) {
-        showToast('請先輸入您的評審姓名或席位代號！');
+        showToast('請先輸入評審姓名或代號！');
         document.getElementById('reviewerInput').focus();
         return;
       }
@@ -328,7 +361,7 @@
       const statusMsg = document.getElementById('coverStatusMsg');
       btn.disabled = true;
       btn.innerHTML = `<span>載入【${currentGrade}】名冊中...</span>`;
-      statusMsg.textContent = '連線 Google 試算表同步名冊與指標...';
+      statusMsg.textContent = '連線試算表同步名冊與評分規準...';
 
       try {
         const response = await fetch(`${GAS_API_URL}?action=getSessionData&grade=${encodeURIComponent(currentGrade)}`);
@@ -336,59 +369,46 @@
 
         if (result.status === 'success') {
           sessionData = result.data;
-          statusMsg.textContent = '載入完成，進入系統！';
+          statusMsg.textContent = '';
           startCritiqueSession();
         } else {
-          statusMsg.textContent = '試算表回傳錯誤：' + result.message;
+          statusMsg.textContent = '載入失敗：' + result.message;
           btn.disabled = false;
           btn.innerHTML = `<span>進入評圖系統</span><span>➔</span>`;
         }
       } catch (err) {
         console.error(err);
-        statusMsg.textContent = '連線至試算表失敗，請檢查網路或後端權限！';
+        statusMsg.textContent = '連線逾時，請確認試算表網路授權！';
         btn.disabled = false;
         btn.innerHTML = `<span>進入評圖系統</span><span>➔</span>`;
       }
     }
 
-    // 啟動評圖主畫面
     function startCritiqueSession() {
       document.getElementById('coverScreen').classList.add('hidden');
       document.getElementById('critiqueScreen').classList.remove('hidden');
 
-      // 更新頂部資訊
       document.getElementById('topGradeBadge').textContent = sessionData.currentGrade;
       document.getElementById('topStageBadge').textContent = sessionData.stage;
       document.getElementById('topReviewerText').textContent = reviewerName;
 
-      // 檢查模式 (小組模式 vs 純個人模式)
+      // 檢查模式
       const isGroup = sessionData.isGroupMode;
       const ratioBar = document.getElementById('scoreRatioSplitBar');
-      const part1Card = document.getElementById('part1GroupCard');
       const part2Badge = document.getElementById('badgePart2Ratio');
-      const cardGroupTag = document.getElementById('cardGroupTag');
-      const groupMembersCont = document.getElementById('groupMembersContainer');
 
       if (isGroup) {
         ratioBar.classList.remove('hidden');
-        part1Card.classList.remove('hidden');
         part2Badge.classList.remove('hidden');
-        cardGroupTag.classList.remove('hidden');
-        groupMembersCont.classList.remove('hidden');
         document.getElementById('splitGroupRatioText').textContent = sessionData.groupRatio;
         document.getElementById('splitIndRatioText').textContent = sessionData.indRatio;
-        document.getElementById('labelPart1Ratio').textContent = sessionData.groupRatio;
         document.getElementById('labelPart2Ratio').textContent = sessionData.indRatio;
       } else {
         ratioBar.classList.add('hidden');
-        part1Card.classList.add('hidden');
-        part2Badge.classList.add('hidden'); // 純個人模式完全隱藏 40% 佔比標籤
-        cardGroupTag.classList.add('hidden');
-        groupMembersCont.classList.add('hidden');
-        document.getElementById('part2Title').textContent = '評分維度 (ASSESSMENT CRITERIA)';
+        part2Badge.classList.add('hidden');
       }
 
-      // 填充快選下拉清單
+      // 快選清單
       const quickSelect = document.getElementById('quickJumpSelect');
       quickSelect.innerHTML = '';
       sessionData.students.forEach((stu, idx) => {
@@ -398,71 +418,68 @@
         quickSelect.appendChild(opt);
       });
 
-      // 渲染評分指標輸入框
       renderCriteriaInputs();
-
-      // 載入第一位同學
-      currentIndex = 0;
-      loadStudent(currentIndex);
+      loadStudent(0);
     }
 
-    // 渲染評分規準欄位
     function renderCriteriaInputs() {
       const container = document.getElementById('indCriteriaList');
       container.innerHTML = '';
 
       sessionData.criteria.forEach((crit, cIdx) => {
         const row = document.createElement('div');
-        row.className = 'flex items-center justify-between p-3 rounded-xl bg-[#0a0e14]/70 border border-slate-800/80';
+        row.className = 'flex items-center justify-between p-3.5 rounded-xl bg-[#0e131b] border border-slate-800/90 shadow-sm';
         row.innerHTML = `
-          <div class="flex-1 pr-2">
-            <p class="text-xs font-semibold text-slate-200 font-serif-tc">${crit.name}</p>
-            <p class="text-[10px] text-amber-500/80 font-times">WEIGHT: ${crit.weight}%</p>
+          <div class="flex-1 pr-3">
+            <p class="text-sm font-semibold text-slate-100 font-serif-tc tracking-wide">${crit.name}</p>
+            <p class="text-[11px] text-amber-500/90 font-times tracking-wider mt-0.5">權重 ${crit.weight}%</p>
           </div>
           <div class="flex items-center gap-2">
             <input type="number" min="0" max="100" id="crit_input_${cIdx}" value="0" 
               oninput="handleScoreChange()" 
-              class="w-16 bg-[#161c26] border border-amber-600/40 rounded-lg py-1.5 text-center text-amber-300 font-bold font-times text-base focus:outline-none focus:border-amber-400">
-            <span class="text-[10px] text-slate-500 font-times">PTS</span>
+              class="w-16 bg-[#161c26] border border-amber-600/40 rounded-lg py-1.5 text-center text-amber-300 font-bold font-times text-lg focus:outline-none focus:border-amber-400">
+            <span class="text-xs text-slate-500 font-times">PTS</span>
           </div>
         `;
         container.appendChild(row);
       });
     }
 
-    // 載入指定索引的學生資料
     function loadStudent(idx) {
       if (idx < 0 || idx >= sessionData.students.length) return;
       currentIndex = idx;
       const stu = sessionData.students[idx];
 
-      // 更新卡片內容
       document.getElementById('cardStudentId').textContent = '#' + stu.id;
       document.getElementById('cardStudentName').textContent = stu.name;
       document.getElementById('cardAdvisorName').textContent = stu.advisor || '未指定';
       document.getElementById('quickJumpSelect').value = idx;
 
-      // 更新底部按鈕文字
       document.getElementById('btnSaveText').textContent = `儲存【${stu.name}】並評下一位 ➔`;
 
-      // 載入評分記憶（如有）
+      // 載入評分記憶
       if (reviewMemory[stu.id]) {
         const mem = reviewMemory[stu.id];
         sessionData.criteria.forEach((_, cIdx) => {
           document.getElementById(`crit_input_${cIdx}`).value = mem.scores[cIdx] || 0;
         });
         document.getElementById('feedbackComment').value = mem.comment || '';
+        if (mem.photo) {
+          showPhotoPreview(mem.photo);
+        } else {
+          hidePhotoPreview();
+        }
       } else {
         sessionData.criteria.forEach((_, cIdx) => {
           document.getElementById(`crit_input_${cIdx}`).value = 0;
         });
         document.getElementById('feedbackComment').value = '';
+        hidePhotoPreview();
       }
 
       calculateTotal();
     }
 
-    // 計算總分
     function calculateTotal() {
       let total = 0;
       sessionData.criteria.forEach((crit, cIdx) => {
@@ -471,6 +488,12 @@
       });
 
       document.getElementById('displayTotalScore').textContent = total.toFixed(1);
+
+      // 動態更新半圓刻度進度條 (半圓長度約 251.2)
+      const maxOffset = 251.2;
+      const offset = maxOffset - (Math.min(total, 100) / 100) * maxOffset;
+      document.getElementById('gaugeArcProgress').style.strokeDashoffset = offset;
+
       return total;
     }
 
@@ -478,17 +501,54 @@
       calculateTotal();
     }
 
-    // 儲存並前進下一位
+    // 照片上傳處理 (相機 / 相簿)
+    function handlePhotoUpload(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const photoBase64 = e.target.result;
+          showPhotoPreview(photoBase64);
+          const stu = sessionData.students[currentIndex];
+          if (!reviewMemory[stu.id]) reviewMemory[stu.id] = { scores: [], comment: '', totalScore: 0 };
+          reviewMemory[stu.id].photo = photoBase64;
+          showToast('📸 照片已附加');
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function showPhotoPreview(src) {
+      const container = document.getElementById('photoPreviewContainer');
+      const img = document.getElementById('photoPreviewImg');
+      img.src = src;
+      container.classList.remove('hidden');
+    }
+
+    function hidePhotoPreview() {
+      const container = document.getElementById('photoPreviewContainer');
+      const img = document.getElementById('photoPreviewImg');
+      img.src = '';
+      container.classList.add('hidden');
+    }
+
+    function removePhoto() {
+      hidePhotoPreview();
+      const stu = sessionData.students[currentIndex];
+      if (reviewMemory[stu.id]) {
+        delete reviewMemory[stu.id].photo;
+      }
+      showToast('已移除附加照片');
+    }
+
     async function handleSaveAndNext() {
       const currentStudent = sessionData.students[currentIndex];
       const scores = sessionData.criteria.map((_, cIdx) => parseFloat(document.getElementById(`crit_input_${cIdx}`).value) || 0);
       const comment = document.getElementById('feedbackComment').value.trim();
       const totalScore = calculateTotal();
+      const existingPhoto = reviewMemory[currentStudent.id]?.photo || null;
 
-      // 儲存至本地記憶體
-      reviewMemory[currentStudent.id] = { scores, comment, totalScore };
+      reviewMemory[currentStudent.id] = { scores, comment, totalScore, photo: existingPhoto };
 
-      // 非同步傳送至後端 Google 試算表
       const payload = {
         action: 'submitScore',
         records: [{
@@ -504,17 +564,15 @@
         }]
       };
 
-      // 靜默背景上傳
       fetch(GAS_API_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain' },
         body: JSON.stringify(payload)
-      }).catch(err => console.error('背景存檔提示：', err));
+      }).catch(err => console.error('存檔同步提示：', err));
 
       showToast(`已儲存 ${currentStudent.name}（${totalScore.toFixed(1)}分）`);
 
-      // 前進下一位
       if (currentIndex + 1 < sessionData.students.length) {
         loadStudent(currentIndex + 1);
       } else {
@@ -522,7 +580,6 @@
       }
     }
 
-    // 上下位切換
     function navigateStudent(direction) {
       const newIndex = currentIndex + direction;
       if (newIndex >= 0 && newIndex < sessionData.students.length) {
@@ -530,22 +587,10 @@
       }
     }
 
-    // 下拉快選切換
     function jumpToStudent(val) {
       loadStudent(parseInt(val, 10));
     }
 
-    // 返回封面重新選年級
-    function switchGradeReturnCover() {
-      document.getElementById('critiqueScreen').classList.add('hidden');
-      document.getElementById('coverScreen').classList.remove('hidden');
-      const btn = document.getElementById('btnEnterSystem');
-      btn.disabled = false;
-      btn.innerHTML = `<span>進入評圖系統</span><span>➔</span>`;
-      document.getElementById('coverStatusMsg').textContent = '';
-    }
-
-    // 提示 Toast
     function showToast(msg) {
       const t = document.getElementById('toast');
       t.textContent = msg;
