@@ -232,10 +232,12 @@
           ACADEMIC EVALUATION SESSION
         </div>
         
-        <div class="flex items-center justify-center gap-3 mt-2">
-          <span id="coverGradeBadge" class="text-lg font-times font-black text-[#ffcf96] bg-gradient-to-b from-[#212a36] to-[#12161f] border border-[#ca6b2d] px-4 py-1 rounded-xl shadow-[inset_0_1px_2px_rgba(255,225,190,0.4),0_4px_12px_rgba(0,0,0,0.8)]">
-            大一
-          </span>
+        <!-- ⭐️ 年級切換按鈕 (支援點選彈出選單) -->
+        <div class="flex items-center justify-center gap-2 mt-2">
+          <button type="button" onclick="openGradeModal()" title="點擊切換年級" class="inline-flex items-center gap-1.5 text-base sm:text-lg font-times font-black text-[#ffcf96] bg-gradient-to-b from-[#212a36] to-[#12161f] border border-[#ca6b2d] hover:border-[#ffa64d] px-3.5 py-1 rounded-xl shadow-[inset_0_1px_2px_rgba(255,225,190,0.4),0_4px_12px_rgba(0,0,0,0.8)] active:scale-95 transition cursor-pointer group">
+            <span id="coverGradeBadge">G1_大一</span>
+            <span class="text-xs text-[#ffaa55] group-hover:translate-y-0.5 transition-transform">▼</span>
+          </button>
 
           <span class="text-[#ffaa55] font-black text-xl">·</span>
 
@@ -280,9 +282,10 @@
     <div class="absolute bottom-0 left-0 right-0 h-[2px] metallic-arch-divider"></div>
 
     <div class="max-w-md mx-auto flex justify-between items-center gap-2 relative z-10">
-      <button onclick="returnToCover()" title="點擊返回封面" class="flex items-center gap-1.5 group active:scale-95 transition">
-        <span id="gradeBadge" class="text-xs font-times font-bold tracking-wider uppercase px-3.5 py-1.5 rounded-xl text-[#ffc68c] bg-gradient-to-b from-[#1d242e] to-[#10141b] border border-[#ca6b2d]/70 shadow-[inset_0_1px_1px_rgba(255,230,195,0.35),0_2px_8px_rgba(0,0,0,0.7)] group-hover:border-[#ffa64d]">
-          G1 大一
+      <button type="button" onclick="openGradeModal()" title="點擊切換年級" class="flex items-center gap-1.5 group active:scale-95 transition">
+        <span id="gradeBadge" class="text-xs font-times font-bold tracking-wider uppercase px-3 py-1.5 rounded-xl text-[#ffc68c] bg-gradient-to-b from-[#1d242e] to-[#10141b] border border-[#ca6b2d]/70 shadow-[inset_0_1px_1px_rgba(255,230,195,0.35),0_2px_8px_rgba(0,0,0,0.7)] group-hover:border-[#ffa64d] flex items-center gap-1">
+          <span>G1_大一</span>
+          <span class="text-[9px] text-[#ffaa55]">▼</span>
         </span>
         <span class="text-[11px] text-[#ffaa55] font-serif-tc font-bold hidden sm:inline" id="stageBadgeHeader">期中評圖</span>
       </button>
@@ -499,6 +502,32 @@
 
   </main>
 
+  <!-- ⭐️ 年級切換彈出層 (Grade Selection Modal) -->
+  <div id="gradeModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex flex-col justify-end">
+    <div class="bg-[#0f131a] border-t-2 border-[#ca6b2d] w-full max-w-md mx-auto rounded-t-3xl p-5 max-h-[75vh] flex flex-col shadow-[0_-10px_35px_rgba(0,0,0,0.9)] animate-modal-up text-[#e6edf3]">
+      
+      <div class="flex justify-between items-start pb-3 border-b border-[#212833]">
+        <div>
+          <div class="flex items-center gap-2">
+            <h3 class="text-base font-black text-white tracking-wide">選擇評圖年級</h3>
+            <span class="text-[10px] font-times font-bold bg-[#1d2532] text-[#ffbe7a] border border-[#ca6b2d]/60 px-2 py-0.5 rounded-lg">SELECT GRADE</span>
+          </div>
+          <p class="text-xs text-[#8e9aa8] mt-1 font-times">點選即可即時讀取該年級的名冊與評分標準</p>
+        </div>
+        <button onclick="closeGradeModal()" class="w-8 h-8 bg-[#18202a] hover:bg-[#232d3b] active:scale-95 text-[#c9d1d9] rounded-full flex items-center justify-center font-bold text-sm transition border border-[#323c4c]">
+          ✕
+        </button>
+      </div>
+
+      <!-- 年級按鈕列表 -->
+      <div id="gradeButtonsList" class="flex-1 overflow-y-auto space-y-2.5 py-4"></div>
+
+      <div class="pt-2 border-t border-[#1e2633] text-center">
+        <span class="text-[10px] font-times text-[#64748b]">試算表分頁自動同步 ｜ 即時載入</span>
+      </div>
+    </div>
+  </div>
+
   <!-- 名冊總覽彈出層 -->
   <div id="overviewModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex flex-col justify-end">
     <div class="bg-[#0f131a] border-t-2 border-[#ca6b2d] w-full max-w-md mx-auto rounded-t-3xl p-5 max-h-[88vh] flex flex-col shadow-[0_-10px_35px_rgba(0,0,0,0.9)] animate-modal-up text-[#e6edf3]">
@@ -575,11 +604,12 @@
     let reviewMemory = {};
     let currentOverviewFilter = 'all';
 
-    // 離線降級備份資料（僅在完全無網路時作為防呆）
+    // 離線降級備份資料
     const mockBackupData = {
       department: '中國文化大學建築及都市設計學系',
       stage: '期中評圖',
       grade: 'G1_大一',
+      availableGrades: ['G1_大一', 'G2_大二', 'G3_大三', 'G4_大四'],
       isGroupMode: false,
       criteria: [
         { name: '形式生成與轉譯邏輯', weight: 35 },
@@ -594,14 +624,18 @@
     const isGasEnvironment = typeof google !== 'undefined' && Boolean(google.script && google.script.run);
 
     const backendService = {
-      getSessionData: function(successHandler, failureHandler) {
+      getSessionData: function(successHandler, failureHandler, targetGrade) {
         if (isGasEnvironment) {
           google.script.run
             .withSuccessHandler(successHandler)
             .withFailureHandler(failureHandler)
-            .getSessionData();
+            .getSessionData(targetGrade);
         } else if (GAS_API_URL && !GAS_API_URL.includes("YOUR_DEPLOYMENT_ID_HERE")) {
-          fetch(`${GAS_API_URL}?action=getSessionData&_t=${Date.now()}`)
+          let url = `${GAS_API_URL}?action=getSessionData&_t=${Date.now()}`;
+          if (targetGrade) {
+            url += `&grade=${encodeURIComponent(targetGrade)}`;
+          }
+          fetch(url)
             .then(res => {
               if (!res.ok) throw new Error(`HTTP 錯誤碼: ${res.status}`);
               return res.json();
@@ -661,8 +695,11 @@
         }
       } catch (e) {}
 
+      loadSession();
+    };
+
+    function loadSession(targetGrade) {
       let hasInitialized = false;
-      // 設定 15 秒寬裕逾時，容納 Google Apps Script 冷啟動延遲
       const fallbackTimer = setTimeout(() => {
         if (!hasInitialized) {
           hasInitialized = true;
@@ -686,9 +723,10 @@
             showToast('試算表連線提示：' + (err.message || err), '⚠️');
             initApp(JSON.parse(JSON.stringify(mockBackupData)));
           }
-        }
+        },
+        targetGrade
       );
-    };
+    }
 
     function showToast(msg, icon = '✨') {
       const toast = document.getElementById('systemToast');
@@ -768,6 +806,72 @@
       }
     }
 
+    // ⭐️ 年級切換彈出層控制
+    function openGradeModal() {
+      const modal = document.getElementById('gradeModal');
+      const listContainer = document.getElementById('gradeButtonsList');
+      if (!modal || !listContainer) return;
+
+      const grades = (sessionData && sessionData.availableGrades && sessionData.availableGrades.length > 0)
+        ? sessionData.availableGrades
+        : ['G1_大一', 'G2_大二', 'G3_大三', 'G4_大四'];
+
+      const currentGrade = sessionData ? sessionData.grade : '';
+
+      listContainer.innerHTML = grades.map(g => {
+        const isCurrent = (g === currentGrade || currentGrade.includes(g) || g.includes(currentGrade));
+        return `
+          <button type="button" onclick="switchGrade('${g}')" class="w-full p-3.5 rounded-2xl flex items-center justify-between gap-3 transition-all active:scale-98 ${
+            isCurrent 
+              ? 'metallic-bronze-btn text-white font-black shadow-[0_4px_16px_rgba(202,107,45,0.45)] border border-[#ffba82]'
+              : 'bg-[#12161f] hover:bg-[#1a212b] border border-[#2b3544] text-[#cbd5e1] font-bold'
+          }">
+            <div class="flex items-center gap-2.5">
+              <span class="text-base">${isCurrent ? '⭐' : '🏛️'}</span>
+              <span class="text-sm font-times tracking-wide">${g}</span>
+            </div>
+            ${isCurrent ? '<span class="text-[11px] font-times bg-[#fff]/20 px-2.5 py-0.5 rounded-full uppercase">CURRENT</span>' : '<span class="text-xs text-[#8e9aa8]">切換 ➔</span>'}
+          </button>
+        `;
+      }).join('');
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeGradeModal() {
+      const modal = document.getElementById('gradeModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function switchGrade(gradeName) {
+      closeGradeModal();
+      showToast(`正在切換至【${gradeName}】...`, '⏳');
+
+      // 重設評分記憶狀態
+      reviewMemory = {};
+      formState = {
+        groupScores: {},
+        indivScores: {},
+        memberNotes: {},
+        savedMembers: {},
+        scores: {},
+        currentPhoto: null
+      };
+
+      const loading = document.getElementById('loading');
+      const appContent = document.getElementById('appContent');
+      if (loading) {
+        loading.classList.remove('hidden');
+        loading.style.display = 'flex';
+      }
+      if (appContent) {
+        appContent.classList.add('hidden');
+        appContent.style.display = 'none';
+      }
+
+      loadSession(gradeName);
+    }
+
     function initApp(data) {
       if (!data || !data.items || data.items.length === 0) {
         data = JSON.parse(JSON.stringify(mockBackupData));
@@ -775,9 +879,11 @@
       sessionData = data;
       
       const gradeBadge = document.getElementById('gradeBadge');
-      if (gradeBadge) gradeBadge.innerText = data.grade || '大一';
+      if (gradeBadge) gradeBadge.innerHTML = `<span>${data.grade || '大一'}</span><span class="text-[9px] text-[#ffaa55]">▼</span>`;
+      
       const coverGradeBadge = document.getElementById('coverGradeBadge');
       if (coverGradeBadge) coverGradeBadge.innerText = data.grade || '大一';
+      
       const coverStageBadge = document.getElementById('coverStageBadge');
       if (coverStageBadge) coverStageBadge.innerText = data.stage || '評圖';
       
@@ -1090,11 +1196,11 @@
         });
 
       } else {
-        // ⭐️ 純個人專案模式：隱藏 PART 2 佔比標籤，純粹顯示評分指標
+        // 純個人專案模式
         if (indivSectionTitle) indivSectionTitle.innerText = '評分維度 (ASSESSMENT CRITERIA)';
         if (indivSectionDesc) indivSectionDesc.innerText = '各項評圖標準加權給分：';
         if (indivSubtotalRow) indivSubtotalRow.classList.add('hidden');
-        if (indivRatioBadge) indivRatioBadge.classList.add('hidden'); // 隱藏「佔比 40%」標籤
+        if (indivRatioBadge) indivRatioBadge.classList.add('hidden');
 
         (sessionData.criteria || []).forEach((crit, i) => {
           const val = formState.scores[i];
@@ -1306,7 +1412,7 @@
         if (iScoreSpan) iScoreSpan.innerText = allIndivEntered ? activeMemberIndivSubtotal.toFixed(1) : '0.0';
 
       } else {
-        // ⭐️ 純個人專案模式加權計算
+        // 純個人專案模式加權計算
         let total = 0, wSum = 0, allEntered = true;
         (sessionData.criteria || []).forEach((crit, i) => {
           const v = formState.scores[i];
