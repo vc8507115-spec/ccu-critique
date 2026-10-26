@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
     :root {
@@ -19,23 +19,23 @@
       --bronze-deep: #521e05;
       --bronze-dark: #290e02;
     }
-
+    
     body {
       font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       -webkit-tap-highlight-color: transparent;
       background-color: #07090c;
       color: #e6edf3;
       background-image: 
-        linear-gradient(rgba(202, 107, 45, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(202, 107, 45, 0.04) 1px, transparent 1px),
-        radial-gradient(ellipse at 50% -10%, rgba(255, 170, 85, 0.22) 0%, transparent 55%),
+        linear-gradient(rgba(202, 107, 45, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(202, 107, 45, 0.03) 1px, transparent 1px),
+        radial-gradient(ellipse at 50% -10%, rgba(245, 158, 11, 0.12) 0%, transparent 55%),
         radial-gradient(ellipse at 50% 110%, rgba(20, 26, 35, 0.95) 0%, #07090c 100%);
-      background-size: 22px 22px, 22px 22px, 100% 100%, 100% 100%;
+      background-size: 24px 24px, 24px 24px, 100% 100%, 100% 100%;
       background-attachment: fixed;
     }
 
-    .font-times, .font-mono-num {
-      font-family: 'Times New Roman', Times, 'Noto Serif TC', Georgia, serif !important;
+    .font-times {
+      font-family: 'Times New Roman', 'Noto Serif TC', Georgia, serif !important;
       font-feature-settings: 'lnum', 'tnum';
     }
 
@@ -43,1881 +43,514 @@
       font-family: 'Noto Serif TC', 'Times New Roman', serif;
     }
 
-    input[type=number]::-webkit-inner-spin-button, 
-    input[type=number]::-webkit-outer-spin-button { 
-      -webkit-appearance: none; 
-      margin: 0; 
-    }
-    input[type=number] { -moz-appearance: textfield; }
-
-    .metallic-panel {
-      background: 
-        linear-gradient(180deg, rgba(22, 28, 36, 0.94) 0%, rgba(11, 14, 19, 0.98) 100%) padding-box,
-        linear-gradient(135deg, 
-          #ffe1ba 0%, 
-          #c96f2e 20%, 
-          #4a1c06 48%, 
-          #b85b20 78%, 
-          #ffe1ba 100%) border-box;
-      border: 1px solid transparent;
-      box-shadow: 
-        inset 0 1px 1px 0 rgba(255, 235, 205, 0.25),
-        inset 0 -1px 2px 0 rgba(0, 0, 0, 0.8),
-        0 12px 32px -6px rgba(0, 0, 0, 0.85);
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
     }
 
-    .metallic-arch-divider {
-      background: radial-gradient(ellipse at 50% 0%, rgba(255, 210, 150, 0.85) 0%, rgba(202, 107, 45, 0.45) 38%, transparent 75%);
-      filter: drop-shadow(0 2px 10px rgba(217, 119, 54, 0.5));
+    .glass-card {
+      background: linear-gradient(145deg, rgba(26, 32, 44, 0.7) 0%, rgba(13, 17, 23, 0.85) 100%);
+      border: 1px solid rgba(202, 107, 45, 0.25);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7), inset 0 1px 0 0 rgba(255, 207, 150, 0.1);
+      backdrop-filter: blur(12px);
     }
 
-    .metallic-bronze-btn {
-      background: linear-gradient(180deg, 
-        #df7c3d 0%, 
-        #bd5822 36%, 
-        #93370b 72%, 
-        #6e2606 100%);
-      border: 1px solid #ffba82;
-      box-shadow: 
-        inset 0 1px 1px 0 rgba(255, 245, 230, 0.75),
-        inset 0 -2px 4px 0 rgba(35, 10, 2, 0.85),
-        0 10px 28px -4px rgba(185, 84, 32, 0.55),
-        0 0 3px 1px rgba(255, 190, 130, 0.35);
+    .bronze-btn {
+      background: linear-gradient(135deg, #f59e0b 0%, #ca6b2d 50%, #9e4612 100%);
+      box-shadow: 0 4px 15px rgba(202, 107, 45, 0.35), inset 0 1px 0 rgba(255, 244, 229, 0.3);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
-    .metallic-bronze-btn:hover {
-      background: linear-gradient(180deg, 
-        #ea8747 0%, 
-        #c86229 36%, 
-        #a13d0e 72%, 
-        #792a08 100%);
-      box-shadow: 
-        inset 0 1px 2px 0 rgba(255, 250, 240, 0.9),
-        0 12px 34px -2px rgba(225, 112, 48, 0.7);
-    }
-
-    .metallic-engraved-input {
-      background: radial-gradient(circle at 50% 50%, #0c0f14 0%, #06080b 100%);
-      border: 1px solid rgba(202, 107, 45, 0.45);
-      box-shadow: 
-        inset 0 2px 6px rgba(0, 0, 0, 0.95),
-        inset 0 0 1px rgba(0, 0, 0, 1),
-        0 1px 1px rgba(255, 215, 170, 0.12);
-    }
-
-    /* 長方形高級腕錶金屬切削儀表板 */
-    .chrono-rect-dashboard {
-      position: relative;
-      border-radius: 1.25rem;
-      background: 
-        radial-gradient(ellipse at 50% 0%, #151c26 0%, #0a0d13 70%, #06080b 100%) padding-box,
-        linear-gradient(135deg, 
-          #fff6ea 0%, 
-          #ca6b2d 20%, 
-          #4a1c06 48%, 
-          #ffd9ab 75%, 
-          #ca6b2d 100%) border-box;
-      border: 2px solid transparent;
-      box-shadow: 
-        0 0 0 1px rgba(255, 225, 185, 0.35),
-        0 0 0 2px rgba(8, 10, 14, 0.95),
-        inset 0 1px 2px 0 rgba(255, 235, 205, 0.3),
-        inset 0 -2px 6px 0 rgba(0, 0, 0, 0.8),
-        0 16px 36px -6px rgba(0, 0, 0, 0.95),
-        0 0 28px -4px rgba(217, 119, 54, 0.35);
-    }
-
-    .chrono-rect-dashboard::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 1.25rem;
-      background: 
-        radial-gradient(circle at 50% -20%, rgba(255, 200, 140, 0.15) 0%, transparent 60%),
-        repeating-linear-gradient(90deg, transparent 0, transparent 18px, rgba(202, 107, 45, 0.04) 19px, transparent 20px);
-      pointer-events-none;
-      z-index: 1;
-    }
-
-    .animate-modal-up {
-      animation: modalSlideUp 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    @keyframes modalSlideUp {
-      from { transform: translateY(100%); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .cover-fade-out {
-      animation: coverExit 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    }
-    @keyframes coverExit {
-      0% { opacity: 1; transform: scale(1); filter: blur(0px); }
-      100% { opacity: 0; transform: scale(1.04); filter: blur(8px); pointer-events: none; visibility: hidden; }
+    .bronze-btn:active {
+      transform: scale(0.98);
+      box-shadow: 0 2px 8px rgba(202, 107, 45, 0.25);
     }
   </style>
 </head>
-<body class="min-h-screen pb-36 selection:bg-[#D97736] selection:text-white">
+<body class="min-h-screen text-slate-200 flex flex-col items-center justify-start p-3 sm:p-6 select-none">
 
-  <!-- 系統封面頁 -->
-  <section id="coverPage" class="fixed inset-0 z-50 bg-[#07090c] flex flex-col justify-between p-6 sm:p-8 overflow-y-auto">
+  <!-- ==================== 1. 封面登入頁 (Cover Screen) ==================== -->
+  <div id="coverScreen" class="w-full max-w-md mx-auto flex flex-col items-center justify-center min-h-[90vh] py-8">
     
-    <!-- 建築線稿背景浮水印 -->
-    <div class="absolute inset-0 pointer-events-none opacity-20 overflow-hidden flex items-center justify-center">
-      <svg class="w-[180%] max-w-[850px] h-auto text-[#d97736] -rotate-6 scale-110" viewBox="0 0 800 900" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern id="archGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="0.6" stroke-dasharray="2 3" opacity="0.4" />
-          </pattern>
-        </defs>
-        <rect width="800" height="900" fill="url(#archGrid)" />
-
-        <g stroke="currentColor" stroke-width="1.4" opacity="0.85">
-          <polygon points="120,480 400,320 680,480 400,640" fill="none" stroke-width="1.8" />
-          <polygon points="120,520 400,360 680,520 400,680" fill="none" stroke-width="0.9" stroke-dasharray="4 4" />
-          
-          <line x1="120" y1="480" x2="120" y2="280" />
-          <line x1="400" y1="640" x2="400" y2="440" />
-          <line x1="680" y1="480" x2="680" y2="280" />
-          <line x1="400" y1="320" x2="400" y2="120" />
-
-          <polygon points="120,280 400,120 680,280 400,440" fill="none" stroke-width="2.2" />
-          <polygon points="260,200 400,120 540,200 400,280" fill="none" stroke-width="1.2" />
-          <line x1="260" y1="200" x2="260" y2="360" stroke-width="0.8" />
-          <line x1="540" y1="200" x2="540" y2="360" stroke-width="0.8" />
-
-          <circle cx="400" cy="120" r="14" fill="none" stroke-width="1.5" />
-          <line x1="380" y1="120" x2="420" y2="120" />
-          <line x1="400" y1="100" x2="400" y2="140" />
-          <text x="425" y="116" fill="currentColor" font-size="11" font-family="Times New Roman" stroke="none">+45.000m</text>
-
-          <circle cx="120" cy="480" r="10" fill="none" stroke-width="1.2" />
-          <text x="75" y="485" fill="currentColor" font-size="10" font-family="Times New Roman" stroke="none">GL ±0.00</text>
-        </g>
-      </svg>
+    <!-- 頂部徽章 -->
+    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-950/40 border border-amber-600/30 text-amber-300 text-xs tracking-widest font-times font-semibold uppercase mb-6 shadow-inner">
+      <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+      CCU ARCHITECTURE · DIGITAL EVALUATION
     </div>
 
-    <!-- 頂部學系標章 -->
-    <div class="relative z-10 max-w-md mx-auto w-full pt-2">
-      <div class="flex items-center justify-between">
-        <div class="inline-flex items-center gap-2 bg-gradient-to-b from-[#1a212b] to-[#0d1117] border border-[#ca6b2d]/70 px-3.5 py-1.5 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
-          <span class="text-sm text-[#ffa64d]">📐</span>
-          <span class="text-[11px] font-times tracking-widest text-[#ffcf96] font-bold uppercase">CCU ARCHITECTURE</span>
-        </div>
-        <div class="text-[10px] font-times tracking-widest text-[#8e9aa8] uppercase">DIGITAL CRITIQUE MATRIX</div>
-      </div>
+    <!-- 標題 -->
+    <div class="text-center mb-8">
+      <p class="text-xs tracking-[0.25em] text-amber-500/80 uppercase font-times mb-1">Chinese Culture University</p>
+      <h1 class="text-2xl sm:text-3xl font-black font-serif-tc tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-500">
+        中國文化大學
+      </h1>
+      <h2 class="text-xl sm:text-2xl font-bold font-serif-tc tracking-widest text-slate-100 mt-1">
+        建築及都市設計學系
+      </h2>
+      <p class="text-[11px] tracking-wider text-slate-400 mt-2 font-times uppercase">Department of Architecture and Urban Design</p>
     </div>
 
-    <!-- 中央核心文字卡片 -->
-    <div class="relative z-10 max-w-md mx-auto w-full space-y-5 text-center my-auto py-6">
-      <div class="space-y-1.5">
-        <div class="text-xs font-times font-bold tracking-[0.25em] text-[#ffaa55] uppercase drop-shadow-[0_0_8px_rgba(255,170,85,0.4)]">
-          CHINESE CULTURE UNIVERSITY
-        </div>
-        <h1 class="text-2xl sm:text-3xl font-serif-tc font-black tracking-wide text-white leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
-          中國文化大學<br>
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#ffe4c4] via-[#ffaa55] to-[#ca6b2d]">
-            建築及都市設計學系
-          </span>
-        </h1>
-        <div class="text-[10px] font-times tracking-[0.18em] text-[#8e9aa8] uppercase mt-1">
-          Department of Architecture and Urban Design
-        </div>
-      </div>
-
-      <div class="w-44 h-[2px] mx-auto metallic-arch-divider my-3"></div>
-
-      <!-- 副標題資訊卡片 -->
-      <div class="metallic-panel p-4 sm:p-5 rounded-2xl relative overflow-hidden shadow-2xl">
-        <div class="text-[11px] font-times font-bold text-[#8e9aa8] tracking-widest uppercase mb-1">
-          ACADEMIC EVALUATION SESSION
-        </div>
-        
-        <!-- ⭐️ 年級切換實體下拉選單 (點選立即展開原生年級清單) -->
-        <div class="flex items-center justify-center gap-2 mt-2">
-          <div class="relative inline-flex items-center">
-            <select id="coverGradeSelect" onchange="switchGrade(this.value)" class="appearance-none cursor-pointer text-base sm:text-lg font-times font-black text-[#ffcf96] bg-gradient-to-b from-[#212a36] to-[#12161f] border border-[#ca6b2d] hover:border-[#ffa64d] pl-4 pr-8 py-1.5 rounded-xl shadow-[inset_0_1px_2px_rgba(255,225,190,0.4),0_4px_12px_rgba(0,0,0,0.8)] active:scale-95 transition focus:outline-none focus:ring-1 focus:ring-[#ffa64d]">
-              <option value="G1_大一" class="bg-[#12161f] text-[#ffcf96]">G1_大一</option>
-              <option value="G2_大二" class="bg-[#12161f] text-[#ffcf96]">G2_大二</option>
-              <option value="G3_大三" class="bg-[#12161f] text-[#ffcf96]">G3_大三</option>
-              <option value="G4_大四" class="bg-[#12161f] text-[#ffcf96]">G4_大四</option>
-              <option value="G5_大五" class="bg-[#12161f] text-[#ffcf96]">G5_大五</option>
-            </select>
-            <span class="pointer-events-none absolute right-2.5 text-xs text-[#ffaa55]">▼</span>
-          </div>
-
-          <span class="text-[#ffaa55] font-black text-xl">·</span>
-
-          <div class="flex items-baseline gap-1.5">
-            <span id="coverStageBadge" class="text-2xl font-serif-tc font-black text-white tracking-wider drop-shadow-md">
-              期中
-            </span>
-            <span class="text-lg font-serif-tc font-extrabold text-[#d2dcde]">
-              設計評圖
-            </span>
-          </div>
-        </div>
-
-        <p class="text-[11px] text-[#8e9aa8] font-times mt-3 tracking-wide">
-          現場評圖 ｜ 金屬分段儀表 ｜ 逐位獨立存檔 ｜ 雲端即時連動
-        </p>
-      </div>
-
-      <!-- 評審席位輸入框 -->
-      <div class="max-w-xs mx-auto">
-        <div class="flex items-center gap-2 bg-[#10141a]/95 border border-[#ca6b2d]/70 p-2 rounded-2xl shadow-[inset_0_2px_6px_rgba(0,0,0,0.9),0_4px_15px_rgba(0,0,0,0.7)]">
-          <span class="text-xs font-serif-tc font-bold text-[#ffa64d] pl-2 shrink-0">評審席位</span>
-          <input id="coverTeacherInput" type="text" placeholder="請輸入評審姓名" oninput="syncTeacherName(this.value)" class="w-full text-sm font-bold bg-transparent text-white focus:outline-none placeholder:text-[#5d6878] px-2 py-1">
-        </div>
-      </div>
-    </div>
-
-    <!-- 進入按鈕 -->
-    <div class="relative z-20 max-w-md mx-auto w-full pb-3">
-      <button type="button" id="enterSystemBtn" onclick="enterSystem()" class="w-full metallic-bronze-btn text-white font-black text-base sm:text-lg py-4 px-6 rounded-2xl active:scale-[0.98] transition-all flex justify-center items-center gap-2 group shadow-[0_12px_32px_rgba(202,107,45,0.45)] cursor-pointer">
-        <span class="tracking-widest font-serif-tc drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">進入評圖系統</span>
-        <span class="group-hover:translate-x-1.5 transition-transform text-xl font-times">➔</span>
-      </button>
-      <div class="text-center text-[10px] font-times text-[#637082] tracking-widest mt-2 uppercase">
-        © CCU ARCHITECTURE & URBAN DESIGN CRITIQUE ENGINE
-      </div>
-    </div>
-  </section>
-
-  <!-- 頂部導航列 -->
-  <header class="sticky top-0 z-30 bg-[#080b0f]/95 backdrop-blur-xl border-b border-[#202732] px-4 py-3 shadow-2xl relative">
-    <div class="absolute bottom-0 left-0 right-0 h-[2px] metallic-arch-divider"></div>
-
-    <div class="max-w-md mx-auto flex justify-between items-center gap-2 relative z-10">
-      <div class="flex items-center gap-2">
-        <div class="relative inline-flex items-center">
-          <select id="headerGradeSelect" onchange="switchGrade(this.value)" class="appearance-none cursor-pointer text-xs font-times font-bold tracking-wider uppercase pl-3 pr-7 py-1.5 rounded-xl text-[#ffc68c] bg-gradient-to-b from-[#1d242e] to-[#10141b] border border-[#ca6b2d]/70 shadow-[inset_0_1px_1px_rgba(255,230,195,0.35),0_2px_8px_rgba(0,0,0,0.7)] hover:border-[#ffa64d] focus:outline-none focus:ring-1 focus:ring-[#ffa64d] transition">
-            <option value="G1_大一" class="bg-[#10141a] text-[#ffcf96]">G1_大一</option>
-            <option value="G2_大二" class="bg-[#10141a] text-[#ffcf96]">G2_大二</option>
-            <option value="G3_大三" class="bg-[#10141a] text-[#ffcf96]">G3_大三</option>
-            <option value="G4_大四" class="bg-[#10141a] text-[#ffcf96]">G4_大四</option>
-            <option value="G5_大五" class="bg-[#10141a] text-[#ffcf96]">G5_大五</option>
+    <!-- 封面主控制卡片 -->
+    <div class="w-full glass-card rounded-2xl p-6 sm:p-7 space-y-5">
+      
+      <!-- 年級選擇 (原生下拉選單) -->
+      <div>
+        <label class="block text-xs font-semibold text-amber-300/90 tracking-wider mb-2 font-serif-tc flex items-center justify-between">
+          <span>評圖年級 (ACADEMIC YEAR)</span>
+          <span class="text-[10px] text-amber-500/70 font-times uppercase">Target Class</span>
+        </label>
+        <div class="relative">
+          <select id="coverGradeSelect" class="w-full bg-[#121721] border border-amber-600/40 rounded-xl px-4 py-3 text-base text-amber-200 font-bold focus:outline-none focus:border-amber-400 transition cursor-pointer appearance-none">
+            <option value="G1_大一">G1_大一 (建築設計一)</option>
+            <option value="G2_大二">G2_大二 (建築設計二)</option>
+            <option value="G3_大三">G3_大三 (建築設計三)</option>
+            <option value="G4_大四">G4_大四 (建築設計四)</option>
+            <option value="G5_大五">G5_大五 (畢業設計)</option>
           </select>
-          <span class="pointer-events-none absolute right-2 text-[9px] text-[#ffaa55]">▼</span>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-amber-400 font-bold text-xs">
+            ▼
+          </div>
         </div>
-        <span class="text-[11px] text-[#ffaa55] font-serif-tc font-bold hidden sm:inline" id="stageBadgeHeader">期中評圖</span>
       </div>
 
-      <div class="flex items-center gap-2 bg-gradient-to-b from-[#171d25] to-[#0e1217] border border-[#394352] hover:border-[#ca6b2d]/70 px-3 py-1.5 rounded-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.08),0_3px_10px_rgba(0,0,0,0.6)] transition-all">
-        <span class="text-xs font-times font-bold text-[#ffa64d] shrink-0 tracking-wide">評審老師</span>
-        <input id="teacherName" type="text" placeholder="請輸入姓名" oninput="syncTeacherName(this.value)" class="text-sm font-semibold bg-transparent text-[#f2f6fa] w-20 focus:outline-none focus:text-white transition placeholder:text-[#616c7d]">
+      <!-- 階段資訊 (唯讀提示) -->
+      <div class="flex items-center justify-between px-4 py-3 bg-[#0a0e14]/60 border border-slate-800 rounded-xl">
+        <span class="text-xs text-slate-400 font-serif-tc">當前評圖階段</span>
+        <span id="coverStageText" class="text-sm font-bold text-amber-300 font-serif-tc">期中評圖</span>
       </div>
+
+      <!-- 評審姓名輸入 -->
+      <div>
+        <label class="block text-xs font-semibold text-amber-300/90 tracking-wider mb-2 font-serif-tc flex items-center justify-between">
+          <span>評審席位 / 姓名 (REVIEWER)</span>
+          <span class="text-[10px] text-amber-500/70 font-times uppercase">Required</span>
+        </label>
+        <input type="text" id="reviewerInput" placeholder="請輸入您的姓名或代號 (如：李老師)" 
+          class="w-full bg-[#121721] border border-amber-600/40 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400 transition">
+      </div>
+
+      <!-- 進入按鈕 -->
+      <button id="btnEnterSystem" onclick="handleEnterSystem()" class="w-full bronze-btn text-white font-bold py-3.5 px-6 rounded-xl text-base tracking-widest font-serif-tc flex items-center justify-center gap-2 mt-4 cursor-pointer">
+        <span>進入評圖系統</span>
+        <span class="text-lg">➔</span>
+      </button>
+
+      <!-- 狀態提示 -->
+      <p id="coverStatusMsg" class="text-center text-xs text-amber-400/80 font-serif-tc min-h-[18px]"></p>
     </div>
-  </header>
 
-  <!-- 載入中動畫 -->
-  <div id="loading" class="flex flex-col items-center justify-center py-36 space-y-4">
-    <div class="w-10 h-10 border-2 border-[#2b333f] border-t-[#d97736] rounded-full animate-spin"></div>
-    <p id="loadingStatusText" class="text-xs font-times tracking-widest text-[#ffbe7a] uppercase animate-pulse">CONNECTING TO GOOGLE CLOUD DATABASE...</p>
+    <!-- 底部版權 -->
+    <p class="text-[10px] text-slate-500 font-times tracking-widest text-center mt-8 uppercase">
+      © CCU Architecture & Urban Design Critique Engine
+    </p>
   </div>
 
-  <!-- 主內容容器 -->
-  <main id="appContent" class="hidden max-w-md mx-auto p-4 space-y-4">
+
+  <!-- ==================== 2. 主評分頁 (Critique Screen) ==================== -->
+  <div id="critiqueScreen" class="w-full max-w-md mx-auto hidden flex flex-col gap-4 pb-24">
     
-    <!-- 巡航切換控制器 ＋ 快速總覽跳轉按鈕 -->
-    <div class="flex justify-between items-center gap-2">
-      <button id="prevBtn" onclick="changeItem(-1)" class="px-3.5 py-2.5 bg-gradient-to-b from-[#1b212a] to-[#11151c] hover:from-[#232a35] hover:to-[#161c24] text-[#c9d1d9] rounded-xl text-xs font-bold transition flex items-center gap-1.5 border border-[#333d4c] shrink-0 active:scale-95 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_4px_12px_rgba(0,0,0,0.6)]">
-        <span>❮</span> 上一位
-      </button>
-
-      <button onclick="openOverviewModal()" class="flex-1 py-1.5 px-3 bg-gradient-to-b from-[#181e26] to-[#0e1217] hover:from-[#202733] hover:to-[#131820] border border-[#3a4555] hover:border-[#ca6b2d]/80 rounded-xl text-center flex items-center justify-between gap-2 text-[#e6edf3] transition active:scale-98 shadow-[inset_0_1px_1px_rgba(255,255,255,0.08),0_4px_14px_rgba(0,0,0,0.65)] group">
-        <div class="flex items-center gap-2 overflow-hidden">
-          <span class="text-sm text-[#ff9f43]">📄</span>
-          <div class="text-left overflow-hidden">
-            <div class="text-[10px] font-times italic font-bold text-[#ff9f43] tracking-wider uppercase leading-none">QUICK JUMP</div>
-            <div id="currentNavLabel" class="text-xs font-semibold text-[#f0f6fc] truncate mt-0.5 font-times">第 1 組 (1/1)</div>
-          </div>
-        </div>
-        <span class="text-xs text-[#ff9f43] group-hover:translate-y-0.5 transition-transform">▼</span>
-      </button>
-
-      <button id="nextBtn" onclick="changeItem(1)" class="px-3.5 py-2.5 bg-gradient-to-b from-[#1b212a] to-[#11151c] hover:from-[#232a35] hover:to-[#161c24] text-[#c9d1d9] rounded-xl text-xs font-bold transition flex items-center gap-1.5 border border-[#333d4c] shrink-0 active:scale-95 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_4px_12px_rgba(0,0,0,0.6)]">
-        下一位 <span>❯</span>
-      </button>
-    </div>
-
-    <!-- 被評分當事者與名冊卡片 -->
-    <div class="metallic-panel p-5 rounded-2xl relative overflow-hidden">
-      <div class="absolute -right-16 -top-16 w-44 h-44 bg-[radial-gradient(circle,rgba(202,107,45,0.15)_0%,transparent_70%)] pointer-events-none"></div>
-
-      <!-- 頂部資訊列：組別標籤 / 指導老師標題 -->
-      <div class="flex justify-between items-center relative z-10 mb-1">
-        <div class="inline-flex items-center gap-1.5 bg-gradient-to-b from-[#171d25] to-[#0b0e12] border border-[#ca6b2d]/60 px-2.5 py-0.5 rounded-lg shadow-inner">
-          <span id="idTagLabel" class="text-[11px] font-times font-bold text-[#ffa64d]">GROUP</span>
-          <span id="studentIdDisplay" class="text-xs font-times text-[#ffffff] font-bold">G1</span>
-        </div>
-
-        <div class="text-right">
-          <span class="text-xs text-[#8e9aa8] font-times font-medium block">指導老師</span>
-        </div>
-      </div>
-
-      <!-- 核心列：組號 + 【被評分當事者放大專屬位置】 + 指導老師姓名膠囊 -->
-      <div class="flex items-center justify-between gap-2.5 relative z-10">
-        <div class="flex items-center gap-2.5 min-w-0 flex-1">
-          <h2 id="studentNameDisplay" class="text-2xl sm:text-3xl font-black text-white tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] shrink-0">1</h2>
-
-          <!-- 當前被評分當事者放大位置 (橘框專屬插槽) -->
-          <div id="activeMemberSpot" class="hidden flex-1 min-w-0"></div>
-        </div>
-
-        <div class="text-right shrink-0">
-          <span id="advisorDisplay" class="text-base font-extrabold text-[#ffb573] inline-block bg-gradient-to-b from-[#1c222b] to-[#11151c] border border-[#ca6b2d]/60 px-3.5 py-1 rounded-xl shadow-[inset_0_1px_1px_rgba(255,225,190,0.3),0_3px_8px_rgba(0,0,0,0.7)]">指導師</span>
-        </div>
-      </div>
-
-      <!-- 小組全體組員快捷標籤 (點選切換) -->
-      <div id="groupMembersTabsContainer" class="hidden mt-3.5 pt-3 border-t border-[#222934] relative z-10">
-        <div class="text-[10px] font-times font-bold text-[#8e9aa8] uppercase tracking-wider mb-2 flex items-center justify-between">
-          <span>GROUP MEMBERS (點擊切換個人評分)</span>
-        </div>
-        <div id="groupMembersList" class="grid grid-cols-2 gap-2"></div>
-      </div>
-
-      <!-- 拍照與相簿選取 -->
-      <div id="photoContainer" class="mt-4 pt-3.5 border-t border-[#222934] relative z-10"></div>
-    </div>
-
-    <input type="file" id="directCameraInput" accept="image/*" capture="environment" class="hidden" onchange="handleImageCaptured(event)">
-    <input type="file" id="directGalleryInput" accept="image/*" class="hidden" onchange="handleImageCaptured(event)">
-
-    <!-- 長方形金色金屬分段刻度儀表板 -->
-    <div class="chrono-rect-dashboard p-4 sm:p-5 my-3.5 select-none relative z-10 overflow-hidden">
-      
-      <!-- 儀表頂部標籤與狀態 -->
-      <div class="flex justify-between items-center relative z-10 mb-1">
-        <div class="inline-flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-[#ffaa55] shadow-[0_0_8px_#ffaa55]"></span>
-          <span id="mainGaugeTitle" class="text-xs sm:text-sm font-serif-tc font-black tracking-wider text-[#ffcf96] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
-            加權總分 (團體+個人)
-          </span>
-        </div>
-        <span id="mainGaugeModeBadge" class="text-[10px] font-times font-bold tracking-widest uppercase text-[#8e9aa8] bg-[#12161f] border border-[#2b3544] px-2.5 py-0.5 rounded-md">
-          EVALUATION TOTAL
-        </span>
-      </div>
-
-      <!-- 中央：放射狀分段刻度弧形儀表 (未打分前保持 0，刻度全暗) -->
-      <div class="relative flex flex-col items-center justify-center my-0">
-        <svg id="segmentedArcSvg" viewBox="0 0 300 175" class="w-full max-w-[280px] h-auto overflow-hidden">
-          <defs>
-            <filter id="segmentGlow" x="-50%" y="-50%" width="200%" height="200%">
-              <feDropShadow dx="0" dy="0" stdDeviation="3.2" flood-color="#ff9f43" flood-opacity="0.9" />
-              <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#ffffff" flood-opacity="0.75" />
-            </filter>
-            <filter id="scoreGlow" x="-30%" y="-30%" width="160%" height="160%">
-              <feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="#ca6b2d" flood-opacity="0.5" />
-            </filter>
-          </defs>
-          <g id="segmentedTicksGroup"></g>
-          <text x="44" y="165" fill="#717d8d" font-size="10" font-family="'Times New Roman', Times, serif" font-weight="bold" text-anchor="middle">0</text>
-          <text x="256" y="165" fill="#ffaa55" font-size="10" font-family="'Times New Roman', Times, serif" font-weight="bold" text-anchor="middle">100</text>
-          <text id="mainGaugeVal" x="150" y="114" text-anchor="middle" fill="#ffffff" font-size="44" font-family="'Times New Roman', Times, serif" font-weight="900" filter="url(#scoreGlow)">0.0</text>
-          <text x="150" y="136" text-anchor="middle" fill="#8e9aa8" font-size="11" font-family="'Times New Roman', Times, serif" font-weight="bold" letter-spacing="1">/ 100 PTS</text>
-        </svg>
-      </div>
-
-      <!-- 下方拆解佔比資訊膠囊 -->
-      <div id="mainGaugeBreakdown" class="mt-1 pt-2.5 border-t border-[#1e2633] flex items-center justify-between text-[11px] font-times relative z-10">
-        <div class="flex items-center gap-1.5 text-[#c4ccd7]">
-          <span class="text-xs">🏛️</span>
-          <span>小組 (<span id="gaugeBreakdownGroupRatio">30%</span>):</span>
-          <span id="gaugeBreakdownGroupScore" class="font-black text-[#ffaa55]">0.0</span>
-        </div>
-        <div class="w-[1px] h-3.5 bg-[#25303f]"></div>
-        <div class="flex items-center gap-1.5 text-[#c4ccd7]">
-          <span class="text-xs">👤</span>
-          <span>個人 (<span id="gaugeBreakdownIndivRatio">40%</span>):</span>
-          <span id="gaugeBreakdownIndivScore" class="font-black text-[#7dd3fc]">0.0</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 評分標準區塊 -->
-    <div id="criteriaContainer" class="space-y-4">
-      
-      <!-- 第一部分：小組團體分數 -->
-      <div id="groupSectionCard" class="metallic-panel p-4 rounded-2xl space-y-3 relative">
-        <div class="flex justify-between items-center pb-2.5 border-b border-[#202732]">
-          <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-[#ff9f43] shadow-[0_0_8px_#ff9f43]"></span>
-            <span id="groupSectionTitle" class="text-xs font-times font-bold tracking-widest text-[#d4dde8] uppercase">PART 1 · 小組團體分數</span>
-            <span id="groupRatioBadge" class="text-[10px] font-times font-bold text-[#ffbe7a] bg-[#1d2532] border border-[#ca6b2d]/50 px-2 py-0.5 rounded-md">佔比 30%</span>
-          </div>
-
-          <!-- 同步至全體組員功能：位在 PART 1 -->
-          <div class="flex items-center gap-2">
-            <button id="syncAllBtn" type="button" onclick="syncCurrentMemberScoresToAll()" class="hidden text-[10px] font-times font-bold px-2.5 py-1 bg-[#1a2330] hover:bg-[#233144] text-[#ffbe7a] hover:text-[#fff0db] rounded-lg border border-[#ca6b2d]/60 hover:border-[#ff9f43] active:scale-95 transition flex items-center gap-1 shadow-sm">
-              <span>⚡</span> 同步至全體組員
-            </button>
-          </div>
-        </div>
-
-        <p class="text-[11px] text-[#8e9aa8] font-times">🏛️ 全組共同表現指標（計入全組組員）：</p>
-        <div id="groupCriteriaList" class="space-y-2.5"></div>
-
-        <!-- 右下角：小組權重加總 -->
-        <div id="groupSubtotalRow" class="pt-2 border-t border-[#1e2633] flex justify-end items-center">
-          <div class="inline-flex items-center gap-2.5 bg-gradient-to-b from-[#1b1c24] to-[#101319] border border-[#ff9f43]/50 px-4 py-1.5 rounded-xl shadow-[inset_0_1px_2px_rgba(255,200,140,0.15),0_4px_12px_rgba(0,0,0,0.5)]">
-            <span class="text-xs font-serif-tc font-bold text-[#d4dde8]">小組權重加總</span>
-            <span id="groupSubtotalDisplay" class="text-2xl font-times font-black text-[#ffaa55]">0.0</span>
-            <span class="text-xs font-times text-[#8e9aa8] font-bold">PTS</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 第二部分：個人評分 / 純個人評分 -->
-      <div id="indivSectionCard" class="metallic-panel p-4 rounded-2xl space-y-3 relative">
-        <div class="flex justify-between items-center pb-2.5 border-b border-[#202732]">
-          <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-[#38bdf8] shadow-[0_0_8px_#38bdf8]"></span>
-            <span id="indivSectionTitle" class="text-xs font-times font-bold tracking-widest text-[#d4dde8] uppercase">PART 2 · 個人評分</span>
-            <span id="indivRatioBadge" class="text-[10px] font-times font-bold text-[#7dd3fc] bg-[#142334] border border-[#38bdf8]/40 px-2 py-0.5 rounded-md">佔比 40%</span>
-          </div>
-        </div>
-
-        <p id="indivSectionDesc" class="text-[11px] text-[#8e9aa8] font-times">每位組員的各項獨立評分指標：</p>
-        <div id="indivCriteriaList" class="space-y-2.5"></div>
-
-        <!-- 右下角：個人權重加總 -->
-        <div id="indivSubtotalRow" class="pt-2 border-t border-[#1e2633] flex justify-end items-center">
-          <div class="inline-flex items-center gap-2.5 bg-gradient-to-b from-[#131b26] to-[#0d121a] border border-[#38bdf8]/50 px-4 py-1.5 rounded-xl shadow-[inset_0_1px_2px_rgba(56,189,248,0.2),0_4px_12px_rgba(0,0,0,0.5)]">
-            <span class="text-xs font-serif-tc font-bold text-[#bae6fd]">個人權重加總</span>
-            <span id="indivSubtotalDisplay" class="text-2xl font-times font-black text-[#7dd3fc]">0.0</span>
-            <span class="text-xs font-times text-[#38bdf8] font-bold">PTS</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- 評審意見 -->
-    <div class="metallic-panel p-4 rounded-2xl">
-      <div class="flex justify-between items-center mb-2">
-        <label class="text-xs text-[#8e9aa8] font-times font-semibold">評審意見與總評 (選填)</label>
-        <span id="savedIndicator" class="text-[11px] font-times text-[#4ade80] font-bold hidden">● 已有儲存記錄</span>
-      </div>
-      <textarea id="notes" rows="2" placeholder="輸入評語、論述盲點或模型打樣建議..." class="w-full text-sm metallic-engraved-input rounded-xl p-3 text-[#f0f6fc] focus:outline-none focus:border-[#ff9f43] focus:ring-1 focus:ring-[#ff9f43]/50 transition placeholder:text-[#525d6d] resize-none leading-relaxed"></textarea>
-    </div>
-
-    <!-- 底部常駐按鈕 (逐位輪轉) -->
-    <div class="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-[#07090c] via-[#07090c]/95 to-transparent z-20 flex justify-center backdrop-blur-md">
-      <button id="submitBtn" onclick="submitCurrentScore()" class="w-full max-w-md metallic-bronze-btn text-white font-black text-base py-4 px-6 rounded-2xl active:scale-[0.98] transition-all flex justify-center items-center gap-2 group">
-        <span id="submitBtnText" class="tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">儲存本筆評分並前往下一位</span>
-        <span class="group-hover:translate-x-1.5 transition-transform text-lg font-times">➔</span>
-      </button>
-    </div>
-
-  </main>
-
-  <!-- 名冊總覽彈出層 -->
-  <div id="overviewModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex flex-col justify-end">
-    <div class="bg-[#0f131a] border-t-2 border-[#ca6b2d] w-full max-w-md mx-auto rounded-t-3xl p-5 max-h-[88vh] flex flex-col shadow-[0_-10px_35px_rgba(0,0,0,0.9)] animate-modal-up text-[#e6edf3]">
-      
-      <div class="flex justify-between items-start pb-3 border-b border-[#212833]">
+    <!-- 頂部資訊列 (常駐年級標籤 + 換年級按鈕) -->
+    <header class="w-full glass-card rounded-xl px-4 py-3 flex items-center justify-between sticky top-2 z-40">
+      <div class="flex items-center gap-2.5">
+        <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></div>
         <div>
           <div class="flex items-center gap-2">
-            <h3 class="text-base font-black text-white tracking-wide">名冊總覽與快速跳轉</h3>
-            <span id="modalProgressBadge" class="text-xs font-times font-bold bg-[#161c24] text-[#ffb066] border border-[#394557] px-2.5 py-0.5 rounded-lg">0/0 Completed</span>
+            <span id="topGradeBadge" class="text-xs font-black tracking-wider text-amber-300 font-serif-tc">G1_大一</span>
+            <span class="text-slate-600 text-xs">|</span>
+            <span id="topStageBadge" class="text-xs text-slate-300 font-serif-tc">期中評圖</span>
           </div>
-          <p class="text-xs text-[#8e9aa8] mt-1 font-times">點擊任意組別或學生，立即切換評分</p>
-        </div>
-        <button onclick="closeOverviewModal()" class="w-8 h-8 bg-[#18202a] hover:bg-[#232d3b] active:scale-95 text-[#c9d1d9] rounded-full flex items-center justify-center font-bold text-sm transition border border-[#323c4c]">
-          ✕
-        </button>
-      </div>
-
-      <div class="pt-3">
-        <div class="relative">
-          <input id="modalSearchInput" type="text" oninput="filterOverviewList()" placeholder="🔍 搜尋學號、姓名或指導老師..." class="w-full text-xs metallic-engraved-input rounded-xl py-2.5 pl-3 pr-8 text-[#f0f6fc] placeholder:text-[#525d6d] focus:outline-none focus:border-[#ca6b2d]">
-          <button id="clearSearchBtn" onclick="clearModalSearch()" class="hidden absolute right-2.5 top-2.5 text-[#8e9aa8] hover:text-white text-xs">✕</button>
+          <p class="text-[11px] text-slate-400 font-serif-tc">評審：<span id="topReviewerText" class="text-amber-200 font-semibold">--</span></p>
         </div>
       </div>
 
-      <div class="flex gap-2 pt-2.5 pb-2 text-xs font-bold font-times">
-        <button id="tabFilterAll" onclick="setOverviewFilter('all')" class="px-3 py-1.5 rounded-xl metallic-bronze-btn text-white transition shadow-sm">全部 (<span id="countAll">0</span>)</button>
-        <button id="tabFilterDone" onclick="setOverviewFilter('done')" class="px-3 py-1.5 rounded-xl bg-[#161c24] text-[#8e9aa8] hover:bg-[#202733] transition border border-[#2f3947]">已評分 (<span id="countDone">0</span>)</button>
-        <button id="tabFilterPending" onclick="setOverviewFilter('pending')" class="px-3 py-1.5 rounded-xl bg-[#161c24] text-[#8e9aa8] hover:bg-[#202733] transition border border-[#2f3947]">待評分 (<span id="countPending">0</span>)</button>
+      <button onclick="switchGradeReturnCover()" class="px-2.5 py-1 rounded-lg bg-amber-950/50 border border-amber-600/40 text-[11px] text-amber-300 hover:bg-amber-900/60 transition cursor-pointer font-serif-tc">
+        ↩ 換年級
+      </button>
+    </header>
+
+    <!-- 快速跳轉與上下位控制 -->
+    <div class="flex items-center justify-between gap-2">
+      <button onclick="navigateStudent(-1)" class="px-3.5 py-2.5 glass-card rounded-xl text-xs font-serif-tc text-slate-300 hover:text-white transition flex items-center gap-1">
+        ❮ 上一位
+      </button>
+
+      <!-- 快選下拉選單 -->
+      <div class="flex-1 relative">
+        <select id="quickJumpSelect" onchange="jumpToStudent(this.value)" class="w-full bg-[#121721] border border-amber-600/30 rounded-xl px-3 py-2 text-xs text-amber-300 font-serif-tc focus:outline-none appearance-none text-center cursor-pointer">
+          <!-- 動態生成選項 -->
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-amber-400 text-[10px]">
+          ▼
+        </div>
       </div>
 
-      <div id="overviewCardsList" class="flex-1 overflow-y-auto space-y-2 py-2 pr-1"></div>
-
+      <button onclick="navigateStudent(1)" class="px-3.5 py-2.5 glass-card rounded-xl text-xs font-serif-tc text-slate-300 hover:text-white transition flex items-center gap-1">
+        下一位 ❯
+      </button>
     </div>
+
+    <!-- 學生名牌卡 -->
+    <div class="w-full glass-card rounded-2xl p-5 space-y-3 relative overflow-hidden">
+      <div class="flex items-start justify-between">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span id="cardGroupTag" class="hidden px-2 py-0.5 rounded bg-amber-600/30 border border-amber-500/50 text-amber-300 text-[10px] font-times font-bold uppercase"></span>
+            <span id="cardStudentId" class="text-xs font-times text-slate-400 tracking-wider">#B1221553</span>
+          </div>
+          <h2 id="cardStudentName" class="text-2xl font-black font-serif-tc text-white tracking-wide">李孟潔</h2>
+        </div>
+        <div class="text-right">
+          <p class="text-[10px] text-slate-400 font-serif-tc">指導老師</p>
+          <span id="cardAdvisorName" class="inline-block mt-0.5 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700 text-xs font-serif-tc text-amber-200">
+            江益璋
+          </span>
+        </div>
+      </div>
+
+      <!-- 小組成員切換列 (僅在小組模式下顯現) -->
+      <div id="groupMembersContainer" class="hidden pt-3 border-t border-slate-800/80">
+        <p class="text-[10px] text-slate-400 font-serif-tc mb-2">小組成員（點擊切換個人評分）：</p>
+        <div id="groupMembersList" class="grid grid-cols-2 gap-2"></div>
+      </div>
+    </div>
+
+    <!-- 加權總分儀表卡片 -->
+    <div class="w-full glass-card rounded-2xl p-6 text-center relative">
+      <div class="flex items-center justify-between text-xs text-slate-400 font-serif-tc mb-2">
+        <span class="flex items-center gap-1.5 text-amber-300">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+          加權評圖總分
+        </span>
+        <span class="font-times uppercase text-[10px] tracking-widest text-slate-500">Evaluation Total</span>
+      </div>
+
+      <div class="my-3">
+        <span id="displayTotalScore" class="text-5xl font-black font-times tracking-tight text-white drop-shadow-[0_2px_15px_rgba(245,158,11,0.25)]">0.0</span>
+        <span class="text-xs font-times text-slate-400 ml-1">/ 100 PTS</span>
+      </div>
+
+      <!-- 小組與個人拆分預覽 (僅在小組模式顯現) -->
+      <div id="scoreRatioSplitBar" class="hidden flex items-center justify-center gap-4 text-xs font-serif-tc pt-3 border-t border-slate-800 text-slate-400">
+        <div>小組 (<span id="splitGroupRatioText">0</span>%)：<span id="splitGroupScoreText" class="font-times text-amber-300 font-bold">0.0</span></div>
+        <span class="text-slate-600">|</span>
+        <div>個人 (<span id="splitIndRatioText">100</span>%)：<span id="splitIndScoreText" class="font-times text-amber-300 font-bold">0.0</span></div>
+      </div>
+    </div>
+
+    <!-- PART 1: 小組團體成績 (僅在小組模式顯現) -->
+    <div id="part1GroupCard" class="w-full glass-card rounded-2xl p-5 space-y-4 hidden">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+          <h3 class="text-sm font-bold text-amber-200 font-serif-tc">PART 1 · 小組團體分數</h3>
+        </div>
+        <span class="px-2 py-0.5 rounded bg-amber-950/60 border border-amber-600/40 text-[10px] text-amber-300 font-serif-tc">
+          佔比 <span id="labelPart1Ratio">30</span>%
+        </span>
+      </div>
+      <div id="groupCriteriaList" class="space-y-3"></div>
+    </div>
+
+    <!-- PART 2: 個人評分維度 -->
+    <div class="w-full glass-card rounded-2xl p-5 space-y-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+          <h3 class="text-sm font-bold text-slate-100 font-serif-tc" id="part2Title">評分維度 (ASSESSMENT CRITERIA)</h3>
+        </div>
+        <!-- 佔比標籤：個人模式下會由程式自動設為 hidden -->
+        <span id="badgePart2Ratio" class="hidden px-2 py-0.5 rounded bg-sky-950/60 border border-sky-600/40 text-[10px] text-sky-300 font-serif-tc">
+          佔比 <span id="labelPart2Ratio">100</span>%
+        </span>
+      </div>
+      <p class="text-[11px] text-slate-400 font-serif-tc">請輸入各評圖指標給分（0 - 100 分）：</p>
+      <div id="indCriteriaList" class="space-y-3"></div>
+    </div>
+
+    <!-- 評審意見與總評 -->
+    <div class="w-full glass-card rounded-2xl p-5 space-y-2">
+      <div class="flex items-center justify-between">
+        <label class="text-xs font-semibold text-slate-300 font-serif-tc">評審意見與總評（選填）</label>
+        <span class="text-[10px] text-slate-500 font-times uppercase">Feedback</span>
+      </div>
+      <textarea id="feedbackComment" rows="3" placeholder="輸入評語、論述盲點或模型打樣建議..." 
+        class="w-full bg-[#121721] border border-slate-700/80 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-400 transition"></textarea>
+    </div>
+
+    <!-- 底部常駐儲存按鈕 -->
+    <div class="fixed bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-[#07090c] via-[#07090c]/90 to-transparent z-40 max-w-md mx-auto">
+      <button id="btnSaveAndNext" onclick="handleSaveAndNext()" class="w-full bronze-btn text-white font-bold py-3.5 px-6 rounded-xl text-base tracking-widest font-serif-tc flex items-center justify-center gap-2 shadow-2xl cursor-pointer">
+        <span id="btnSaveText">儲存並評下一位 ➔</span>
+      </button>
+    </div>
+
   </div>
 
-  <!-- 全螢幕燈箱放大圖片 -->
-  <div id="imageLightbox" onclick="this.classList.add('hidden')" class="hidden fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center p-4">
-    <img id="lightboxImg" src="" class="max-w-full max-h-[85vh] rounded-2xl object-contain shadow-2xl border-2 border-[#ca6b2d]">
-    <p class="text-[#8e9aa8] text-xs mt-3 font-times italic">點擊任意處關閉放大預覽</p>
-  </div>
-
-  <!-- 系統通知 Toast -->
-  <div id="systemToast" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-[#12161f] border border-[#ca6b2d] text-[#f0f6fc] px-4 py-2.5 rounded-2xl shadow-2xl text-xs font-bold flex items-center gap-2 pointer-events-none opacity-0 transition-opacity duration-200">
-    <span id="toastIcon">✨</span>
-    <span id="toastMessage">系統訊息</span>
+  <!-- 全域訊息吐司 (Toast) -->
+  <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 px-4 py-2 rounded-xl bg-slate-900/95 border border-amber-500/50 text-amber-200 text-xs font-serif-tc shadow-2xl transition-all duration-300 opacity-0 pointer-events-none z-50">
+    提示訊息
   </div>
 
   <script>
-    // ⭐️ 核心設定：已填入您的 Google Apps Script 網頁應用程式網址
+    // ==================== 後端 API 網址 (已自動填入您的部署網址) ====================
     const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxVKmk3v0HRJJOPkvwYMKbFyIPumffiyO-j56v3RicEqNYBilGpwPXd37yFk7hJFeEQ/exec";
 
-    const safeStorage = {
-      getItem: function(key) {
-        try { return localStorage.getItem(key); } catch (e) { return null; }
-      },
-      setItem: function(key, val) {
-        try { localStorage.setItem(key, val); } catch (e) {}
-      }
-    };
-
+    // 狀態變數
+    let currentGrade = "G1_大一";
+    let reviewerName = "";
     let sessionData = null;
     let currentIndex = 0;
-    let selectedMemberIndex = 0;
-    
-    let formState = {
-      groupScores: {},
-      indivScores: {},
-      memberNotes: {},
-      savedMembers: {},
-      scores: {},
-      currentPhoto: null
-    };
+    let reviewMemory = {}; // 記憶評分：studentId -> { scores, comment, totalScore }
 
-    let reviewMemory = {};
-    let currentOverviewFilter = 'all';
-
-    // 離線降級備份資料
-    const mockBackupData = {
-      department: '中國文化大學建築及都市設計學系',
-      stage: '期中評圖',
-      grade: 'G1_大一',
-      availableGrades: ['G1_大一', 'G2_大二', 'G3_大三', 'G4_大四', 'G5_大五'],
-      isGroupMode: false,
-      criteria: [
-        { name: '形式生成與轉譯邏輯', weight: 35 },
-        { name: '模型與 1:1 實作', weight: 35 },
-        { name: '手作表現', weight: 30 }
-      ],
-      items: [
-        { id: 'B1221553', name: '李孟潔', advisor: '江益璋' }
-      ]
-    };
-
-    const isGasEnvironment = typeof google !== 'undefined' && Boolean(google.script && google.script.run);
-
-    const backendService = {
-      getSessionData: function(successHandler, failureHandler, targetGrade) {
-        if (isGasEnvironment) {
-          google.script.run
-            .withSuccessHandler(successHandler)
-            .withFailureHandler(failureHandler)
-            .getSessionData(targetGrade);
-        } else if (GAS_API_URL && !GAS_API_URL.includes("YOUR_DEPLOYMENT_ID_HERE")) {
-          let url = `${GAS_API_URL}?action=getSessionData&_t=${Date.now()}`;
-          if (targetGrade) {
-            url += `&grade=${encodeURIComponent(targetGrade)}`;
-          }
-          fetch(url)
-            .then(res => {
-              if (!res.ok) throw new Error(`HTTP 錯誤碼: ${res.status}`);
-              return res.json();
-            })
-            .then(data => {
-              if (data && data.error) throw new Error(data.error);
-              successHandler(data);
-            })
-            .catch(err => {
-              console.error("API getSessionData 失敗:", err);
-              failureHandler(err);
-            });
-        } else {
-          setTimeout(() => {
-            successHandler(JSON.parse(JSON.stringify(mockBackupData)));
-          }, 150);
-        }
-      },
-
-      saveScores: function(payload, successHandler, failureHandler) {
-        if (isGasEnvironment) {
-          google.script.run
-            .withSuccessHandler(successHandler)
-            .withFailureHandler(failureHandler)
-            .saveScores(payload);
-        } else if (GAS_API_URL && !GAS_API_URL.includes("YOUR_DEPLOYMENT_ID_HERE")) {
-          fetch(GAS_API_URL, {
-            method: 'POST',
-            redirect: 'follow',
-            headers: {
-              'Content-Type': 'text/plain;charset=utf-8'
-            },
-            body: JSON.stringify(payload)
-          })
-            .then(res => res.json())
-            .then(data => successHandler(data))
-            .catch(err => {
-              console.error("API saveScores 失敗:", err);
-              failureHandler(err);
-            });
-        } else {
-          setTimeout(() => {
-            successHandler({ success: true, isMock: true });
-          }, 300);
-        }
+    // 初始化封面
+    window.addEventListener('DOMContentLoaded', () => {
+      // 讀取本地快取的評審姓名
+      const savedReviewer = localStorage.getItem('ccu_reviewer_name');
+      if (savedReviewer) {
+        document.getElementById('reviewerInput').value = savedReviewer;
       }
-    };
+    });
 
-    window.onload = function() {
-      try {
-        const savedTeacher = safeStorage.getItem('review_teacher_name');
-        if (savedTeacher) {
-          const t1 = document.getElementById('teacherName');
-          const t2 = document.getElementById('coverTeacherInput');
-          if (t1) t1.value = savedTeacher;
-          if (t2) t2.value = savedTeacher;
-        }
-      } catch (e) {}
-
-      loadSession();
-    };
-
-    function loadSession(targetGrade) {
-      let hasInitialized = false;
-      const fallbackTimer = setTimeout(() => {
-        if (!hasInitialized) {
-          hasInitialized = true;
-          showToast('試算表讀取較久，已進入離線備用模式', '⚠️');
-          initApp(JSON.parse(JSON.stringify(mockBackupData)));
-        }
-      }, 15000);
-
-      backendService.getSessionData(
-        data => {
-          if (!hasInitialized) {
-            hasInitialized = true;
-            clearTimeout(fallbackTimer);
-            initApp(data);
-          }
-        },
-        err => {
-          if (!hasInitialized) {
-            hasInitialized = true;
-            clearTimeout(fallbackTimer);
-            showToast('試算表連線提示：' + (err.message || err), '⚠️');
-            initApp(JSON.parse(JSON.stringify(mockBackupData)));
-          }
-        },
-        targetGrade
-      );
-    }
-
-    function showToast(msg, icon = '✨') {
-      const toast = document.getElementById('systemToast');
-      if (!toast) return;
-      const tIcon = document.getElementById('toastIcon');
-      const tMsg = document.getElementById('toastMessage');
-      if (tIcon) tIcon.innerText = icon;
-      if (tMsg) tMsg.innerText = msg;
-      toast.classList.remove('opacity-0');
-      setTimeout(() => toast.classList.add('opacity-0'), 2800);
-    }
-
-    function syncTeacherName(val) {
-      const t1 = document.getElementById('teacherName');
-      const t2 = document.getElementById('coverTeacherInput');
-      if (t1 && t1.value !== val) t1.value = val;
-      if (t2 && t2.value !== val) t2.value = val;
-      if (val && val.trim()) {
-        safeStorage.setItem('review_teacher_name', val.trim());
-      }
-    }
-
-    function enterSystem() {
-      try {
-        let teacher = '';
-        const coverInput = document.getElementById('coverTeacherInput');
-        const headerInput = document.getElementById('teacherName');
-        if (coverInput && coverInput.value.trim()) {
-          teacher = coverInput.value.trim();
-        } else if (headerInput && headerInput.value.trim()) {
-          teacher = headerInput.value.trim();
-        } else {
-          teacher = '評審老師';
-        }
-        syncTeacherName(teacher);
-      } catch (e) {
-        console.error('syncTeacherName err', e);
-      }
-      
-      const cover = document.getElementById('coverPage');
-      if (cover) {
-        cover.classList.add('cover-fade-out');
-        cover.style.pointerEvents = 'none';
-        cover.style.opacity = '0';
-        setTimeout(() => {
-          cover.style.display = 'none';
-          cover.classList.add('hidden');
-          cover.classList.remove('flex');
-        }, 280);
+    // 點擊「進入評圖系統」
+    async function handleEnterSystem() {
+      const reviewerInput = document.getElementById('reviewerInput').value.trim();
+      if (!reviewerInput) {
+        showToast('請先輸入您的評審姓名或席位代號！');
+        document.getElementById('reviewerInput').focus();
+        return;
       }
 
-      const loading = document.getElementById('loading');
-      const appContent = document.getElementById('appContent');
+      reviewerName = reviewerInput;
+      localStorage.setItem('ccu_reviewer_name', reviewerName);
+      currentGrade = document.getElementById('coverGradeSelect').value;
 
-      if (!sessionData || !sessionData.items || sessionData.items.length === 0) {
-        initApp(JSON.parse(JSON.stringify(mockBackupData)));
-      } else {
-        if (loading) {
-          loading.classList.add('hidden');
-          loading.style.display = 'none';
-        }
-        if (appContent) {
-          appContent.classList.remove('hidden');
-          appContent.style.display = 'block';
-        }
-      }
-    }
-
-    function returnToCover() {
-      const cover = document.getElementById('coverPage');
-      if (cover) {
-        cover.classList.remove('cover-fade-out', 'hidden');
-        cover.classList.add('flex');
-        cover.style.display = 'flex';
-        cover.style.opacity = '1';
-        cover.style.pointerEvents = 'auto';
-      }
-    }
-
-    // ⭐️ 動態填充年級下拉選單項目
-    function populateGradeSelects(availableGrades, currentGrade) {
-      const grades = (availableGrades && availableGrades.length > 0)
-        ? availableGrades
-        : ['G1_大一', 'G2_大二', 'G3_大三', 'G4_大四', 'G5_大五'];
-      
-      const coverSelect = document.getElementById('coverGradeSelect');
-      const headerSelect = document.getElementById('headerGradeSelect');
-
-      const optionsHtml = grades.map(g => {
-        const isSelected = (g === currentGrade || (currentGrade && (currentGrade.includes(g) || g.includes(currentGrade))));
-        return `<option value="${g}" class="bg-[#12161f] text-[#ffcf96]" ${isSelected ? 'selected' : ''}>${g}</option>`;
-      }).join('');
-
-      if (coverSelect) {
-        coverSelect.innerHTML = optionsHtml;
-        if (currentGrade) coverSelect.value = currentGrade;
-      }
-      if (headerSelect) {
-        headerSelect.innerHTML = optionsHtml;
-        if (currentGrade) headerSelect.value = currentGrade;
-      }
-    }
-
-    // ⭐️ 年級切換：直接觸發即時資料庫抓取
-    function switchGrade(gradeName) {
-      if (!gradeName) return;
-      showToast(`正在切換至【${gradeName}】...`, '⏳');
-
-      const coverSelect = document.getElementById('coverGradeSelect');
-      const headerSelect = document.getElementById('headerGradeSelect');
-      if (coverSelect && coverSelect.value !== gradeName) coverSelect.value = gradeName;
-      if (headerSelect && headerSelect.value !== gradeName) headerSelect.value = gradeName;
-
-      // 重設評分記憶狀態
-      reviewMemory = {};
-      formState = {
-        groupScores: {},
-        indivScores: {},
-        memberNotes: {},
-        savedMembers: {},
-        scores: {},
-        currentPhoto: null
-      };
-
-      const loading = document.getElementById('loading');
-      const appContent = document.getElementById('appContent');
-      if (loading) {
-        loading.classList.remove('hidden');
-        loading.style.display = 'flex';
-      }
-      if (appContent) {
-        appContent.classList.add('hidden');
-        appContent.style.display = 'none';
-      }
-
-      loadSession(gradeName);
-    }
-
-    function initApp(data) {
-      if (!data || !data.items || data.items.length === 0) {
-        data = JSON.parse(JSON.stringify(mockBackupData));
-      }
-      sessionData = data;
-      
-      populateGradeSelects(data.availableGrades, data.grade);
-      
-      const coverStageBadge = document.getElementById('coverStageBadge');
-      if (coverStageBadge) coverStageBadge.innerText = data.stage || '評圖';
-      
-      const headerStage = document.getElementById('stageBadgeHeader');
-      if (headerStage) headerStage.innerText = data.stage || '評圖';
-
-      const loading = document.getElementById('loading');
-      if (loading) {
-        loading.classList.add('hidden');
-        loading.style.display = 'none';
-      }
-      const appContent = document.getElementById('appContent');
-      if (appContent) {
-        appContent.classList.remove('hidden');
-        appContent.style.display = 'block';
-      }
+      const btn = document.getElementById('btnEnterSystem');
+      const statusMsg = document.getElementById('coverStatusMsg');
+      btn.disabled = true;
+      btn.innerHTML = `<span>載入【${currentGrade}】名冊中...</span>`;
+      statusMsg.textContent = '連線 Google 試算表同步名冊與指標...';
 
       try {
-        renderView(0);
-      } catch (e) {
-        console.error('renderView error in initApp', e);
-      }
-    }
+        const response = await fetch(`${GAS_API_URL}?action=getSessionData&grade=${encodeURIComponent(currentGrade)}`);
+        const result = await response.json();
 
-    function renderView(index) {
-      if (!sessionData || !sessionData.items || !sessionData.items[index]) return;
-      currentIndex = index;
-      selectedMemberIndex = 0;
-
-      const currentItem = sessionData.items[index];
-      const navLabel = document.getElementById('currentNavLabel');
-      const membersTabsContainer = document.getElementById('groupMembersTabsContainer');
-      const groupSectionCard = document.getElementById('groupSectionCard');
-      const syncAllBtn = document.getElementById('syncAllBtn');
-      const idTagLabel = document.getElementById('idTagLabel');
-      const activeMemberSpot = document.getElementById('activeMemberSpot');
-
-      if (sessionData.isGroupMode) {
-        if (idTagLabel) idTagLabel.innerText = 'GROUP';
-        if (navLabel) navLabel.innerText = `第 ${currentItem.groupName} 組 (${index + 1}/${sessionData.items.length})`;
-        document.getElementById('studentIdDisplay').innerText = `G${index + 1}`;
-        document.getElementById('studentNameDisplay').innerText = currentItem.groupName;
-        document.getElementById('advisorDisplay').innerText = currentItem.advisor;
-
-        if (activeMemberSpot) activeMemberSpot.classList.remove('hidden');
-        if (membersTabsContainer) membersTabsContainer.classList.remove('hidden');
-        if (groupSectionCard) groupSectionCard.classList.remove('hidden');
-        if (syncAllBtn) syncAllBtn.classList.remove('hidden');
-      } else {
-        // ⭐️ 純個人專案模式：徹底隱藏所有小組 UI
-        if (idTagLabel) idTagLabel.innerText = 'ID';
-        if (navLabel) navLabel.innerText = `${currentItem.id} ${currentItem.name} (${index + 1}/${sessionData.items.length})`;
-        document.getElementById('studentIdDisplay').innerText = currentItem.id;
-        document.getElementById('studentNameDisplay').innerText = currentItem.name;
-        document.getElementById('advisorDisplay').innerText = currentItem.advisor;
-
-        if (activeMemberSpot) {
-          activeMemberSpot.classList.add('hidden');
-          activeMemberSpot.innerHTML = '';
+        if (result.status === 'success') {
+          sessionData = result.data;
+          statusMsg.textContent = '載入完成，進入系統！';
+          startCritiqueSession();
+        } else {
+          statusMsg.textContent = '試算表回傳錯誤：' + result.message;
+          btn.disabled = false;
+          btn.innerHTML = `<span>進入評圖系統</span><span>➔</span>`;
         }
-        if (membersTabsContainer) membersTabsContainer.classList.add('hidden');
-        if (groupSectionCard) groupSectionCard.classList.add('hidden');
-        if (syncAllBtn) syncAllBtn.classList.add('hidden');
-      }
-
-      const mem = reviewMemory[index];
-      if (mem) {
-        formState.memberNotes = mem.memberNotes ? { ...mem.memberNotes } : {};
-        formState.savedMembers = mem.savedMembers ? { ...mem.savedMembers } : {};
-        formState.currentPhoto = mem.photo || null;
-        document.getElementById('savedIndicator').classList.remove('hidden');
-      } else {
-        formState.memberNotes = {};
-        formState.savedMembers = {};
-        formState.currentPhoto = null;
-        document.getElementById('savedIndicator').classList.add('hidden');
-      }
-
-      const photoContainer = document.getElementById('photoContainer');
-      if (photoContainer) {
-        photoContainer.innerHTML = renderPhotoSectionHTML();
-      }
-
-      if (sessionData.isGroupMode) {
-        formState.groupScores = {};
-        formState.indivScores = {};
-
-        (sessionData.groupCriteria || []).forEach((_, gi) => {
-          formState.groupScores[gi] = (mem && mem.groupScores && mem.groupScores[gi] !== undefined)
-            ? mem.groupScores[gi]
-            : null;
-        });
-
-        if (currentItem.members) {
-          currentItem.members.forEach(m => {
-            formState.indivScores[m.id] = {};
-            (sessionData.indivCriteria || []).forEach((_, ii) => {
-              const savedVal = mem && mem.indivScores && mem.indivScores[m.id] && mem.indivScores[m.id][ii];
-              formState.indivScores[m.id][ii] = (savedVal !== undefined && savedVal !== null) ? savedVal : null;
-            });
-          });
-        }
-        renderMemberPillTabs();
-      } else {
-        formState.scores = {};
-        (sessionData.criteria || []).forEach((_, i) => {
-          const savedVal = mem && mem.scores && mem.scores[i];
-          formState.scores[i] = (savedVal !== undefined && savedVal !== null) ? savedVal : null;
-        });
-        const currentNotes = (mem && mem.notes) ? mem.notes : '';
-        document.getElementById('notes').value = currentNotes;
-      }
-
-      renderCriteriaSections();
-      calcAndRefreshTotals();
-      updateSubmitButtonLabel();
-    }
-
-    function renderMemberPillTabs() {
-      const topSpot = document.getElementById('activeMemberSpot');
-      const listContainer = document.getElementById('groupMembersList');
-      const currentItem = sessionData.items[currentIndex];
-      if (!currentItem || !currentItem.members) return;
-
-      const activeMember = currentItem.members[selectedMemberIndex] || currentItem.members[0];
-
-      if (topSpot && activeMember) {
-        const isSaved = formState.savedMembers && formState.savedMembers[activeMember.id] !== undefined;
-        const savedTag = isSaved 
-          ? `<span class="text-[11px] font-times bg-[#102a18] text-[#4ade80] border border-[#22c55e]/50 px-2 py-0.5 rounded-md font-bold shrink-0">✔ ${formState.savedMembers[activeMember.id].toFixed(1)}</span>`
-          : `<span class="text-[10px] font-times bg-[#26180b] text-[#ffbe7a] border border-[#ff9f43]/40 px-2 py-0.5 rounded font-bold shrink-0">評分中</span>`;
-
-        topSpot.innerHTML = `
-          <div class="inline-flex items-center gap-2 py-1.5 px-3 rounded-xl transition-all metallic-bronze-btn text-white shadow-[0_4px_16px_rgba(202,107,45,0.45)] border border-[#ffba82] max-w-full">
-            <span class="text-sm sm:text-base font-black tracking-wide text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] truncate">${activeMember.name}</span>
-            <span class="text-xs font-times text-[#ffe5cc] font-bold shrink-0">#${activeMember.id}</span>
-            ${savedTag}
-          </div>
-        `;
-      }
-
-      if (listContainer) {
-        const otherMembersHTML = currentItem.members.map((m, idx) => {
-          if (idx === selectedMemberIndex) return '';
-
-          const isSaved = formState.savedMembers && formState.savedMembers[m.id] !== undefined;
-          const statusTag = isSaved
-            ? `<span class="text-[10px] font-times text-[#4ade80] font-bold shrink-0">✔ ${formState.savedMembers[m.id].toFixed(1)}</span>`
-            : `<span class="text-[10px] font-times text-[#6f7c8d] shrink-0 font-medium">待評</span>`;
-
-          return `
-            <button type="button" onclick="selectMember(${idx})" class="py-2.5 px-3 rounded-xl transition-all flex items-center justify-between gap-1.5 active:scale-95 bg-[#11151c] border border-[#27313f] text-[#c0cad6] hover:border-[#ca6b2d]/70 hover:bg-[#181f2a] shadow-sm">
-              <div class="flex items-center gap-1.5 truncate">
-                <span class="text-xs font-bold text-[#e6edf3] truncate">${m.name}</span>
-                <span class="text-[10px] font-times text-[#8e9aa8]">#${m.id}</span>
-              </div>
-              ${statusTag}
-            </button>
-          `;
-        }).filter(Boolean).join('');
-
-        listContainer.className = "grid grid-cols-2 gap-2";
-        listContainer.innerHTML = otherMembersHTML;
-      }
-    }
-
-    function selectMember(idx) {
-      const currentItem = sessionData.items[currentIndex];
-      if (!currentItem || !currentItem.members || !currentItem.members[idx]) return;
-
-      const oldMember = currentItem.members[selectedMemberIndex];
-      const notesInput = document.getElementById('notes');
-      if (oldMember && notesInput) {
-        formState.memberNotes[oldMember.id] = notesInput.value;
-      }
-
-      selectedMemberIndex = idx;
-      const newMember = currentItem.members[idx];
-
-      const hasSaved = formState.savedMembers && formState.savedMembers[newMember.id] !== undefined;
-      if (!hasSaved) {
-        if (!formState.indivScores) formState.indivScores = {};
-        if (!formState.indivScores[newMember.id]) {
-          formState.indivScores[newMember.id] = {};
-        }
-        if (notesInput) notesInput.value = formState.memberNotes[newMember.id] || '';
-      } else {
-        if (notesInput) {
-          notesInput.value = formState.memberNotes[newMember.id] || '';
-        }
-      }
-
-      renderMemberPillTabs();
-      renderCriteriaSections();
-      calcAndRefreshTotals();
-      setButtonLoading(false);
-    }
-
-    function setButtonLoading(loading) {
-      const btn = document.getElementById('submitBtn');
-      if (!btn) return;
-
-      if (loading) {
-        btn.disabled = true;
-        btn.classList.add('opacity-80', 'cursor-not-allowed');
-        btn.innerHTML = `
-          <span class="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></span>
-          <span class="tracking-wide">儲存中...</span>
-        `;
-      } else {
+      } catch (err) {
+        console.error(err);
+        statusMsg.textContent = '連線至試算表失敗，請檢查網路或後端權限！';
         btn.disabled = false;
-        btn.classList.remove('opacity-80', 'cursor-not-allowed');
-        updateSubmitButtonLabel();
+        btn.innerHTML = `<span>進入評圖系統</span><span>➔</span>`;
       }
     }
 
-    function updateSubmitButtonLabel() {
-      const btn = document.getElementById('submitBtn');
-      if (!btn || !sessionData) return;
+    // 啟動評圖主畫面
+    function startCritiqueSession() {
+      document.getElementById('coverScreen').classList.add('hidden');
+      document.getElementById('critiqueScreen').classList.remove('hidden');
 
-      btn.disabled = false;
-      btn.classList.remove('opacity-80', 'cursor-not-allowed');
+      // 更新頂部資訊
+      document.getElementById('topGradeBadge').textContent = sessionData.currentGrade;
+      document.getElementById('topStageBadge').textContent = sessionData.stage;
+      document.getElementById('topReviewerText').textContent = reviewerName;
 
-      let labelText = '儲存本筆評分並前往下一位';
-      if (sessionData.isGroupMode) {
-        const currentItem = sessionData.items[currentIndex];
-        const totalMembers = (currentItem && currentItem.members) ? currentItem.members.length : 1;
-        const activeMember = (currentItem && currentItem.members) ? currentItem.members[selectedMemberIndex] : null;
-        const memberName = activeMember ? activeMember.name : '當前組員';
-        const isLastMember = selectedMemberIndex + 1 >= totalMembers;
+      // 檢查模式 (小組模式 vs 純個人模式)
+      const isGroup = sessionData.isGroupMode;
+      const ratioBar = document.getElementById('scoreRatioSplitBar');
+      const part1Card = document.getElementById('part1GroupCard');
+      const part2Badge = document.getElementById('badgePart2Ratio');
+      const cardGroupTag = document.getElementById('cardGroupTag');
+      const groupMembersCont = document.getElementById('groupMembersContainer');
 
-        if (isLastMember) {
-          labelText = `儲存【${memberName}】並前往下一組`;
-        } else {
-          labelText = `儲存【${memberName}】並評下一位組員 (${selectedMemberIndex + 1}/${totalMembers})`;
-        }
+      if (isGroup) {
+        ratioBar.classList.remove('hidden');
+        part1Card.classList.remove('hidden');
+        part2Badge.classList.remove('hidden');
+        cardGroupTag.classList.remove('hidden');
+        groupMembersCont.classList.remove('hidden');
+        document.getElementById('splitGroupRatioText').textContent = sessionData.groupRatio;
+        document.getElementById('splitIndRatioText').textContent = sessionData.indRatio;
+        document.getElementById('labelPart1Ratio').textContent = sessionData.groupRatio;
+        document.getElementById('labelPart2Ratio').textContent = sessionData.indRatio;
       } else {
-        const currentItem = sessionData.items[currentIndex];
-        const studentName = currentItem ? currentItem.name : '本位學生';
-        const isLast = currentIndex + 1 >= sessionData.items.length;
-        labelText = isLast ? `儲存【${studentName}】評分 (完成全部評圖)` : `儲存【${studentName}】並評下一位 (${currentIndex + 1}/${sessionData.items.length})`;
+        ratioBar.classList.add('hidden');
+        part1Card.classList.add('hidden');
+        part2Badge.classList.add('hidden'); // 純個人模式完全隱藏 40% 佔比標籤
+        cardGroupTag.classList.add('hidden');
+        groupMembersCont.classList.add('hidden');
+        document.getElementById('part2Title').textContent = '評分維度 (ASSESSMENT CRITERIA)';
       }
 
-      btn.innerHTML = `
-        <span id="submitBtnText" class="tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">${labelText}</span>
-        <span class="group-hover:translate-x-1.5 transition-transform text-lg font-times">➔</span>
-      `;
-    }
-
-    function syncCurrentMemberScoresToAll() {
-      const currentItem = sessionData.items[currentIndex];
-      if (!currentItem || !currentItem.members) return;
-      const srcMember = currentItem.members[selectedMemberIndex];
-      const srcScores = (formState.indivScores && formState.indivScores[srcMember.id]) || {};
-      
-      let hasScores = false;
-      (sessionData.indivCriteria || []).forEach((_, ii) => {
-        if (srcScores[ii] !== undefined && srcScores[ii] !== null && srcScores[ii] !== '') {
-          hasScores = true;
-        }
+      // 填充快選下拉清單
+      const quickSelect = document.getElementById('quickJumpSelect');
+      quickSelect.innerHTML = '';
+      sessionData.students.forEach((stu, idx) => {
+        const opt = document.createElement('option');
+        opt.value = idx;
+        opt.textContent = `${stu.id} ${stu.name} (${idx + 1}/${sessionData.students.length})`;
+        quickSelect.appendChild(opt);
       });
-      if (!hasScores) {
-        showToast(`【${srcMember.name}】尚未輸入個人評分，無法同步！`, '⚠️');
-        return;
-      }
 
-      const srcNotes = document.getElementById('notes').value.trim();
+      // 渲染評分指標輸入框
+      renderCriteriaInputs();
 
-      currentItem.members.forEach(m => {
-        formState.indivScores[m.id] = { ...srcScores };
-        if (srcNotes) {
-          formState.memberNotes[m.id] = srcNotes;
-        }
+      // 載入第一位同學
+      currentIndex = 0;
+      loadStudent(currentIndex);
+    }
+
+    // 渲染評分規準欄位
+    function renderCriteriaInputs() {
+      const container = document.getElementById('indCriteriaList');
+      container.innerHTML = '';
+
+      sessionData.criteria.forEach((crit, cIdx) => {
+        const row = document.createElement('div');
+        row.className = 'flex items-center justify-between p-3 rounded-xl bg-[#0a0e14]/70 border border-slate-800/80';
+        row.innerHTML = `
+          <div class="flex-1 pr-2">
+            <p class="text-xs font-semibold text-slate-200 font-serif-tc">${crit.name}</p>
+            <p class="text-[10px] text-amber-500/80 font-times">WEIGHT: ${crit.weight}%</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <input type="number" min="0" max="100" id="crit_input_${cIdx}" value="0" 
+              oninput="handleScoreChange()" 
+              class="w-16 bg-[#161c26] border border-amber-600/40 rounded-lg py-1.5 text-center text-amber-300 font-bold font-times text-base focus:outline-none focus:border-amber-400">
+            <span class="text-[10px] text-slate-500 font-times">PTS</span>
+          </div>
+        `;
+        container.appendChild(row);
       });
-      showToast(`已將【${srcMember.name}】的分數帶給全組組員！`, '⚡');
-      renderMemberPillTabs();
-      calcAndRefreshTotals();
     }
 
-    function renderCriteriaSections() {
-      const indivContainer = document.getElementById('indivCriteriaList');
-      const groupContainer = document.getElementById('groupCriteriaList');
-      const indivSectionTitle = document.getElementById('indivSectionTitle');
-      const indivSectionDesc = document.getElementById('indivSectionDesc');
-      const indivSubtotalRow = document.getElementById('indivSubtotalRow');
-      const indivRatioBadge = document.getElementById('indivRatioBadge');
-      
-      if (indivContainer) indivContainer.innerHTML = '';
-      if (groupContainer) groupContainer.innerHTML = '';
+    // 載入指定索引的學生資料
+    function loadStudent(idx) {
+      if (idx < 0 || idx >= sessionData.students.length) return;
+      currentIndex = idx;
+      const stu = sessionData.students[idx];
 
-      if (sessionData.isGroupMode) {
-        const currentItem = sessionData.items[currentIndex];
-        const activeMember = (currentItem.members && currentItem.members[selectedMemberIndex]) || (currentItem.members && currentItem.members[0]) || { name: '組員', id: '1' };
-        if (indivSectionTitle) indivSectionTitle.innerText = 'PART 2 · 個人評分';
-        if (indivSectionDesc) indivSectionDesc.innerText = '每位組員的各項獨立評分指標：';
-        if (indivSubtotalRow) indivSubtotalRow.classList.remove('hidden');
-        if (indivRatioBadge) indivRatioBadge.classList.remove('hidden');
+      // 更新卡片內容
+      document.getElementById('cardStudentId').textContent = '#' + stu.id;
+      document.getElementById('cardStudentName').textContent = stu.name;
+      document.getElementById('cardAdvisorName').textContent = stu.advisor || '未指定';
+      document.getElementById('quickJumpSelect').value = idx;
 
-        (sessionData.groupCriteria || []).forEach((crit, gi) => {
-          const val = (formState.groupScores && formState.groupScores[gi] !== undefined && formState.groupScores[gi] !== null)
-            ? formState.groupScores[gi]
-            : '';
-          if (groupContainer) groupContainer.appendChild(createCriterionRowElement(gi, crit.name, crit.weight, val, 'group'));
+      // 更新底部按鈕文字
+      document.getElementById('btnSaveText').textContent = `儲存【${stu.name}】並評下一位 ➔`;
+
+      // 載入評分記憶（如有）
+      if (reviewMemory[stu.id]) {
+        const mem = reviewMemory[stu.id];
+        sessionData.criteria.forEach((_, cIdx) => {
+          document.getElementById(`crit_input_${cIdx}`).value = mem.scores[cIdx] || 0;
         });
-
-        (sessionData.indivCriteria || []).forEach((crit, ii) => {
-          const memberScores = (formState.indivScores && formState.indivScores[activeMember.id]) || {};
-          const val = memberScores[ii];
-          if (indivContainer) indivContainer.appendChild(createCriterionRowElement(ii, crit.name, crit.weight, val, 'indiv_member', activeMember.id));
-        });
-
+        document.getElementById('feedbackComment').value = mem.comment || '';
       } else {
-        // 純個人專案模式
-        if (indivSectionTitle) indivSectionTitle.innerText = '評分維度 (ASSESSMENT CRITERIA)';
-        if (indivSectionDesc) indivSectionDesc.innerText = '各項評圖標準加權給分：';
-        if (indivSubtotalRow) indivSubtotalRow.classList.add('hidden');
-        if (indivRatioBadge) indivRatioBadge.classList.add('hidden');
-
-        (sessionData.criteria || []).forEach((crit, i) => {
-          const val = formState.scores[i];
-          if (indivContainer) indivContainer.appendChild(createCriterionRowElement(i, crit.name, crit.weight, val, 'indiv_single'));
+        sessionData.criteria.forEach((_, cIdx) => {
+          document.getElementById(`crit_input_${cIdx}`).value = 0;
         });
+        document.getElementById('feedbackComment').value = '';
       }
+
+      calculateTotal();
     }
 
-    function createCriterionRowElement(idx, name, weight, val, mode, memberId) {
-      const row = document.createElement('div');
-      row.className = 'p-3 rounded-xl transition-all flex justify-between items-center bg-[#10141a] border border-[#242b37] hover:border-[#ca6b2d]/60 shadow-sm';
-      const displayVal = (val !== null && val !== undefined && val !== '') ? val : '';
+    // 計算總分
+    function calculateTotal() {
+      let total = 0;
+      sessionData.criteria.forEach((crit, cIdx) => {
+        const val = parseFloat(document.getElementById(`crit_input_${cIdx}`).value) || 0;
+        total += (val * crit.weight) / 100;
+      });
 
-      row.innerHTML = `
-        <div class="flex items-center gap-3 pr-2 min-w-0">
-          <div class="text-xs sm:text-sm font-bold text-[#f0f6fc] truncate">${name}</div>
-          <div class="text-[10px] sm:text-[11px] font-times font-bold text-[#8e9aa8] shrink-0">權重 ${weight}%</div>
-        </div>
-        <div class="flex items-center gap-2 shrink-0" onclick="event.stopPropagation()">
-          <input type="number" inputmode="decimal" min="0" max="100" value="${displayVal}" placeholder="0"
-            onfocus="handleCriterionInputFocus(this)"
-            oninput="handleCriterionInput(${idx}, this.value, '${mode}', '${memberId || ''}')"
-            onblur="handleCriterionInputBlur(${idx}, this, '${mode}', '${memberId || ''}')"
-            class="w-16 h-10 text-center font-times font-black text-lg text-[#ffb573] placeholder:text-[#475263] metallic-engraved-input rounded-xl focus:outline-none focus:border-[#ff9f43] focus:ring-1 focus:ring-[#ff9f43]/50 transition">
-          <span class="text-xs font-times text-[#8e9aa8] font-bold">PTS</span>
-        </div>
-      `;
-      return row;
+      document.getElementById('displayTotalScore').textContent = total.toFixed(1);
+      return total;
     }
 
-    function handleCriterionInputFocus(inputEl) {
-      setTimeout(() => {
-        try { inputEl.setSelectionRange(0, inputEl.value.length); } catch (e) { inputEl.select(); }
-      }, 25);
+    function handleScoreChange() {
+      calculateTotal();
     }
 
-    function handleCriterionInput(idx, valueStr, mode, memberId) {
-      const trimmed = String(valueStr).trim();
-      let num = trimmed === '' ? null : parseFloat(trimmed);
-      if (num !== null) {
-        if (isNaN(num)) num = 0;
-        if (num > 100) num = 100;
-        if (num < 0) num = 0;
-      }
+    // 儲存並前進下一位
+    async function handleSaveAndNext() {
+      const currentStudent = sessionData.students[currentIndex];
+      const scores = sessionData.criteria.map((_, cIdx) => parseFloat(document.getElementById(`crit_input_${cIdx}`).value) || 0);
+      const comment = document.getElementById('feedbackComment').value.trim();
+      const totalScore = calculateTotal();
 
-      if (mode === 'group') {
-        formState.groupScores[idx] = num;
-      } else if (mode === 'indiv_member') {
-        if (!formState.indivScores[memberId]) formState.indivScores[memberId] = {};
-        formState.indivScores[memberId][idx] = num;
-      } else {
-        formState.scores[idx] = num;
-      }
-      calcAndRefreshTotals();
-    }
+      // 儲存至本地記憶體
+      reviewMemory[currentStudent.id] = { scores, comment, totalScore };
 
-    function handleCriterionInputBlur(idx, inputEl, mode, memberId) {
-      let val = '';
-      if (mode === 'group') {
-        val = (formState.groupScores[idx] !== undefined && formState.groupScores[idx] !== null)
-          ? formState.groupScores[idx]
-          : '';
-      } else if (mode === 'indiv_member') {
-        val = (formState.indivScores[memberId] && formState.indivScores[memberId][idx] !== undefined && formState.indivScores[memberId][idx] !== null)
-          ? formState.indivScores[memberId][idx] : '';
-      } else {
-        val = (formState.scores[idx] !== undefined && formState.scores[idx] !== null) ? formState.scores[idx] : '';
-      }
-      inputEl.value = val;
-      calcAndRefreshTotals();
-    }
-
-    function calcAndRefreshTotals() {
-      let groupSubtotalScore = 0;
-      let activeMemberIndivSubtotal = 0;
-      let combinedFinalScore = 0;
-
-      const mainGaugeTitle = document.getElementById('mainGaugeTitle');
-      const mainGaugeVal = document.getElementById('mainGaugeVal');
-      const mainGaugeBreakdown = document.getElementById('mainGaugeBreakdown');
-      const groupSubtotalDisplay = document.getElementById('groupSubtotalDisplay');
-      const indivSubtotalDisplay = document.getElementById('indivSubtotalDisplay');
-
-      if (sessionData.isGroupMode) {
-        const currentItem = sessionData.items[currentIndex];
-        const gRatio = (sessionData.groupRatio !== undefined && sessionData.groupRatio > 0) ? sessionData.groupRatio : 30;
-        const iRatio = (sessionData.indivRatio !== undefined && sessionData.indivRatio > 0) ? sessionData.indivRatio : 40;
-        const totalWeightScale = gRatio + iRatio;
-        
-        let gWeightedSum = 0;
-        let gWeightTotal = 0;
-        let allGroupEntered = true;
-        const groupCriteriaList = sessionData.groupCriteria || [];
-        if (groupCriteriaList.length === 0) {
-          allGroupEntered = false;
-        } else {
-          for (let gi = 0; gi < groupCriteriaList.length; gi++) {
-            const sc = formState.groupScores ? formState.groupScores[gi] : null;
-            if (sc === undefined || sc === null || sc === '') {
-              allGroupEntered = false;
-              break;
-            }
-          }
-        }
-
-        if (allGroupEntered) {
-          groupCriteriaList.forEach((crit, gi) => {
-            const s = Number(formState.groupScores[gi]) || 0;
-            gWeightedSum += s * crit.weight;
-            gWeightTotal += crit.weight;
-          });
-          groupSubtotalScore = gWeightTotal > 0 ? (gWeightedSum / gWeightTotal) : 0;
-        } else {
-          groupSubtotalScore = 0;
-        }
-
-        const gRatioBadge = document.getElementById('groupRatioBadge');
-        if (gRatioBadge) gRatioBadge.innerText = `佔比 ${gRatio}%`;
-        const iRatioBadge = document.getElementById('indivRatioBadge');
-        if (iRatioBadge) iRatioBadge.innerText = `佔比 ${iRatio}%`;
-
-        let iWeightTotal = 0;
-        (sessionData.indivCriteria || []).forEach(crit => iWeightTotal += crit.weight);
-
-        const activeMember = (currentItem && currentItem.members) ? currentItem.members[selectedMemberIndex] : null;
-        const memberScores = (activeMember && formState.indivScores) ? (formState.indivScores[activeMember.id] || {}) : {};
-
-        let allIndivEntered = true;
-        const indivCriteriaList = sessionData.indivCriteria || [];
-        if (indivCriteriaList.length === 0) {
-          allIndivEntered = false;
-        } else {
-          for (let ii = 0; ii < indivCriteriaList.length; ii++) {
-            const sc = memberScores[ii];
-            if (sc === undefined || sc === null || sc === '') {
-              allIndivEntered = false;
-              break;
-            }
-          }
-        }
-
-        if (allIndivEntered) {
-          let mIndivWeightedSum = 0;
-          indivCriteriaList.forEach((crit, ii) => {
-            const score = Number(memberScores[ii]) || 0;
-            mIndivWeightedSum += score * crit.weight;
-          });
-          activeMemberIndivSubtotal = iWeightTotal > 0 ? (mIndivWeightedSum / iWeightTotal) : 0;
-        } else {
-          activeMemberIndivSubtotal = 0;
-        }
-
-        if (allGroupEntered && allIndivEntered) {
-          combinedFinalScore = totalWeightScale > 0 
-            ? ((groupSubtotalScore * gRatio + activeMemberIndivSubtotal * iRatio) / totalWeightScale) 
-            : ((groupSubtotalScore + activeMemberIndivSubtotal) / 2);
-        } else {
-          combinedFinalScore = 0;
-        }
-
-        if (groupSubtotalDisplay) groupSubtotalDisplay.innerText = allGroupEntered ? groupSubtotalScore.toFixed(1) : '0.0';
-        if (indivSubtotalDisplay) indivSubtotalDisplay.innerText = allIndivEntered ? activeMemberIndivSubtotal.toFixed(1) : '0.0';
-
-        if (allGroupEntered && currentItem && currentItem.members) {
-          let updatedAny = false;
-          currentItem.members.forEach((m, mIdx) => {
-            if (mIdx !== selectedMemberIndex && formState.savedMembers && formState.savedMembers[m.id] !== undefined) {
-              const mScores = formState.indivScores ? formState.indivScores[m.id] : null;
-              if (mScores) {
-                let mSum = 0;
-                let mWSum = 0;
-                (sessionData.indivCriteria || []).forEach((crit, ii) => {
-                  const s = mScores[ii];
-                  if (s !== undefined && s !== null && s !== '') {
-                    mSum += Number(s) * crit.weight;
-                    mWSum += crit.weight;
-                  }
-                });
-                if (mWSum > 0) {
-                  const mIndivSub = mSum / mWSum;
-                  const newRecalculatedScore = totalWeightScale > 0
-                    ? parseFloat(((groupSubtotalScore * gRatio + mIndivSub * iRatio) / totalWeightScale).toFixed(1))
-                    : 0.0;
-                  formState.savedMembers[m.id] = newRecalculatedScore;
-                  updatedAny = true;
-                }
-              }
-            }
-          });
-          if (updatedAny) {
-            renderMemberPillTabs();
-          }
-        }
-
-        if (mainGaugeTitle) mainGaugeTitle.innerText = '加權總分 (團體+個人)';
-        const canShowGauge = allGroupEntered && allIndivEntered;
-        if (mainGaugeVal) mainGaugeVal.textContent = canShowGauge ? combinedFinalScore.toFixed(1) : '0.0';
-        renderSegmentedArc(canShowGauge ? combinedFinalScore : 0);
-
-        if (mainGaugeBreakdown) mainGaugeBreakdown.classList.remove('hidden');
-        const gRatioSpan = document.getElementById('gaugeBreakdownGroupRatio');
-        if (gRatioSpan) gRatioSpan.innerText = `${gRatio}%`;
-        const gScoreSpan = document.getElementById('gaugeBreakdownGroupScore');
-        if (gScoreSpan) gScoreSpan.innerText = allGroupEntered ? groupSubtotalScore.toFixed(1) : '0.0';
-
-        const iRatioSpan = document.getElementById('gaugeBreakdownIndivRatio');
-        if (iRatioSpan) iRatioSpan.innerText = `${iRatio}%`;
-        const iScoreSpan = document.getElementById('gaugeBreakdownIndivScore');
-        if (iScoreSpan) iScoreSpan.innerText = allIndivEntered ? activeMemberIndivSubtotal.toFixed(1) : '0.0';
-
-      } else {
-        // 純個人專案模式加權計算
-        let total = 0, wSum = 0, allEntered = true;
-        (sessionData.criteria || []).forEach((crit, i) => {
-          const v = formState.scores[i];
-          if (v === undefined || v === null || v === '') {
-            allEntered = false;
-          } else {
-            total += Number(v) * crit.weight;
-            wSum += crit.weight;
-          }
-        });
-        combinedFinalScore = (allEntered && wSum > 0) ? (total / wSum) : 0;
-
-        if (mainGaugeTitle) mainGaugeTitle.innerText = '個人加權分數';
-        if (mainGaugeVal) mainGaugeVal.textContent = allEntered ? combinedFinalScore.toFixed(1) : '0.0';
-        renderSegmentedArc(allEntered ? combinedFinalScore : 0);
-        if (mainGaugeBreakdown) mainGaugeBreakdown.classList.add('hidden');
-      }
-    }
-
-    function renderSegmentedArc(score) {
-      const group = document.getElementById('segmentedTicksGroup');
-      if (!group) return;
-      const totalTicks = 26;
-      const startAngle = 160;
-      const endAngle = 380;
-      const angleRange = endAngle - startAngle;
-      const cx = 150, cy = 135;
-      const rInner = 82, rOuter = 104;
-
-      const numericScore = typeof score === 'number' ? score : parseFloat(score) || 0;
-      const activeCount = numericScore > 0 ? Math.round((Math.max(0, Math.min(100, numericScore)) / 100) * totalTicks) : 0;
-      let html = '';
-
-      for (let i = 0; i < totalTicks; i++) {
-        const ratio = i / (totalTicks - 1);
-        const deg = startAngle + ratio * angleRange;
-        const rad = (deg * Math.PI) / 180;
-        const cos = Math.cos(rad);
-        const sin = Math.sin(rad);
-
-        const x1 = (cx + rInner * cos).toFixed(1);
-        const y1 = (cy + rInner * sin).toFixed(1);
-        const x2 = (cx + rOuter * cos).toFixed(1);
-        const y2 = (cy + rOuter * sin).toFixed(1);
-
-        const isActive = i < activeCount && numericScore > 0;
-        if (isActive) {
-          let strokeColor = '#ca6b2d';
-          if (ratio > 0.75) strokeColor = '#fff5ea';
-          else if (ratio > 0.45) strokeColor = '#ffcf96';
-          else strokeColor = '#ff9f43';
-
-          html += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${strokeColor}" stroke-width="4.2" stroke-linecap="round" filter="url(#segmentGlow)" />`;
-        } else {
-          html += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#1e2735" stroke-width="3.8" stroke-linecap="round" opacity="0.65" />`;
-        }
-      }
-      group.innerHTML = html;
-    }
-
-    function submitCurrentScore() {
-      const teacher = document.getElementById('teacherName').value.trim();
-      if (!teacher) {
-        showToast('請先在頂部輸入「評審老師」姓名！', '⚠️');
-        document.getElementById('teacherName').focus();
-        return;
-      }
-      safeStorage.setItem('review_teacher_name', teacher);
-
-      const item = sessionData.items[currentIndex];
-      const currentNotes = document.getElementById('notes').value.trim();
-      let representativeFinalScore = 0;
-      let records = [];
-      let syncedCount = 0;
-
-      if (sessionData.isGroupMode) {
-        const activeMember = (item.members || [])[selectedMemberIndex] || item.members[0];
-        const mScores = (formState.indivScores && formState.indivScores[activeMember.id]) ? formState.indivScores[activeMember.id] : {};
-
-        let allGroupEntered = true;
-        (sessionData.groupCriteria || []).forEach((crit, gi) => {
-          const s = formState.groupScores && formState.groupScores[gi];
-          if (s === undefined || s === null || s === '') {
-            allGroupEntered = false;
-          }
-        });
-        if (!allGroupEntered) {
-          showToast('請先完成「PART 1 · 小組團體分數」評分！', '⚠️');
-          return;
-        }
-
-        let allEntered = true;
-        (sessionData.indivCriteria || []).forEach((crit, ii) => {
-          const s = mScores[ii];
-          if (s === undefined || s === null || s === '') {
-            allEntered = false;
-          }
-        });
-
-        if (!allEntered) {
-          showToast(`請先完成【${activeMember.name}】的個人評分！`, '⚠️');
-          return;
-        }
-
-        const gRatio = (sessionData.groupRatio !== undefined && sessionData.groupRatio > 0) ? sessionData.groupRatio : 30;
-        const iRatio = (sessionData.indivRatio !== undefined && sessionData.indivRatio > 0) ? sessionData.indivRatio : 40;
-        const totalWeightScale = gRatio + iRatio;
-
-        let gWeightedSum = 0;
-        let gWeightTotal = 0;
-        (sessionData.groupCriteria || []).forEach((crit, gi) => {
-          const s = Number(formState.groupScores[gi]) || 0;
-          gWeightedSum += s * crit.weight;
-          gWeightTotal += crit.weight;
-        });
-        const groupSubtotalScore = gWeightTotal > 0 ? (gWeightedSum / gWeightTotal) : 0;
-
-        let iWeightTotal = 0;
-        (sessionData.indivCriteria || []).forEach(crit => iWeightTotal += crit.weight);
-
-        let mIndivWeightedSum = 0;
-        (sessionData.indivCriteria || []).forEach((crit, ii) => {
-          const s = Number(mScores[ii]) || 0;
-          mIndivWeightedSum += s * crit.weight;
-        });
-        const mIndivSubtotal = iWeightTotal > 0 ? (mIndivWeightedSum / iWeightTotal) : 0;
-
-        const finalScoreVal = totalWeightScale > 0 
-          ? parseFloat(((groupSubtotalScore * gRatio + mIndivSubtotal * iRatio) / totalWeightScale).toFixed(1))
-          : 0.0;
-
-        representativeFinalScore = finalScoreVal;
-
-        records = [{
-          id: activeMember.id,
-          name: activeMember.name,
-          advisor: activeMember.advisor,
-          finalScore: finalScoreVal,
-          notes: currentNotes
-        }];
-
-        (item.members || []).forEach(m => {
-          if (m.id !== activeMember.id && formState.savedMembers && formState.savedMembers[m.id] !== undefined) {
-            records.push({
-              id: m.id,
-              name: m.name,
-              advisor: m.advisor,
-              finalScore: formState.savedMembers[m.id],
-              notes: (formState.memberNotes && formState.memberNotes[m.id]) ? formState.memberNotes[m.id] : ''
-            });
-            syncedCount++;
-          }
-        });
-
-        formState.memberNotes[activeMember.id] = currentNotes;
-        if (!formState.savedMembers) formState.savedMembers = {};
-        formState.savedMembers[activeMember.id] = finalScoreVal;
-
-        if (!reviewMemory[currentIndex]) reviewMemory[currentIndex] = {};
-        reviewMemory[currentIndex].groupScores = { ...formState.groupScores };
-        reviewMemory[currentIndex].indivScores = JSON.parse(JSON.stringify(formState.indivScores));
-        reviewMemory[currentIndex].memberNotes = { ...formState.memberNotes };
-        reviewMemory[currentIndex].savedMembers = { ...formState.savedMembers };
-        reviewMemory[currentIndex].representativeScore = representativeFinalScore;
-        reviewMemory[currentIndex].notes = currentNotes;
-        reviewMemory[currentIndex].photo = formState.currentPhoto;
-
-      } else {
-        // 純個人專案模式
-        let total = 0, wSum = 0, allEntered = true;
-        (sessionData.criteria || []).forEach((crit, i) => {
-          const v = formState.scores[i];
-          if (v === undefined || v === null || v === '') {
-            allEntered = false;
-          } else {
-            total += Number(v) * crit.weight;
-            wSum += crit.weight;
-          }
-        });
-
-        if (!allEntered) {
-          showToast(`請先完成【${item.name}】的各項評分！`, '⚠️');
-          return;
-        }
-
-        const finalVal = wSum > 0 ? (total / wSum) : 0;
-        representativeFinalScore = parseFloat(finalVal.toFixed(1));
-
-        records = [{
-          id: item.id,
-          name: item.name,
-          advisor: item.advisor,
-          finalScore: representativeFinalScore,
-          notes: currentNotes
-        }];
-
-        reviewMemory[currentIndex] = {
-          scores: { ...formState.scores },
-          representativeScore: representativeFinalScore,
-          notes: currentNotes,
-          photo: formState.currentPhoto
-        };
-      }
-
-      setButtonLoading(true);
-
-      const safetyTimer = setTimeout(() => {
-        setButtonLoading(false);
-      }, 6000);
-
+      // 非同步傳送至後端 Google 試算表
       const payload = {
-        grade: sessionData.grade,
-        teacher: teacher,
-        groupName: sessionData.isGroupMode ? item.groupName : '個人專題',
-        notes: currentNotes,
-        imageBase64: formState.currentPhoto,
-        records: records
+        action: 'submitScore',
+        records: [{
+          grade: sessionData.currentGrade,
+          reviewer: reviewerName,
+          group: currentStudent.group || '',
+          studentId: currentStudent.id,
+          studentName: currentStudent.name,
+          advisor: currentStudent.advisor,
+          totalScore: totalScore,
+          comment: comment,
+          details: scores
+        }]
       };
 
-      backendService.saveScores(
-        payload,
-        res => {
-          clearTimeout(safetyTimer);
+      // 靜默背景上傳
+      fetch(GAS_API_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(payload)
+      }).catch(err => console.error('背景存檔提示：', err));
 
-          if (res && res.success) {
-            if (sessionData.isGroupMode) {
-              const currentItem = sessionData.items[currentIndex];
-              const totalMembers = (currentItem.members || []).length;
-              const activeMember = currentItem.members[selectedMemberIndex];
-              const currentMemberName = activeMember ? activeMember.name : '';
+      showToast(`已儲存 ${currentStudent.name}（${totalScore.toFixed(1)}分）`);
 
-              if (syncedCount > 0) {
-                showToast(`已儲存【${currentMemberName}】(${representativeFinalScore}分)，並同步更新全組 ${syncedCount} 位同學最新成績！`, '✔');
-              } else {
-                showToast(`已成功儲存【${currentMemberName}】(${representativeFinalScore} 分)！`, '✔');
-              }
-
-              if (selectedMemberIndex + 1 < totalMembers) {
-                selectMember(selectedMemberIndex + 1);
-                window.scrollTo({ top: 80, behavior: 'smooth' });
-              } else {
-                setButtonLoading(false);
-                showToast(`🎉 第 ${currentItem.groupName} 組已全員完成評分！`, '🏆');
-                if (currentIndex + 1 < sessionData.items.length) {
-                  renderView(currentIndex + 1);
-                } else {
-                  renderView(currentIndex);
-                }
-              }
-            } else {
-              setButtonLoading(false);
-              showToast(res.isMock ? '評分已儲存！' : `已儲存【${item.name}】(${representativeFinalScore}分)！`, '✔');
-              if (currentIndex + 1 < sessionData.items.length) {
-                renderView(currentIndex + 1);
-              } else {
-                showToast('🎉 已完成全體評分！', '🏆');
-                renderView(currentIndex);
-              }
-            }
-          } else {
-            setButtonLoading(false);
-            showToast('儲存失敗：' + (res ? res.error : '未知錯誤'), '❌');
-          }
-        },
-        err => {
-          clearTimeout(safetyTimer);
-          setButtonLoading(false);
-          showToast('網路或伺服器錯誤：' + (err.message || err), '⚠️');
-        }
-      );
-    }
-
-    function renderPhotoSectionHTML() {
-      if (formState.currentPhoto) {
-        return `
-          <div class="flex items-center justify-between bg-[#10141a] border border-[#ca6b2d]/60 p-2.5 rounded-xl shadow-[inset_0_1px_1px_rgba(255,230,195,0.2)]">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="openLightbox('${formState.currentPhoto}')">
-              <img src="${formState.currentPhoto}" class="w-14 h-14 object-cover rounded-xl border border-[#ca6b2d]/80 shadow-md">
-              <div>
-                <span class="text-xs font-bold text-[#ff9f43] block">作品縮圖 (已留存)</span>
-                <span class="text-[10px] text-[#8e9aa8] font-times italic">點擊全螢幕放大 🔍</span>
-              </div>
-            </div>
-            <div class="flex items-center gap-2">
-              <label for="directCameraInput" class="px-3 py-1.5 bg-[#1a212b] hover:bg-[#232c39] text-[#ffb573] text-xs font-bold rounded-xl border border-[#394557] cursor-pointer active:scale-95 transition">
-                重拍
-              </label>
-              <button type="button" onclick="removePhoto()" class="px-2.5 py-1.5 bg-[#2c1513] hover:bg-[#3d1e1a] text-[#f87171] text-xs font-bold rounded-xl border border-[#4d231e] active:scale-95 transition">
-                ✕
-              </button>
-            </div>
-          </div>
-        `;
+      // 前進下一位
+      if (currentIndex + 1 < sessionData.students.length) {
+        loadStudent(currentIndex + 1);
       } else {
-        return `
-          <div class="grid grid-cols-2 gap-2.5">
-            <label for="directCameraInput" class="py-3 bg-gradient-to-b from-[#1b212a] to-[#11141a] hover:from-[#232a35] hover:to-[#161a22] border border-[#ca6b2d]/70 hover:border-[#ff9f43] rounded-xl text-[#f2f6fa] text-xs font-bold flex items-center justify-center gap-2 cursor-pointer active:scale-98 transition shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_4px_14px_rgba(0,0,0,0.6)]">
-              <span class="text-base text-[#ff9f43]">📷</span> 啟動相機拍照
-            </label>
-            <label for="directGalleryInput" class="py-3 bg-gradient-to-b from-[#171c23] to-[#0f1217] hover:from-[#1f252f] hover:to-[#13171e] border border-[#323c4a] rounded-xl text-[#c4ccd7] text-xs font-bold flex items-center justify-center gap-2 cursor-pointer active:scale-98 transition shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_4px_12px_rgba(0,0,0,0.6)]">
-              <span class="text-base text-[#8e9aa8]">🖼️</span> 從相簿選取
-            </label>
-          </div>
-        `;
+        showToast('🎉 本年級所有學生均已評分完畢！');
       }
     }
 
-    function removePhoto() {
-      formState.currentPhoto = null;
-      const photoContainer = document.getElementById('photoContainer');
-      if (photoContainer) photoContainer.innerHTML = renderPhotoSectionHTML();
-    }
-
-    function handleImageCaptured(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const photoContainer = document.getElementById('photoContainer');
-      if (photoContainer) {
-        photoContainer.innerHTML = `
-          <div class="py-3 bg-[#10141a] border border-[#ca6b2d]/50 rounded-xl flex items-center justify-center gap-2 text-[#ff9f43] text-xs font-times animate-pulse">
-            <span class="animate-spin">⏳</span> Compressing Image...
-          </div>
-        `;
-      }
-
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        const img = new Image();
-        img.onload = function() {
-          const canvas = document.createElement('canvas');
-          const maxDim = 600;
-          let width = img.width;
-          let height = img.height;
-
-          if (width > height && width > maxDim) {
-            height = Math.round((height * maxDim) / width);
-            width = maxDim;
-          } else if (height > maxDim) {
-            width = Math.round((width * maxDim) / height);
-            height = maxDim;
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, height);
-
-          const compressedBase64 = canvas.toDataURL('image/jpeg', 0.5);
-          formState.currentPhoto = compressedBase64;
-          
-          if (photoContainer) {
-            photoContainer.innerHTML = renderPhotoSectionHTML();
-          }
-        };
-        img.src = event.target.result;
-      };
-      reader.readAsDataURL(file);
-      e.target.value = '';
-    }
-
-    function openLightbox(src) {
-      document.getElementById('lightboxImg').src = src;
-      document.getElementById('imageLightbox').classList.remove('hidden');
-    }
-
-    function changeItem(dir) {
-      const nIdx = currentIndex + dir;
-      if (nIdx >= 0 && nIdx < sessionData.items.length) {
-        renderView(nIdx);
+    // 上下位切換
+    function navigateStudent(direction) {
+      const newIndex = currentIndex + direction;
+      if (newIndex >= 0 && newIndex < sessionData.students.length) {
+        loadStudent(newIndex);
       }
     }
 
-    function openOverviewModal() {
-      const modal = document.getElementById('overviewModal');
-      document.getElementById('modalSearchInput').value = '';
-      currentOverviewFilter = 'all';
-      updateFilterTabButtons();
-      renderOverviewCards();
-      modal.classList.remove('hidden');
+    // 下拉快選切換
+    function jumpToStudent(val) {
+      loadStudent(parseInt(val, 10));
     }
 
-    function closeOverviewModal() {
-      document.getElementById('overviewModal').classList.add('hidden');
+    // 返回封面重新選年級
+    function switchGradeReturnCover() {
+      document.getElementById('critiqueScreen').classList.add('hidden');
+      document.getElementById('coverScreen').classList.remove('hidden');
+      const btn = document.getElementById('btnEnterSystem');
+      btn.disabled = false;
+      btn.innerHTML = `<span>進入評圖系統</span><span>➔</span>`;
+      document.getElementById('coverStatusMsg').textContent = '';
     }
 
-    function jumpToItem(index) {
-      closeOverviewModal();
-      renderView(index);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function setOverviewFilter(filterType) {
-      currentOverviewFilter = filterType;
-      updateFilterTabButtons();
-      renderOverviewCards();
-    }
-
-    function updateFilterTabButtons() {
-      const tabs = ['all', 'done', 'pending'];
-      tabs.forEach(t => {
-        const btn = document.getElementById('tabFilter' + t.charAt(0).toUpperCase() + t.slice(1));
-        if (btn) {
-          if (t === currentOverviewFilter) {
-            btn.className = 'px-3 py-1.5 rounded-xl metallic-bronze-btn text-white font-extrabold transition shadow-sm font-times';
-          } else {
-            btn.className = 'px-3 py-1.5 rounded-xl bg-[#161c24] text-[#8e9aa8] hover:bg-[#202733] transition border border-[#2f3947] font-times';
-          }
-        }
-      });
-    }
-
-    function filterOverviewList() {
-      const query = document.getElementById('modalSearchInput').value.trim().toLowerCase();
-      const clearBtn = document.getElementById('clearSearchBtn');
-      if (query) {
-        clearBtn.classList.remove('hidden');
-      } else {
-        clearBtn.classList.add('hidden');
-      }
-      renderOverviewCards();
-    }
-
-    function clearModalSearch() {
-      document.getElementById('modalSearchInput').value = '';
-      document.getElementById('clearSearchBtn').classList.add('hidden');
-      renderOverviewCards();
-    }
-
-    function renderOverviewCards() {
-      if (!sessionData || !sessionData.items) return;
-
-      const container = document.getElementById('overviewCardsList');
-      const query = document.getElementById('modalSearchInput').value.trim().toLowerCase();
-      
-      let totalCount = sessionData.items.length;
-      let doneCount = 0;
-      let pendingCount = 0;
-
-      sessionData.items.forEach((_, idx) => {
-        if (reviewMemory[idx]) doneCount++;
-        else pendingCount++;
-      });
-
-      document.getElementById('countAll').innerText = totalCount;
-      document.getElementById('countDone').innerText = doneCount;
-      document.getElementById('countPending').innerText = pendingCount;
-      document.getElementById('modalProgressBadge').innerText = `${doneCount}/${totalCount} Completed`;
-
-      let filteredItems = [];
-
-      sessionData.items.forEach((item, idx) => {
-        const isDone = !!reviewMemory[idx];
-
-        if (currentOverviewFilter === 'done' && !isDone) return;
-        if (currentOverviewFilter === 'pending' && isDone) return;
-
-        if (query) {
-          let match = false;
-          if (sessionData.isGroupMode) {
-            if (item.groupName && item.groupName.toLowerCase().includes(query)) match = true;
-            if (item.advisor && item.advisor.toLowerCase().includes(query)) match = true;
-            if (item.members) {
-              item.members.forEach(m => {
-                if ((m.name && m.name.toLowerCase().includes(query)) || (m.id && m.id.toLowerCase().includes(query))) match = true;
-              });
-            }
-          } else {
-            if ((item.name && item.name.toLowerCase().includes(query)) || (item.id && item.id.toLowerCase().includes(query)) || (item.advisor && item.advisor.toLowerCase().includes(query))) {
-              match = true;
-            }
-          }
-          if (!match) return;
-        }
-
-        filteredItems.push({ item: item, originalIndex: idx, isDone: isDone });
-      });
-
-      if (filteredItems.length === 0) {
-        container.innerHTML = `
-          <div class="py-12 text-center text-[#8e9aa8] font-medium text-xs font-times italic">
-            No matching records found
-          </div>
-        `;
-        return;
-      }
-
-      container.innerHTML = filteredItems.map(({ item, originalIndex, isDone }) => {
-        const isCurrent = originalIndex === currentIndex;
-        const mem = reviewMemory[originalIndex];
-        const photo = mem && mem.photo ? mem.photo : null;
-        const scoreDisplay = mem && mem.representativeScore ? `${mem.representativeScore.toFixed(1)} PTS` : (isDone ? '已評分' : '待評分');
-
-        let titleText = sessionData.isGroupMode ? `第 ${item.groupName} 組` : item.name;
-        let subtitleText = sessionData.isGroupMode && item.members ? item.members.map(m => m.name).join(', ') : `#${item.id}`;
-        let advisorText = item.advisor || '未指定';
-
-        return `
-          <div onclick="jumpToItem(${originalIndex})" class="p-3 rounded-xl border ${isCurrent ? 'border-[#ca6b2d] bg-[#19202a] shadow-[0_0_15px_rgba(202,107,45,0.35)]' : 'border-[#212833] bg-[#11151c] hover:border-[#354050]'} active:scale-[0.98] transition cursor-pointer flex items-center justify-between gap-3 shadow-md">
-            <div class="flex items-center gap-3 min-w-0">
-              ${photo ? `
-                <img src="${photo}" class="w-11 h-11 object-cover rounded-lg border border-[#ca6b2d]/70 shadow-sm shrink-0">
-              ` : `
-                <div class="w-11 h-11 rounded-lg bg-[#161c24] border border-[#2e3745] flex items-center justify-center font-times font-bold text-sm text-[#ff9f43] shrink-0">
-                  ${originalIndex + 1}
-                </div>
-              `}
-              <div class="min-w-0">
-                <div class="flex items-center gap-2">
-                  <span class="text-sm font-black text-white truncate">${titleText}</span>
-                  ${isCurrent ? `<span class="text-[9px] font-times font-bold bg-[#ca6b2d] text-white px-1.5 py-0.5 rounded shadow-sm">NOW</span>` : ''}
-                </div>
-                <div class="text-[11px] text-[#8e9aa8] font-times truncate">${subtitleText} ｜ Advisor: ${advisorText}</div>
-              </div>
-            </div>
-
-            <div class="text-right shrink-0">
-              ${isDone ? `
-                <div class="bg-[#1b212a] border border-[#ca6b2d]/60 text-[#ffb573] font-times font-bold text-xs px-2.5 py-1 rounded-lg shadow-inner">
-                  ${scoreDisplay}
-                </div>
-              ` : `
-                <div class="bg-[#141820] text-[#616e7e] font-times font-bold text-xs px-2.5 py-1 rounded-lg border border-[#212733]">
-                  PENDING
-                </div>
-              `}
-            </div>
-          </div>
-        `;
-      }).join('');
+    // 提示 Toast
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.remove('opacity-0');
+      setTimeout(() => t.classList.add('opacity-0'), 2200);
     }
   </script>
 </body>
