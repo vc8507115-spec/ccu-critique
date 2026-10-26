@@ -102,7 +102,7 @@
     </div>
 
     <!-- 封面主控制卡片 -->
-    <div class="w-full glass-card rounded-2xl p-6 sm:p-7 space-y-5">
+    <div class="w-full glass-card rounded-2xl p-6 sm:p-7 space-y-4">
       
       <!-- 年級選擇 (原生下拉選單) -->
       <div>
@@ -124,11 +124,28 @@
         </div>
       </div>
 
-      <!-- 階段資訊 (唯讀提示) -->
+      <!-- 階段資訊 -->
       <div class="flex items-center justify-between px-4 py-3 bg-[#0a0e14]/60 border border-slate-800 rounded-xl">
         <span class="text-xs text-slate-400 font-serif-tc">當前評圖階段</span>
         <span id="coverStageText" class="text-sm font-bold text-amber-300 font-serif-tc">期中評圖</span>
       </div>
+
+      <!-- ★ 題本查閱按鈕 (另開新分頁查閱) -->
+      <a href="./1151文化建築_建築設計三題本.pdf" target="_blank" rel="noopener noreferrer" 
+         class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-[#0a0e14]/80 border border-amber-600/40 text-amber-300 hover:border-amber-400 hover:bg-amber-950/30 transition-all duration-200 cursor-pointer shadow-sm group">
+        <div class="flex items-center gap-2.5">
+          <svg class="w-4 h-4 text-amber-400 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+          <div class="text-left">
+            <span class="text-xs font-bold font-serif-tc tracking-wider block">查閱本期設計題本與任務說明</span>
+            <span class="text-[9px] text-slate-400 font-times tracking-widest uppercase">Project Brief & Guidelines</span>
+          </div>
+        </div>
+        <svg class="w-4 h-4 text-amber-500/80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a>
 
       <!-- 評審姓名輸入 -->
       <div>
@@ -160,7 +177,7 @@
   <!-- ==================== 2. 主評分頁 (Critique Screen) ==================== -->
   <div id="critiqueScreen" class="w-full max-w-md mx-auto hidden flex flex-col gap-4 pb-24">
     
-    <!-- 頂部資訊列 (已移除換年級按鈕，極致簡潔) -->
+    <!-- 頂部資訊列 (常駐年級與評審姓名) -->
     <header class="w-full glass-card rounded-xl px-4 py-2.5 flex items-center justify-between sticky top-2 z-40">
       <div class="flex items-center gap-2.5">
         <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></div>
@@ -185,7 +202,6 @@
       <!-- 快選下拉選單 -->
       <div class="flex-1 relative">
         <select id="quickJumpSelect" onchange="jumpToStudent(this.value)" class="w-full bg-[#121721] border border-amber-600/30 rounded-xl px-3 py-2 text-xs text-amber-300 font-serif-tc focus:outline-none appearance-none text-center cursor-pointer">
-          <!-- 動態生成學生選單 -->
         </select>
         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-amber-400 text-[10px]">
           ▼
@@ -197,20 +213,20 @@
       </button>
     </div>
 
-    <!-- 學生名牌卡 (含拍照與相簿按鈕) -->
+    <!-- 學生名牌卡 (含拍照與相簿功能) -->
     <div class="w-full glass-card rounded-2xl p-5 space-y-4 relative overflow-hidden">
       <div class="flex items-start justify-between">
         <div>
           <div class="flex items-center gap-2 mb-1">
             <span id="cardGroupTag" class="hidden px-2 py-0.5 rounded bg-amber-600/30 border border-amber-500/50 text-amber-300 text-[10px] font-times font-bold uppercase"></span>
-            <span id="cardStudentId" class="text-xs font-times text-slate-400 tracking-wider">#B1221553</span>
+            <span id="cardStudentId" class="text-xs font-times text-slate-400 tracking-wider">#--</span>
           </div>
-          <h2 id="cardStudentName" class="text-2xl font-black font-serif-tc text-white tracking-wide">李孟潔</h2>
+          <h2 id="cardStudentName" class="text-2xl font-black font-serif-tc text-white tracking-wide">學生姓名</h2>
         </div>
         <div class="text-right">
           <p class="text-[10px] text-slate-400 font-serif-tc">指導老師</p>
           <span id="cardAdvisorName" class="inline-block mt-0.5 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700 text-xs font-serif-tc text-amber-200">
-            江益璋
+            指導老師
           </span>
         </div>
       </div>
@@ -244,7 +260,7 @@
       </div>
     </div>
 
-    <!-- 加權總分儀表卡片 (復原半圓刻度環) -->
+    <!-- 加權總分儀表卡片 (半圓刻度環) -->
     <div class="w-full glass-card rounded-2xl p-5 text-center relative overflow-hidden">
       <div class="flex items-center justify-between text-xs text-slate-400 font-serif-tc mb-1">
         <span class="flex items-center gap-1.5 text-amber-300">
@@ -257,9 +273,7 @@
       <!-- 儀表半圓刻度繪製區 -->
       <div class="relative w-48 h-28 mx-auto mt-2 flex flex-col items-center justify-end">
         <svg class="w-48 h-24 overflow-visible" viewBox="0 0 200 100">
-          <!-- 刻度線背景弧 -->
           <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(202, 107, 45, 0.2)" stroke-width="6" stroke-linecap="round" stroke-dasharray="2 6"/>
-          <!-- 動態高亮進度條 -->
           <path id="gaugeArcProgress" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#amberGradient)" stroke-width="6" stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="251.2" style="transition: stroke-dashoffset 0.4s ease;"/>
           <defs>
             <linearGradient id="amberGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -270,7 +284,6 @@
           </defs>
         </svg>
 
-        <!-- 置中分數 -->
         <div class="absolute bottom-1 flex flex-col items-center">
           <span id="displayTotalScore" class="text-4xl font-black font-times tracking-tight text-white drop-shadow-[0_2px_12px_rgba(245,158,11,0.3)]">0.0</span>
           <span class="text-[10px] font-times text-slate-400 -mt-1">/ 100 PTS</span>
@@ -489,7 +502,7 @@
 
       document.getElementById('displayTotalScore').textContent = total.toFixed(1);
 
-      // 動態更新半圓刻度進度條 (半圓長度約 251.2)
+      // 動態更新半圓刻度進度條
       const maxOffset = 251.2;
       const offset = maxOffset - (Math.min(total, 100) / 100) * maxOffset;
       document.getElementById('gaugeArcProgress').style.strokeDashoffset = offset;
