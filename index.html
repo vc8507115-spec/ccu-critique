@@ -460,7 +460,7 @@
         </div>
       </div>
 
-      <!-- 第二部分：個人評分 -->
+      <!-- 第二部分：個人評分 / 純個人評分 -->
       <div id="indivSectionCard" class="metallic-panel p-4 rounded-2xl space-y-3 relative">
         <div class="flex justify-between items-center pb-2.5 border-b border-[#202732]">
           <div class="flex items-center gap-2">
@@ -552,7 +552,7 @@
   </div>
 
   <script>
-    // ⭐️ 核心設定：已為您直接填入您的 Google Apps Script 網頁應用程式網址
+    // ⭐️ 核心設定：已填入您的 Google Apps Script 網頁應用程式網址
     const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxVKmk3v0HRJJOPkvwYMKbFyIPumffiyO-j56v3RicEqNYBilGpwPXd37yFk7hJFeEQ/exec";
 
     const safeStorage = {
@@ -616,18 +616,17 @@
 
     const mockIndivData = {
       department: '中國文化大學建築及都市設計學系',
-      stage: '畢業評圖',
-      grade: 'G4_大四',
+      stage: '個人評圖',
+      grade: 'G1_大一',
       isGroupMode: false,
       criteria: [
-        { name: '畢業專題概念創新度', weight: 30 },
-        { name: '建築細部與構造模型', weight: 30 },
-        { name: '圖面表現與都市分析', weight: 20 },
-        { name: '現場問答與口頭答辯', weight: 20 }
+        { name: '形式生成與轉譯邏輯', weight: 35 },
+        { name: '模型與 1:1 實作', weight: 35 },
+        { name: '手作表現', weight: 30 }
       ],
       items: [
-        { id: '401', name: '陳建州', advisor: '何老師' },
-        { id: '402', name: '林心如', advisor: '何老師' }
+        { id: 'B1221553', name: '李孟潔', advisor: '江益璋' },
+        { id: 'B4217001', name: '陳同學', advisor: '何老師' }
       ]
     };
 
@@ -641,7 +640,6 @@
             .withFailureHandler(failureHandler)
             .getSessionData();
         } else if (GAS_API_URL && !GAS_API_URL.includes("YOUR_DEPLOYMENT_ID_HERE")) {
-          // GitHub Pages 模式：透過 Fetch GET 向 Google 試算表讀取名冊與設定
           fetch(`${GAS_API_URL}?action=getSessionData&_t=${Date.now()}`)
             .then(res => {
               if (!res.ok) throw new Error(`HTTP 錯誤碼: ${res.status}`);
@@ -658,7 +656,7 @@
         } else {
           setTimeout(() => {
             successHandler(JSON.parse(JSON.stringify(mockGroupData)));
-            showToast('已載入小組評圖預覽（請在 index.html 填入 GAS_API_URL）', '⚠️');
+            showToast('已載入小組評圖預覽（請確認 GAS_API_URL）', '⚠️');
           }, 150);
         }
       },
@@ -670,7 +668,6 @@
             .withFailureHandler(failureHandler)
             .saveScores(payload);
         } else if (GAS_API_URL && !GAS_API_URL.includes("YOUR_DEPLOYMENT_ID_HERE")) {
-          // GitHub Pages 模式：使用 text/plain 送出避免觸發跨域 CORS preflight OPTIONS 攔截
           fetch(GAS_API_URL, {
             method: 'POST',
             redirect: 'follow',
@@ -839,7 +836,7 @@
 
       const previewLabel = document.getElementById('previewModeLabel');
       if (previewLabel) {
-        previewLabel.innerText = data.isGroupMode ? '小組專案' : '個人專題';
+        previewLabel.innerText = data.isGroupMode ? '小組專案' : '純個人專題';
       }
 
       const loading = document.getElementById('loading');
@@ -885,6 +882,7 @@
         if (groupSectionCard) groupSectionCard.classList.remove('hidden');
         if (syncAllBtn) syncAllBtn.classList.remove('hidden');
       } else {
+        // 純個人專案模式
         if (idTagLabel) idTagLabel.innerText = 'ID';
         if (navLabel) navLabel.innerText = `${currentItem.id} ${currentItem.name} (${index + 1}/${sessionData.items.length})`;
         document.getElementById('studentIdDisplay').innerText = currentItem.id;
@@ -922,7 +920,6 @@
         formState.groupScores = {};
         formState.indivScores = {};
 
-        // 讀取既有儲存紀錄，若無則預設為 null（未評分歸零）
         (sessionData.groupCriteria || []).forEach((_, gi) => {
           formState.groupScores[gi] = (mem && mem.groupScores && mem.groupScores[gi] !== undefined)
             ? mem.groupScores[gi]
@@ -962,7 +959,6 @@
 
       const activeMember = currentItem.members[selectedMemberIndex] || currentItem.members[0];
 
-      // 1. 被評分當事者：放大移至組別旁橘框位置 (僅顯示姓名與學號)
       if (topSpot && activeMember) {
         const isSaved = formState.savedMembers && formState.savedMembers[activeMember.id] !== undefined;
         const savedTag = isSaved 
@@ -978,7 +974,6 @@
         `;
       }
 
-      // 2. 其他組員：留在下方清單，點選立即切換
       if (listContainer) {
         const otherMembersHTML = currentItem.members.map((m, idx) => {
           if (idx === selectedMemberIndex) return '';
@@ -1074,6 +1069,11 @@
         } else {
           labelText = `儲存【${memberName}】並評下一位組員 (${selectedMemberIndex + 1}/${totalMembers})`;
         }
+      } else {
+        const currentItem = sessionData.items[currentIndex];
+        const studentName = currentItem ? currentItem.name : '本位學生';
+        const isLast = currentIndex + 1 >= sessionData.items.length;
+        labelText = isLast ? `儲存【${studentName}】評分 (完成全部評圖)` : `儲存【${studentName}】並評下一位 (${currentIndex + 1}/${sessionData.items.length})`;
       }
 
       btn.innerHTML = `
@@ -1118,6 +1118,7 @@
       const indivSectionTitle = document.getElementById('indivSectionTitle');
       const indivSectionDesc = document.getElementById('indivSectionDesc');
       const indivSubtotalRow = document.getElementById('indivSubtotalRow');
+      const indivRatioBadge = document.getElementById('indivRatioBadge');
       
       if (indivContainer) indivContainer.innerHTML = '';
       if (groupContainer) groupContainer.innerHTML = '';
@@ -1128,6 +1129,7 @@
         if (indivSectionTitle) indivSectionTitle.innerText = 'PART 2 · 個人評分';
         if (indivSectionDesc) indivSectionDesc.innerText = '每位組員的各項獨立評分指標：';
         if (indivSubtotalRow) indivSubtotalRow.classList.remove('hidden');
+        if (indivRatioBadge) indivRatioBadge.classList.remove('hidden');
 
         (sessionData.groupCriteria || []).forEach((crit, gi) => {
           const val = (formState.groupScores && formState.groupScores[gi] !== undefined && formState.groupScores[gi] !== null)
@@ -1143,9 +1145,12 @@
         });
 
       } else {
+        // ⭐️ 純個人專案模式：隱藏 PART 2 佔比標籤，純粹顯示評分指標
         if (indivSectionTitle) indivSectionTitle.innerText = '評分維度 (ASSESSMENT CRITERIA)';
         if (indivSectionDesc) indivSectionDesc.innerText = '各項評圖標準加權給分：';
         if (indivSubtotalRow) indivSubtotalRow.classList.add('hidden');
+        if (indivRatioBadge) indivRatioBadge.classList.add('hidden'); // 隱藏「佔比 40%」標籤
+
         (sessionData.criteria || []).forEach((crit, i) => {
           const val = formState.scores[i];
           if (indivContainer) indivContainer.appendChild(createCriterionRowElement(i, crit.name, crit.weight, val, 'indiv_single'));
@@ -1308,7 +1313,6 @@
         if (groupSubtotalDisplay) groupSubtotalDisplay.innerText = allGroupEntered ? groupSubtotalScore.toFixed(1) : '0.0';
         if (indivSubtotalDisplay) indivSubtotalDisplay.innerText = allIndivEntered ? activeMemberIndivSubtotal.toFixed(1) : '0.0';
 
-        // 當小組分數調整時，自動為全組「已評分同學」重新計算最新加權總分，更新名冊標籤
         if (allGroupEntered && currentItem && currentItem.members) {
           let updatedAny = false;
           currentItem.members.forEach((m, mIdx) => {
@@ -1357,6 +1361,7 @@
         if (iScoreSpan) iScoreSpan.innerText = allIndivEntered ? activeMemberIndivSubtotal.toFixed(1) : '0.0';
 
       } else {
+        // ⭐️ 純個人專案模式加權計算
         let total = 0, wSum = 0, allEntered = true;
         (sessionData.criteria || []).forEach((crit, i) => {
           const v = formState.scores[i];
@@ -1436,7 +1441,6 @@
         const activeMember = (item.members || [])[selectedMemberIndex] || item.members[0];
         const mScores = (formState.indivScores && formState.indivScores[activeMember.id]) ? formState.indivScores[activeMember.id] : {};
 
-        // 防呆校驗：若小組團體指標尚未填寫完畢，不允許送出
         let allGroupEntered = true;
         (sessionData.groupCriteria || []).forEach((crit, gi) => {
           const s = formState.groupScores && formState.groupScores[gi];
@@ -1449,7 +1453,6 @@
           return;
         }
 
-        // 防呆校驗：若個人各項指標尚未填寫完畢，不允許送出
         let allEntered = true;
         (sessionData.indivCriteria || []).forEach((crit, ii) => {
           const s = mScores[ii];
@@ -1492,7 +1495,6 @@
 
         representativeFinalScore = finalScoreVal;
 
-        // 當前被選中當事者
         records = [{
           id: activeMember.id,
           name: activeMember.name,
@@ -1501,7 +1503,6 @@
           notes: currentNotes
         }];
 
-        // 自動將本組其他「已評過分」的同學一起打包送出更新（確保連動最新團體成績到試算表）
         (item.members || []).forEach(m => {
           if (m.id !== activeMember.id && formState.savedMembers && formState.savedMembers[m.id] !== undefined) {
             records.push({
@@ -1529,6 +1530,7 @@
         reviewMemory[currentIndex].photo = formState.currentPhoto;
 
       } else {
+        // 純個人專案模式
         let total = 0, wSum = 0, allEntered = true;
         (sessionData.criteria || []).forEach((crit, i) => {
           const v = formState.scores[i];
@@ -1552,7 +1554,8 @@
           id: item.id,
           name: item.name,
           advisor: item.advisor,
-          finalScore: representativeFinalScore
+          finalScore: representativeFinalScore,
+          notes: currentNotes
         }];
 
         reviewMemory[currentIndex] = {
@@ -1610,7 +1613,7 @@
               }
             } else {
               setButtonLoading(false);
-              showToast(res.isMock ? '評分已儲存！' : '已成功儲存至 Google 試算表！', '✔');
+              showToast(res.isMock ? '評分已儲存！' : `已儲存【${item.name}】(${representativeFinalScore}分)！`, '✔');
               if (currentIndex + 1 < sessionData.items.length) {
                 renderView(currentIndex + 1);
               } else {
