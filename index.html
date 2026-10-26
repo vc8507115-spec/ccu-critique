@@ -286,11 +286,6 @@
         </span>
         <span class="text-[11px] text-[#ffaa55] font-serif-tc font-bold hidden sm:inline" id="stageBadgeHeader">期中評圖</span>
       </button>
-      
-      <!-- 模式切換按鈕 (本機預覽用) -->
-      <button id="previewModeToggleBtn" onclick="togglePreviewMode()" class="text-[10px] font-times font-bold px-2 py-1 rounded-lg bg-[#18202b] border border-[#ca6b2d]/60 text-[#ffbe7a] hover:border-[#ff9f43] transition">
-        模式：<span id="previewModeLabel">小組專案</span> ⇋
-      </button>
 
       <div class="flex items-center gap-2 bg-gradient-to-b from-[#171d25] to-[#0e1217] border border-[#394352] hover:border-[#ca6b2d]/70 px-3 py-1.5 rounded-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.08),0_3px_10px_rgba(0,0,0,0.6)] transition-all">
         <span class="text-xs font-times font-bold text-[#ffa64d] shrink-0 tracking-wide">評審老師</span>
@@ -302,7 +297,7 @@
   <!-- 載入中動畫 -->
   <div id="loading" class="flex flex-col items-center justify-center py-36 space-y-4">
     <div class="w-10 h-10 border-2 border-[#2b333f] border-t-[#d97736] rounded-full animate-spin"></div>
-    <p class="text-xs font-times tracking-widest text-[#8b949e] uppercase">INITIALIZING METALLIC ENGINE...</p>
+    <p id="loadingStatusText" class="text-xs font-times tracking-widest text-[#ffbe7a] uppercase animate-pulse">CONNECTING TO GOOGLE CLOUD DATABASE...</p>
   </div>
 
   <!-- 主內容容器 -->
@@ -580,43 +575,10 @@
     let reviewMemory = {};
     let currentOverviewFilter = 'all';
 
-    const mockGroupData = {
+    // 離線降級備份資料（僅在完全無網路時作為防呆）
+    const mockBackupData = {
       department: '中國文化大學建築及都市設計學系',
       stage: '期中評圖',
-      grade: 'G1_大一',
-      isGroupMode: true,
-      groupRatio: 30,
-      indivRatio: 40,
-      groupCriteria: [
-        { name: '小組整體成績', weight: 50 }
-      ],
-      indivCriteria: [
-        { name: '形式生成與轉譯邏輯', weight: 35 },
-        { name: '模型與 1:1 實作', weight: 35 },
-        { name: '手作表現', weight: 30 }
-      ],
-      items: [
-        {
-          groupName: '1',
-          advisor: '江益璋',
-          members: [
-            { id: 'B1221553', name: '李孟潔', advisor: '江益璋' },
-            { id: 'B4228044', name: '阮氏霜梅', advisor: '江益璋' },
-            { id: 'B5201671', name: '劉厚妤', advisor: '江益璋' },
-            { id: 'B5201697', name: '張芷毓', advisor: '江益璋' },
-            { id: 'B5232771', name: '侯宗辰', advisor: '江益璋' },
-            { id: 'B5232789', name: '鄭安潔', advisor: '江益璋' },
-            { id: 'B5232886', name: '黃禹綸', advisor: '江益璋' },
-            { id: 'B5232932', name: '林冠廷', advisor: '江益璋' },
-            { id: 'B4233871', name: '陳桂雲', advisor: '江益璋' }
-          ]
-        }
-      ]
-    };
-
-    const mockIndivData = {
-      department: '中國文化大學建築及都市設計學系',
-      stage: '個人評圖',
       grade: 'G1_大一',
       isGroupMode: false,
       criteria: [
@@ -625,8 +587,7 @@
         { name: '手作表現', weight: 30 }
       ],
       items: [
-        { id: 'B1221553', name: '李孟潔', advisor: '江益璋' },
-        { id: 'B4217001', name: '陳同學', advisor: '何老師' }
+        { id: 'B1221553', name: '李孟潔', advisor: '江益璋' }
       ]
     };
 
@@ -655,8 +616,7 @@
             });
         } else {
           setTimeout(() => {
-            successHandler(JSON.parse(JSON.stringify(mockGroupData)));
-            showToast('已載入小組評圖預覽（請確認 GAS_API_URL）', '⚠️');
+            successHandler(JSON.parse(JSON.stringify(mockBackupData)));
           }, 150);
         }
       },
@@ -702,12 +662,14 @@
       } catch (e) {}
 
       let hasInitialized = false;
+      // 設定 15 秒寬裕逾時，容納 Google Apps Script 冷啟動延遲
       const fallbackTimer = setTimeout(() => {
         if (!hasInitialized) {
           hasInitialized = true;
-          initApp(JSON.parse(JSON.stringify(mockGroupData)));
+          showToast('試算表讀取較久，已進入離線備用模式', '⚠️');
+          initApp(JSON.parse(JSON.stringify(mockBackupData)));
         }
-      }, 3500);
+      }, 15000);
 
       backendService.getSessionData(
         data => {
@@ -722,7 +684,7 @@
             hasInitialized = true;
             clearTimeout(fallbackTimer);
             showToast('試算表連線提示：' + (err.message || err), '⚠️');
-            initApp(JSON.parse(JSON.stringify(mockGroupData)));
+            initApp(JSON.parse(JSON.stringify(mockBackupData)));
           }
         }
       );
@@ -736,7 +698,7 @@
       if (tIcon) tIcon.innerText = icon;
       if (tMsg) tMsg.innerText = msg;
       toast.classList.remove('opacity-0');
-      setTimeout(() => toast.classList.add('opacity-0'), 2500);
+      setTimeout(() => toast.classList.add('opacity-0'), 2800);
     }
 
     function syncTeacherName(val) {
@@ -782,7 +744,7 @@
       const appContent = document.getElementById('appContent');
 
       if (!sessionData || !sessionData.items || sessionData.items.length === 0) {
-        initApp(JSON.parse(JSON.stringify(mockGroupData)));
+        initApp(JSON.parse(JSON.stringify(mockBackupData)));
       } else {
         if (loading) {
           loading.classList.add('hidden');
@@ -806,21 +768,9 @@
       }
     }
 
-    function togglePreviewMode() {
-      if (isGasEnvironment) {
-        showToast('正式連線模式由試算表自動判斷', 'ℹ️');
-        return;
-      }
-      const nextModeIsGroup = !sessionData.isGroupMode;
-      const nextData = nextModeIsGroup ? mockGroupData : mockIndivData;
-      reviewMemory = {};
-      initApp(JSON.parse(JSON.stringify(nextData)));
-      showToast(`已切換為：${nextModeIsGroup ? '小組專案模式' : '純個人專題模式'}`, '🔄');
-    }
-
     function initApp(data) {
       if (!data || !data.items || data.items.length === 0) {
-        data = JSON.parse(JSON.stringify(mockGroupData));
+        data = JSON.parse(JSON.stringify(mockBackupData));
       }
       sessionData = data;
       
@@ -833,11 +783,6 @@
       
       const headerStage = document.getElementById('stageBadgeHeader');
       if (headerStage) headerStage.innerText = data.stage || '評圖';
-
-      const previewLabel = document.getElementById('previewModeLabel');
-      if (previewLabel) {
-        previewLabel.innerText = data.isGroupMode ? '小組專案' : '純個人專題';
-      }
 
       const loading = document.getElementById('loading');
       if (loading) {
@@ -882,7 +827,7 @@
         if (groupSectionCard) groupSectionCard.classList.remove('hidden');
         if (syncAllBtn) syncAllBtn.classList.remove('hidden');
       } else {
-        // 純個人專案模式
+        // ⭐️ 純個人專案模式：徹底隱藏所有小組 UI
         if (idTagLabel) idTagLabel.innerText = 'ID';
         if (navLabel) navLabel.innerText = `${currentItem.id} ${currentItem.name} (${index + 1}/${sessionData.items.length})`;
         document.getElementById('studentIdDisplay').innerText = currentItem.id;
