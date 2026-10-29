@@ -184,7 +184,7 @@
         ❮ 上一位
       </button>
 
-      <!-- 快選下拉選單 (含已評分動態標記) -->
+      <!-- 快選下拉選單 (純顯示「待評」與「已評」，隱藏具體分數) -->
       <div class="flex-1 relative">
         <select id="quickJumpSelect" onchange="jumpToStudent(this.value)" class="w-full bg-[#121721] border border-amber-600/30 rounded-xl px-3 py-2 text-xs text-amber-300 font-serif-tc focus:outline-none appearance-none text-center cursor-pointer">
         </select>
@@ -311,7 +311,7 @@
         class="w-full bg-[#121721] border border-slate-700/80 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-400 transition"></textarea>
     </div>
 
-    <!-- 底部常駐儲存按鈕 (不自動跳下一位) -->
+    <!-- 底部常駐儲存按鈕 -->
     <div class="fixed bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-[#07090c] via-[#07090c]/95 to-transparent z-40 max-w-md mx-auto">
       <button id="btnSaveScore" onclick="handleSaveCurrentScore()" class="w-full bronze-btn text-white font-bold py-3.5 px-6 rounded-xl text-base tracking-widest font-serif-tc flex items-center justify-center gap-2 shadow-2xl cursor-pointer">
         <span id="btnSaveText">儲存評分</span>
@@ -332,7 +332,7 @@
     let reviewerName = "";
     let sessionData = null;
     let currentIndex = 0;
-    let reviewMemory = {}; // 記憶體儲存結構
+    let reviewMemory = {};
 
     window.addEventListener('DOMContentLoaded', () => {
       const savedReviewer = localStorage.getItem('ccu_reviewer_name');
@@ -341,12 +341,10 @@
       }
     });
 
-    // 取得本地快取的 Key
     function getStorageKey() {
       return `ccu_memory_${currentGrade}_${reviewerName}`;
     }
 
-    // 儲存至手機本地硬碟
     function persistToLocalStorage() {
       try {
         localStorage.setItem(getStorageKey(), JSON.stringify(reviewMemory));
@@ -355,7 +353,6 @@
       }
     }
 
-    // 從手機硬碟恢復記憶
     function restoreFromLocalStorage() {
       try {
         const raw = localStorage.getItem(getStorageKey());
@@ -381,7 +378,6 @@
       localStorage.setItem('ccu_reviewer_name', reviewerName);
       currentGrade = document.getElementById('coverGradeSelect').value;
 
-      // 讀取該年級與評審的本地儲存
       restoreFromLocalStorage();
 
       const btn = document.getElementById('btnEnterSystem');
@@ -439,7 +435,7 @@
       loadStudent(0);
     }
 
-    // 更新快選下拉清單 (標記已評分與分數)
+    // ★ 更新快選清單：僅顯示「待評」與「已評」，完全隱藏分數
     function updateQuickJumpSelect() {
       const quickSelect = document.getElementById('quickJumpSelect');
       quickSelect.innerHTML = '';
@@ -448,8 +444,10 @@
         opt.value = idx;
         const mem = reviewMemory[stu.id];
         if (mem && mem.totalScore !== undefined) {
-          opt.textContent = `✓ ${stu.id} ${stu.name} (${mem.totalScore.toFixed(1)}分)`;
+          // 已評分：顯示勾勾與「已評」
+          opt.textContent = `✓ ${stu.id} ${stu.name} (已評)`;
         } else {
+          // 尚未評分：顯示「待評」
           opt.textContent = `${stu.id} ${stu.name} (待評)`;
         }
         quickSelect.appendChild(opt);
@@ -490,10 +488,8 @@
       document.getElementById('cardAdvisorName').textContent = stu.advisor || '未指定';
       document.getElementById('quickJumpSelect').value = idx;
 
-      // 更新儲存按鈕文字 (不含跳下一位指示)
       document.getElementById('btnSaveText').textContent = `儲存【${stu.name}】評分`;
 
-      // 載入評分記憶 (若重進系統也會從 reviewMemory 復原)
       if (reviewMemory[stu.id]) {
         const mem = reviewMemory[stu.id];
         sessionData.criteria.forEach((_, cIdx) => {
@@ -576,7 +572,6 @@
       showToast('已移除附加照片');
     }
 
-    // ★ 核心儲存功能：停在原頁面，不自動跳下一位
     async function handleSaveCurrentScore() {
       const currentStudent = sessionData.students[currentIndex];
       const scores = sessionData.criteria.map((_, cIdx) => parseFloat(document.getElementById(`crit_input_${cIdx}`).value) || 0);
@@ -584,18 +579,18 @@
       const totalScore = calculateTotal();
       const existingPhoto = reviewMemory[currentStudent.id]?.photo || null;
 
-      // 1. 同步寫入記憶體與手機硬碟 (重開不怕掉)
+      // 1. 同步儲存至本地記憶體與硬碟
       reviewMemory[currentStudent.id] = { scores, comment, totalScore, photo: existingPhoto };
       persistToLocalStorage();
 
-      // 2. 更新快選選單顯示「✓ 李孟潔 (85.0分)」
+      // 2. 更新選單為「✓ 學號 姓名 (已評)」
       updateQuickJumpSelect();
 
-      // 3. 按鈕視覺反饋
+      // 3. 按鈕綠色成功反饋
       const saveBtn = document.getElementById('btnSaveScore');
       const saveText = document.getElementById('btnSaveText');
       const originalText = `儲存【${currentStudent.name}】評分`;
-      saveText.innerHTML = `✓ 已成功儲存（${totalScore.toFixed(1)} 分）`;
+      saveText.innerHTML = `✓ 已成功儲存`;
       saveBtn.classList.remove('bronze-btn');
       saveBtn.classList.add('bg-emerald-700');
 
@@ -603,9 +598,9 @@
         saveText.textContent = originalText;
         saveBtn.classList.remove('bg-emerald-700');
         saveBtn.classList.add('bronze-btn');
-      }, 2000);
+      }, 1800);
 
-      // 4. 發送至後端 Google 試算表 (後端會自動原地覆蓋舊分)
+      // 4. 背景非同步同步至 Google 試算表 (後端原地覆蓋舊分)
       const payload = {
         action: 'submitScore',
         records: [{
