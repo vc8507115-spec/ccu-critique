@@ -10,16 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
-    :root {
-      --bronze-specular-white: #fff4e5;
-      --bronze-specular-gold: #ffcf96;
-      --bronze-highlight: #f59e0b;
-      --bronze-base: #ca6b2d;
-      --bronze-rich: #9e4612;
-      --bronze-deep: #521e05;
-      --bronze-dark: #290e02;
-    }
-    
     body {
       font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       -webkit-tap-highlight-color: transparent;
@@ -83,13 +73,11 @@
   <!-- ==================== 1. 封面登入頁 (Cover Screen) ==================== -->
   <div id="coverScreen" class="w-full max-w-md mx-auto flex flex-col items-center justify-center min-h-[92vh] py-6">
     
-    <!-- 頂部徽章 -->
     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-950/40 border border-amber-600/30 text-amber-300 text-xs tracking-widest font-times font-semibold uppercase mb-6 shadow-inner">
       <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
       CCU ARCHITECTURE · DIGITAL EVALUATION
     </div>
 
-    <!-- 標題 -->
     <div class="text-center mb-8">
       <p class="text-xs tracking-[0.25em] text-amber-500/80 uppercase font-times mb-1">Chinese Culture University</p>
       <h1 class="text-2xl sm:text-3xl font-black font-serif-tc tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-500">
@@ -101,10 +89,9 @@
       <p class="text-[11px] tracking-wider text-slate-400 mt-2 font-times uppercase">Department of Architecture and Urban Design</p>
     </div>
 
-    <!-- 封面主控制卡片 -->
     <div class="w-full glass-card rounded-2xl p-6 sm:p-7 space-y-4">
       
-      <!-- 年級選擇 (原生下拉選單) -->
+      <!-- 年級選擇 -->
       <div>
         <label class="block text-xs font-semibold text-amber-300/90 tracking-wider mb-2 font-serif-tc flex items-center justify-between">
           <span>評圖年級 (ACADEMIC YEAR)</span>
@@ -130,7 +117,7 @@
         <span id="coverStageText" class="text-sm font-bold text-amber-300 font-serif-tc">期中評圖</span>
       </div>
 
-      <!-- ★ 題本查閱按鈕 (另開新分頁查閱) -->
+      <!-- 題本查閱按鈕 -->
       <a href="./1151文化建築_建築設計三題本.pdf" target="_blank" rel="noopener noreferrer" 
          class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-[#0a0e14]/80 border border-amber-600/40 text-amber-300 hover:border-amber-400 hover:bg-amber-950/30 transition-all duration-200 cursor-pointer shadow-sm group">
         <div class="flex items-center gap-2.5">
@@ -147,7 +134,7 @@
         </svg>
       </a>
 
-      <!-- 評審姓名輸入 -->
+      <!-- 評審席位輸入 -->
       <div>
         <label class="block text-xs font-semibold text-amber-300/90 tracking-wider mb-2 font-serif-tc flex items-center justify-between">
           <span>評審席位 / 姓名 (REVIEWER)</span>
@@ -163,11 +150,9 @@
         <span class="text-lg">➔</span>
       </button>
 
-      <!-- 狀態提示 -->
       <p id="coverStatusMsg" class="text-center text-xs text-amber-400/80 font-serif-tc min-h-[18px]"></p>
     </div>
 
-    <!-- 底部版權 -->
     <p class="text-[10px] text-slate-500 font-times tracking-widest text-center mt-8 uppercase">
       © CCU Architecture & Urban Design Critique Engine
     </p>
@@ -177,7 +162,7 @@
   <!-- ==================== 2. 主評分頁 (Critique Screen) ==================== -->
   <div id="critiqueScreen" class="w-full max-w-md mx-auto hidden flex flex-col gap-4 pb-24">
     
-    <!-- 頂部資訊列 (常駐年級與評審姓名) -->
+    <!-- 頂部資訊列 -->
     <header class="w-full glass-card rounded-xl px-4 py-2.5 flex items-center justify-between sticky top-2 z-40">
       <div class="flex items-center gap-2.5">
         <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></div>
@@ -199,7 +184,7 @@
         ❮ 上一位
       </button>
 
-      <!-- 快選下拉選單 -->
+      <!-- 快選下拉選單 (含已評分動態標記) -->
       <div class="flex-1 relative">
         <select id="quickJumpSelect" onchange="jumpToStudent(this.value)" class="w-full bg-[#121721] border border-amber-600/30 rounded-xl px-3 py-2 text-xs text-amber-300 font-serif-tc focus:outline-none appearance-none text-center cursor-pointer">
         </select>
@@ -213,7 +198,7 @@
       </button>
     </div>
 
-    <!-- 學生名牌卡 (含拍照與相簿功能) -->
+    <!-- 學生名牌卡 -->
     <div class="w-full glass-card rounded-2xl p-5 space-y-4 relative overflow-hidden">
       <div class="flex items-start justify-between">
         <div>
@@ -231,7 +216,7 @@
         </div>
       </div>
 
-      <!-- 拍照與相簿按鈕列 -->
+      <!-- 拍照與相簿按鈕 -->
       <div class="grid grid-cols-2 gap-2 pt-1">
         <label class="action-btn flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl cursor-pointer text-xs font-serif-tc text-slate-200 hover:text-amber-200">
           <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -251,7 +236,7 @@
         </label>
       </div>
 
-      <!-- 照片預覽縮圖容器 -->
+      <!-- 照片預覽縮圖 -->
       <div id="photoPreviewContainer" class="hidden pt-2">
         <div class="relative w-full h-32 rounded-xl overflow-hidden border border-amber-500/40 bg-black/60">
           <img id="photoPreviewImg" class="w-full h-full object-cover">
@@ -260,7 +245,7 @@
       </div>
     </div>
 
-    <!-- 加權總分儀表卡片 (半圓刻度環) -->
+    <!-- 加權總分儀表卡片 -->
     <div class="w-full glass-card rounded-2xl p-5 text-center relative overflow-hidden">
       <div class="flex items-center justify-between text-xs text-slate-400 font-serif-tc mb-1">
         <span class="flex items-center gap-1.5 text-amber-300">
@@ -270,7 +255,7 @@
         <span class="font-times uppercase text-[10px] tracking-widest text-slate-500">Evaluation Total</span>
       </div>
 
-      <!-- 儀表半圓刻度繪製區 -->
+      <!-- 儀表半圓刻度 -->
       <div class="relative w-48 h-28 mx-auto mt-2 flex flex-col items-center justify-end">
         <svg class="w-48 h-24 overflow-visible" viewBox="0 0 200 100">
           <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(202, 107, 45, 0.2)" stroke-width="6" stroke-linecap="round" stroke-dasharray="2 6"/>
@@ -293,7 +278,7 @@
         <span class="absolute right-2 bottom-0 text-[10px] font-times text-amber-500/80">100</span>
       </div>
 
-      <!-- 小組與個人拆分預覽 (僅在小組模式顯現) -->
+      <!-- 小組與個人拆分預覽 -->
       <div id="scoreRatioSplitBar" class="hidden flex items-center justify-center gap-4 text-xs font-serif-tc pt-3 mt-2 border-t border-slate-800 text-slate-400">
         <div>小組 (<span id="splitGroupRatioText">0</span>%)：<span id="splitGroupScoreText" class="font-times text-amber-300 font-bold">0.0</span></div>
         <span class="text-slate-600">|</span>
@@ -301,7 +286,7 @@
       </div>
     </div>
 
-    <!-- 評分維度 (ASSESSMENT CRITERIA) -->
+    <!-- 評分維度 -->
     <div class="w-full glass-card rounded-2xl p-5 space-y-4">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
@@ -313,8 +298,6 @@
         </span>
       </div>
       <p class="text-[11px] text-slate-400 font-serif-tc">各項評圖標準加權給分：</p>
-      
-      <!-- 動態載入規準清單 -->
       <div id="indCriteriaList" class="space-y-2.5"></div>
     </div>
 
@@ -328,16 +311,16 @@
         class="w-full bg-[#121721] border border-slate-700/80 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-400 transition"></textarea>
     </div>
 
-    <!-- 底部常駐儲存按鈕 -->
+    <!-- 底部常駐儲存按鈕 (不自動跳下一位) -->
     <div class="fixed bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-[#07090c] via-[#07090c]/95 to-transparent z-40 max-w-md mx-auto">
-      <button id="btnSaveAndNext" onclick="handleSaveAndNext()" class="w-full bronze-btn text-white font-bold py-3.5 px-6 rounded-xl text-base tracking-widest font-serif-tc flex items-center justify-center gap-2 shadow-2xl cursor-pointer">
-        <span id="btnSaveText">儲存並評下一位 ➔</span>
+      <button id="btnSaveScore" onclick="handleSaveCurrentScore()" class="w-full bronze-btn text-white font-bold py-3.5 px-6 rounded-xl text-base tracking-widest font-serif-tc flex items-center justify-center gap-2 shadow-2xl cursor-pointer">
+        <span id="btnSaveText">儲存評分</span>
       </button>
     </div>
 
   </div>
 
-  <!-- 全域訊息吐司 (Toast) -->
+  <!-- 全域訊息吐司 -->
   <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 px-4 py-2 rounded-xl bg-slate-900/95 border border-amber-500/50 text-amber-200 text-xs font-serif-tc shadow-2xl transition-all duration-300 opacity-0 pointer-events-none z-50">
     提示訊息
   </div>
@@ -349,7 +332,7 @@
     let reviewerName = "";
     let sessionData = null;
     let currentIndex = 0;
-    let reviewMemory = {}; // studentId -> { scores, comment, totalScore, photo }
+    let reviewMemory = {}; // 記憶體儲存結構
 
     window.addEventListener('DOMContentLoaded', () => {
       const savedReviewer = localStorage.getItem('ccu_reviewer_name');
@@ -357,6 +340,34 @@
         document.getElementById('reviewerInput').value = savedReviewer;
       }
     });
+
+    // 取得本地快取的 Key
+    function getStorageKey() {
+      return `ccu_memory_${currentGrade}_${reviewerName}`;
+    }
+
+    // 儲存至手機本地硬碟
+    function persistToLocalStorage() {
+      try {
+        localStorage.setItem(getStorageKey(), JSON.stringify(reviewMemory));
+      } catch (e) {
+        console.warn('本地快取空間不足，跳過照片快取');
+      }
+    }
+
+    // 從手機硬碟恢復記憶
+    function restoreFromLocalStorage() {
+      try {
+        const raw = localStorage.getItem(getStorageKey());
+        if (raw) {
+          reviewMemory = JSON.parse(raw);
+        } else {
+          reviewMemory = {};
+        }
+      } catch (e) {
+        reviewMemory = {};
+      }
+    }
 
     async function handleEnterSystem() {
       const reviewerInput = document.getElementById('reviewerInput').value.trim();
@@ -369,6 +380,9 @@
       reviewerName = reviewerInput;
       localStorage.setItem('ccu_reviewer_name', reviewerName);
       currentGrade = document.getElementById('coverGradeSelect').value;
+
+      // 讀取該年級與評審的本地儲存
+      restoreFromLocalStorage();
 
       const btn = document.getElementById('btnEnterSystem');
       const statusMsg = document.getElementById('coverStatusMsg');
@@ -405,7 +419,6 @@
       document.getElementById('topStageBadge').textContent = sessionData.stage;
       document.getElementById('topReviewerText').textContent = reviewerName;
 
-      // 檢查模式
       const isGroup = sessionData.isGroupMode;
       const ratioBar = document.getElementById('scoreRatioSplitBar');
       const part2Badge = document.getElementById('badgePart2Ratio');
@@ -421,18 +434,27 @@
         part2Badge.classList.add('hidden');
       }
 
-      // 快選清單
+      updateQuickJumpSelect();
+      renderCriteriaInputs();
+      loadStudent(0);
+    }
+
+    // 更新快選下拉清單 (標記已評分與分數)
+    function updateQuickJumpSelect() {
       const quickSelect = document.getElementById('quickJumpSelect');
       quickSelect.innerHTML = '';
       sessionData.students.forEach((stu, idx) => {
         const opt = document.createElement('option');
         opt.value = idx;
-        opt.textContent = `${stu.id} ${stu.name} (${idx + 1}/${sessionData.students.length})`;
+        const mem = reviewMemory[stu.id];
+        if (mem && mem.totalScore !== undefined) {
+          opt.textContent = `✓ ${stu.id} ${stu.name} (${mem.totalScore.toFixed(1)}分)`;
+        } else {
+          opt.textContent = `${stu.id} ${stu.name} (待評)`;
+        }
         quickSelect.appendChild(opt);
       });
-
-      renderCriteriaInputs();
-      loadStudent(0);
+      quickSelect.value = currentIndex;
     }
 
     function renderCriteriaInputs() {
@@ -468,9 +490,10 @@
       document.getElementById('cardAdvisorName').textContent = stu.advisor || '未指定';
       document.getElementById('quickJumpSelect').value = idx;
 
-      document.getElementById('btnSaveText').textContent = `儲存【${stu.name}】並評下一位 ➔`;
+      // 更新儲存按鈕文字 (不含跳下一位指示)
+      document.getElementById('btnSaveText').textContent = `儲存【${stu.name}】評分`;
 
-      // 載入評分記憶
+      // 載入評分記憶 (若重進系統也會從 reviewMemory 復原)
       if (reviewMemory[stu.id]) {
         const mem = reviewMemory[stu.id];
         sessionData.criteria.forEach((_, cIdx) => {
@@ -502,7 +525,6 @@
 
       document.getElementById('displayTotalScore').textContent = total.toFixed(1);
 
-      // 動態更新半圓刻度進度條
       const maxOffset = 251.2;
       const offset = maxOffset - (Math.min(total, 100) / 100) * maxOffset;
       document.getElementById('gaugeArcProgress').style.strokeDashoffset = offset;
@@ -514,7 +536,6 @@
       calculateTotal();
     }
 
-    // 照片上傳處理 (相機 / 相簿)
     function handlePhotoUpload(input) {
       if (input.files && input.files[0]) {
         const reader = new FileReader();
@@ -524,6 +545,7 @@
           const stu = sessionData.students[currentIndex];
           if (!reviewMemory[stu.id]) reviewMemory[stu.id] = { scores: [], comment: '', totalScore: 0 };
           reviewMemory[stu.id].photo = photoBase64;
+          persistToLocalStorage();
           showToast('📸 照片已附加');
         };
         reader.readAsDataURL(input.files[0]);
@@ -549,19 +571,41 @@
       const stu = sessionData.students[currentIndex];
       if (reviewMemory[stu.id]) {
         delete reviewMemory[stu.id].photo;
+        persistToLocalStorage();
       }
       showToast('已移除附加照片');
     }
 
-    async function handleSaveAndNext() {
+    // ★ 核心儲存功能：停在原頁面，不自動跳下一位
+    async function handleSaveCurrentScore() {
       const currentStudent = sessionData.students[currentIndex];
       const scores = sessionData.criteria.map((_, cIdx) => parseFloat(document.getElementById(`crit_input_${cIdx}`).value) || 0);
       const comment = document.getElementById('feedbackComment').value.trim();
       const totalScore = calculateTotal();
       const existingPhoto = reviewMemory[currentStudent.id]?.photo || null;
 
+      // 1. 同步寫入記憶體與手機硬碟 (重開不怕掉)
       reviewMemory[currentStudent.id] = { scores, comment, totalScore, photo: existingPhoto };
+      persistToLocalStorage();
 
+      // 2. 更新快選選單顯示「✓ 李孟潔 (85.0分)」
+      updateQuickJumpSelect();
+
+      // 3. 按鈕視覺反饋
+      const saveBtn = document.getElementById('btnSaveScore');
+      const saveText = document.getElementById('btnSaveText');
+      const originalText = `儲存【${currentStudent.name}】評分`;
+      saveText.innerHTML = `✓ 已成功儲存（${totalScore.toFixed(1)} 分）`;
+      saveBtn.classList.remove('bronze-btn');
+      saveBtn.classList.add('bg-emerald-700');
+
+      setTimeout(() => {
+        saveText.textContent = originalText;
+        saveBtn.classList.remove('bg-emerald-700');
+        saveBtn.classList.add('bronze-btn');
+      }, 2000);
+
+      // 4. 發送至後端 Google 試算表 (後端會自動原地覆蓋舊分)
       const payload = {
         action: 'submitScore',
         records: [{
@@ -582,15 +626,9 @@
         mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain' },
         body: JSON.stringify(payload)
-      }).catch(err => console.error('存檔同步提示：', err));
+      }).catch(err => console.error('後端儲存提示：', err));
 
-      showToast(`已儲存 ${currentStudent.name}（${totalScore.toFixed(1)}分）`);
-
-      if (currentIndex + 1 < sessionData.students.length) {
-        loadStudent(currentIndex + 1);
-      } else {
-        showToast('🎉 本年級所有學生均已評分完畢！');
-      }
+      showToast(`✅ ${currentStudent.name} 評分儲存完成！`);
     }
 
     function navigateStudent(direction) {
@@ -608,7 +646,7 @@
       const t = document.getElementById('toast');
       t.textContent = msg;
       t.classList.remove('opacity-0');
-      setTimeout(() => t.classList.add('opacity-0'), 2200);
+      setTimeout(() => t.classList.add('opacity-0'), 2500);
     }
   </script>
 </body>
