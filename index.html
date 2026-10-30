@@ -91,14 +91,14 @@
 
     <div class="w-full glass-card rounded-2xl p-6 sm:p-7 space-y-4">
       
-      <!-- 年級選擇 -->
+      <!-- 年級選擇 (切換時自動更新題本連結) -->
       <div>
         <label class="block text-xs font-semibold text-amber-300/90 tracking-wider mb-2 font-serif-tc flex items-center justify-between">
           <span>評圖年級 (ACADEMIC YEAR)</span>
           <span class="text-[10px] text-amber-500/70 font-times uppercase">Select Class</span>
         </label>
         <div class="relative">
-          <select id="coverGradeSelect" class="w-full bg-[#121721] border border-amber-600/40 rounded-xl px-4 py-3 text-base text-amber-200 font-bold focus:outline-none focus:border-amber-400 transition cursor-pointer appearance-none">
+          <select id="coverGradeSelect" onchange="handleCoverGradeChange()" class="w-full bg-[#121721] border border-amber-600/40 rounded-xl px-4 py-3 text-base text-amber-200 font-bold focus:outline-none focus:border-amber-400 transition cursor-pointer appearance-none">
             <option value="G1_大一">G1_大一 (建築設計一)</option>
             <option value="G2_大二" selected>G2_大二 (建築設計二)</option>
             <option value="G3_大三">G3_大三 (建築設計三)</option>
@@ -117,16 +117,16 @@
         <span id="coverStageText" class="text-sm font-bold text-amber-300 font-serif-tc">期中評圖</span>
       </div>
 
-      <!-- 題本查閱按鈕 -->
-      <a href="./1151文化建築_建築設計三題本.pdf" target="_blank" rel="noopener noreferrer" 
+      <!-- ★ 動態題本查閱按鈕 (依選取年級自動指向對應網址) -->
+      <a id="coverBriefBtn" href="./1151文化建築_建築設計三題本.pdf" target="_blank" rel="noopener noreferrer" onclick="return handleBriefClick(event)"
          class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-[#0a0e14]/80 border border-amber-600/40 text-amber-300 hover:border-amber-400 hover:bg-amber-950/30 transition-all duration-200 cursor-pointer shadow-sm group">
         <div class="flex items-center gap-2.5">
           <svg class="w-4 h-4 text-amber-400 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
           </svg>
           <div class="text-left">
-            <span class="text-xs font-bold font-serif-tc tracking-wider block">查閱本期設計題本與任務說明</span>
-            <span class="text-[9px] text-slate-400 font-times tracking-widest uppercase">Project Brief & Guidelines</span>
+            <span class="text-xs font-bold font-serif-tc tracking-wider block" id="coverBriefTitle">查閱本期設計題本與任務說明</span>
+            <span class="text-[9px] text-slate-400 font-times tracking-widest uppercase" id="coverBriefSubtext">Project Brief & Guidelines</span>
           </div>
         </div>
         <svg class="w-4 h-4 text-amber-500/80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,7 +162,6 @@
   <!-- ==================== 2. 主評分頁 (Critique Screen) ==================== -->
   <div id="critiqueScreen" class="w-full max-w-md mx-auto hidden flex flex-col gap-4 pb-24">
     
-    <!-- 頂部資訊列 -->
     <header class="w-full glass-card rounded-xl px-4 py-2.5 flex items-center justify-between sticky top-2 z-40">
       <div class="flex items-center gap-2.5">
         <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></div>
@@ -178,13 +177,11 @@
       </div>
     </header>
 
-    <!-- 快速跳轉與上下位控制 -->
     <div class="flex items-center justify-between gap-2">
       <button onclick="navigateStudent(-1)" class="px-3.5 py-2.5 action-btn rounded-xl text-xs font-serif-tc text-slate-300 hover:text-white transition flex items-center gap-1 cursor-pointer">
         ❮ 上一位
       </button>
 
-      <!-- 快選下拉選單 (純顯示「待評」與「已評」，隱藏具體分數) -->
       <div class="flex-1 relative">
         <select id="quickJumpSelect" onchange="jumpToStudent(this.value)" class="w-full bg-[#121721] border border-amber-600/30 rounded-xl px-3 py-2 text-xs text-amber-300 font-serif-tc focus:outline-none appearance-none text-center cursor-pointer">
         </select>
@@ -216,7 +213,6 @@
         </div>
       </div>
 
-      <!-- 拍照與相簿按鈕 -->
       <div class="grid grid-cols-2 gap-2 pt-1">
         <label class="action-btn flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl cursor-pointer text-xs font-serif-tc text-slate-200 hover:text-amber-200">
           <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -236,7 +232,6 @@
         </label>
       </div>
 
-      <!-- 照片預覽縮圖 -->
       <div id="photoPreviewContainer" class="hidden pt-2">
         <div class="relative w-full h-32 rounded-xl overflow-hidden border border-amber-500/40 bg-black/60">
           <img id="photoPreviewImg" class="w-full h-full object-cover">
@@ -255,7 +250,6 @@
         <span class="font-times uppercase text-[10px] tracking-widest text-slate-500">Evaluation Total</span>
       </div>
 
-      <!-- 儀表半圓刻度 -->
       <div class="relative w-48 h-28 mx-auto mt-2 flex flex-col items-center justify-end">
         <svg class="w-48 h-24 overflow-visible" viewBox="0 0 200 100">
           <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(202, 107, 45, 0.2)" stroke-width="6" stroke-linecap="round" stroke-dasharray="2 6"/>
@@ -278,7 +272,6 @@
         <span class="absolute right-2 bottom-0 text-[10px] font-times text-amber-500/80">100</span>
       </div>
 
-      <!-- 小組與個人拆分預覽 -->
       <div id="scoreRatioSplitBar" class="hidden flex items-center justify-center gap-4 text-xs font-serif-tc pt-3 mt-2 border-t border-slate-800 text-slate-400">
         <div>小組 (<span id="splitGroupRatioText">0</span>%)：<span id="splitGroupScoreText" class="font-times text-amber-300 font-bold">0.0</span></div>
         <span class="text-slate-600">|</span>
@@ -301,7 +294,7 @@
       <div id="indCriteriaList" class="space-y-2.5"></div>
     </div>
 
-    <!-- 評審意見與總評 -->
+    <!-- 評審意見 -->
     <div class="w-full glass-card rounded-2xl p-5 space-y-2">
       <div class="flex items-center justify-between">
         <label class="text-xs font-semibold text-slate-300 font-serif-tc">評審意見與總評（選填）</label>
@@ -320,7 +313,6 @@
 
   </div>
 
-  <!-- 全域訊息吐司 -->
   <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 px-4 py-2 rounded-xl bg-slate-900/95 border border-amber-500/50 text-amber-200 text-xs font-serif-tc shadow-2xl transition-all duration-300 opacity-0 pointer-events-none z-50">
     提示訊息
   </div>
@@ -333,13 +325,74 @@
     let sessionData = null;
     let currentIndex = 0;
     let reviewMemory = {};
+    let briefLinksMap = {
+      // 內建預設備援
+      "G3_大三": "./1151文化建築_建築設計三題本.pdf"
+    };
 
     window.addEventListener('DOMContentLoaded', () => {
       const savedReviewer = localStorage.getItem('ccu_reviewer_name');
       if (savedReviewer) {
         document.getElementById('reviewerInput').value = savedReviewer;
       }
+      // 頁面載入時先同步一次試算表的題本對照表與階段
+      fetchInitialConfig();
     });
+
+    // 取得全域題本配置
+    async function fetchInitialConfig() {
+      try {
+        const res = await fetch(`${GAS_API_URL}?action=getInitialConfig`);
+        const json = await res.json();
+        if (json.status === 'success' && json.data) {
+          if (json.data.stage) {
+            document.getElementById('coverStageText').textContent = json.data.stage;
+          }
+          if (json.data.briefLinks) {
+            briefLinksMap = { ...briefLinksMap, ...json.data.briefLinks };
+            updateCoverBriefLink();
+          }
+        }
+      } catch (e) {
+        console.warn('題本配置讀取提示：使用預設備援連結');
+      }
+    }
+
+    // 當年級下拉選單變更時
+    function handleCoverGradeChange() {
+      currentGrade = document.getElementById('coverGradeSelect').value;
+      updateCoverBriefLink();
+    }
+
+    // 動態更新題本按鈕的 href
+    function updateCoverBriefLink() {
+      const selectedGrade = document.getElementById('coverGradeSelect').value;
+      const targetUrl = briefLinksMap[selectedGrade] || '';
+      const btn = document.getElementById('coverBriefBtn');
+      const subtext = document.getElementById('coverBriefSubtext');
+
+      if (targetUrl) {
+        btn.href = targetUrl;
+        btn.classList.remove('opacity-60');
+        subtext.textContent = `【${selectedGrade}】題本 · 點擊另開分頁查閱`;
+      } else {
+        btn.href = '#';
+        btn.classList.add('opacity-60');
+        subtext.textContent = `【${selectedGrade}】尚未設定題本連結`;
+      }
+    }
+
+    // 點擊題本按鈕時的防呆處理
+    function handleBriefClick(event) {
+      const selectedGrade = document.getElementById('coverGradeSelect').value;
+      const targetUrl = briefLinksMap[selectedGrade];
+      if (!targetUrl || targetUrl === '#') {
+        event.preventDefault();
+        showToast(`⚠️ 【${selectedGrade}】尚未設定題本連結，請洽系辦！`);
+        return false;
+      }
+      return true;
+    }
 
     function getStorageKey() {
       return `ccu_memory_${currentGrade}_${reviewerName}`;
@@ -349,18 +402,14 @@
       try {
         localStorage.setItem(getStorageKey(), JSON.stringify(reviewMemory));
       } catch (e) {
-        console.warn('本地快取空間不足，跳過照片快取');
+        console.warn('本地快取空間不足');
       }
     }
 
     function restoreFromLocalStorage() {
       try {
         const raw = localStorage.getItem(getStorageKey());
-        if (raw) {
-          reviewMemory = JSON.parse(raw);
-        } else {
-          reviewMemory = {};
-        }
+        reviewMemory = raw ? JSON.parse(raw) : {};
       } catch (e) {
         reviewMemory = {};
       }
@@ -392,6 +441,9 @@
 
         if (result.status === 'success') {
           sessionData = result.data;
+          if (sessionData.briefLinks) {
+            briefLinksMap = { ...briefLinksMap, ...sessionData.briefLinks };
+          }
           statusMsg.textContent = '';
           startCritiqueSession();
         } else {
@@ -435,7 +487,6 @@
       loadStudent(0);
     }
 
-    // ★ 更新快選清單：僅顯示「待評」與「已評」，完全隱藏分數
     function updateQuickJumpSelect() {
       const quickSelect = document.getElementById('quickJumpSelect');
       quickSelect.innerHTML = '';
@@ -444,10 +495,8 @@
         opt.value = idx;
         const mem = reviewMemory[stu.id];
         if (mem && mem.totalScore !== undefined) {
-          // 已評分：顯示勾勾與「已評」
           opt.textContent = `✓ ${stu.id} ${stu.name} (已評)`;
         } else {
-          // 尚未評分：顯示「待評」
           opt.textContent = `${stu.id} ${stu.name} (待評)`;
         }
         quickSelect.appendChild(opt);
@@ -487,7 +536,6 @@
       document.getElementById('cardStudentName').textContent = stu.name;
       document.getElementById('cardAdvisorName').textContent = stu.advisor || '未指定';
       document.getElementById('quickJumpSelect').value = idx;
-
       document.getElementById('btnSaveText').textContent = `儲存【${stu.name}】評分`;
 
       if (reviewMemory[stu.id]) {
@@ -496,11 +544,8 @@
           document.getElementById(`crit_input_${cIdx}`).value = mem.scores[cIdx] || 0;
         });
         document.getElementById('feedbackComment').value = mem.comment || '';
-        if (mem.photo) {
-          showPhotoPreview(mem.photo);
-        } else {
-          hidePhotoPreview();
-        }
+        if (mem.photo) showPhotoPreview(mem.photo);
+        else hidePhotoPreview();
       } else {
         sessionData.criteria.forEach((_, cIdx) => {
           document.getElementById(`crit_input_${cIdx}`).value = 0;
@@ -579,14 +624,11 @@
       const totalScore = calculateTotal();
       const existingPhoto = reviewMemory[currentStudent.id]?.photo || null;
 
-      // 1. 同步儲存至本地記憶體與硬碟
       reviewMemory[currentStudent.id] = { scores, comment, totalScore, photo: existingPhoto };
       persistToLocalStorage();
 
-      // 2. 更新選單為「✓ 學號 姓名 (已評)」
       updateQuickJumpSelect();
 
-      // 3. 按鈕綠色成功反饋
       const saveBtn = document.getElementById('btnSaveScore');
       const saveText = document.getElementById('btnSaveText');
       const originalText = `儲存【${currentStudent.name}】評分`;
@@ -600,7 +642,6 @@
         saveBtn.classList.add('bronze-btn');
       }, 1800);
 
-      // 4. 背景非同步同步至 Google 試算表 (後端原地覆蓋舊分)
       const payload = {
         action: 'submitScore',
         records: [{
